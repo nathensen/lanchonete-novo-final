@@ -15,8 +15,10 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
+import com.lanchonete.controller.LoginController;
 import com.lanchonete.model.Vendedor;
 import com.lanchonete.service.VendedorService;
 
@@ -24,9 +26,10 @@ public class FormLogin extends JPanel {
 
     private MainFrame mainFrame;
     private VendedorService vendedorService;
+    private LoginController loginController = new LoginController();
 
     private JTextField txtNome;
-    private JTextField txtCodigo;
+    private JPasswordField txtCodigo;
     private JButton btnEntrar;
 
     public FormLogin(MainFrame mainFrame) {
@@ -61,7 +64,7 @@ public class FormLogin extends JPanel {
         lblNome.setFont(new Font("SansSerif", Font.BOLD, 18));
         lblNome.setForeground(Color.BLACK);
 
-        JLabel lblCodigo = new JLabel("Código do Vendedor (4 dígitos):");
+        JLabel lblCodigo = new JLabel("Senha:");
         lblCodigo.setFont(new Font("SansSerif", Font.BOLD, 18));
         lblCodigo.setForeground(Color.BLACK);
 
@@ -69,17 +72,19 @@ public class FormLogin extends JPanel {
         txtNome = new JTextField(18);
         txtNome.setFont(new Font("SansSerif", Font.PLAIN, 16));
 
-        txtCodigo = new JTextField(18);
+        txtCodigo = new JPasswordField(18);
         txtCodigo.setFont(new Font("SansSerif", Font.PLAIN, 16));
 
         // Adiciona os campos
-        gbc.gridx = 0; gbc.gridy = 0;
+        gbc.gridx = 0; 
+        gbc.gridy = 0;
         formPanel.add(lblNome, gbc);
 
         gbc.gridx = 1;
         formPanel.add(txtNome, gbc);
 
-        gbc.gridx = 0; gbc.gridy = 1;
+        gbc.gridx = 0; 
+        gbc.gridy = 1;
         formPanel.add(lblCodigo, gbc);
 
         gbc.gridx = 1;
@@ -96,7 +101,7 @@ public class FormLogin extends JPanel {
         add(formPanel, BorderLayout.CENTER);
     }
 
-    // ---- BOTÃO IGUAL AO MENU ----
+    // ---- BOTÃO ESTILIZADO ----
     private JButton criarBotao(String texto, java.awt.event.ActionListener listener) {
 
         JButton btn = new JButton(texto) {
@@ -149,30 +154,24 @@ public class FormLogin extends JPanel {
         return btn;
     }
 
-    // ---- LÓGICA DO LOGIN ----
+    // ---- LÓGICA DO LOGIN (COM SENHA FIXA 1234) ----
     private void login() {
         try {
             String nome = txtNome.getText().trim();
-            String codigoText = txtCodigo.getText().trim();
+            String codigo = String.valueOf(txtCodigo.getPassword()).trim();                                              
 
-            if (nome.isEmpty()) {
-                JOptionPane.showMessageDialog(this, "Por favor, digite o nome do vendedor.", 
-                        "Campo Obrigatório", JOptionPane.WARNING_MESSAGE);
-                return;
-            }
+            // Valida usando senha fixa
+            loginController.autenticar(nome, codigo);
 
-            int codigo = Integer.parseInt(codigoText);
-
-            Vendedor vendedor = vendedorService.criarVendedor(nome, codigo);
+            Vendedor vendedor = vendedorService.criarVendedor(nome, 0);
             mainFrame.setVendedor(vendedor);
 
             JOptionPane.showMessageDialog(this, "Bem-vindo(a), " + nome + "!");
-
             mainFrame.showPanel("menu");
 
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e.getMessage(), 
-                    "Erro", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, e.getMessage(),
+                    "Erro no Login", JOptionPane.ERROR_MESSAGE);
         }
     }
 }

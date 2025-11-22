@@ -21,19 +21,15 @@ public class VendedorService {
     public void mostrarInformacoes(Vendedor vendedor) {
         System.out.println("\n=== Informações do Vendedor ===");
         System.out.println("Nome: " + vendedor.getNome());
-        System.out.println("Código do Vendedor: " + FormatadorMoeda.formatar(vendedor.getCodigo()));
         System.out.println("Bônus acumulado: " + FormatadorMoeda.formatar(vendedor.getBonus()));
-        System.out.println("Total a receber: " + 
-                FormatadorMoeda.formatar(vendedor.getCodigo() + vendedor.getBonus()));
+        System.out.println("Total a receber: " + FormatadorMoeda.formatar(vendedor.getBonus()));
     }
     
     public void mostrarResumoFinalTurno(Vendedor vendedor) {
         System.out.println("\n======== RESUMO FINAL DO TURNO ========");
         System.out.println("Vendedor: " + vendedor.getNome());
-        System.out.println("Código do Vendedor: " + FormatadorMoeda.formatar(vendedor.getCodigo()));
         System.out.println("Bônus total acumulado: " + FormatadorMoeda.formatar(vendedor.getBonus()));
-        System.out.println("Valor total a receber: " + 
-                FormatadorMoeda.formatar(vendedor.getCodigo() + vendedor.getBonus()));
+        System.out.println("Valor total a receber: " + FormatadorMoeda.formatar(vendedor.getBonus()));
         System.out.println("=======================================");
     }
 }

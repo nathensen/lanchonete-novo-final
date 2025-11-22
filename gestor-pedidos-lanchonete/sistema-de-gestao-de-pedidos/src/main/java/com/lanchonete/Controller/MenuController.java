@@ -1,0 +1,81 @@
+package com.lanchonete.controller;
+
+import javax.swing.JOptionPane;
+
+import com.lanchonete.model.Pedido;
+import com.lanchonete.model.Vendedor;
+import com.lanchonete.service.PedidoService;
+import com.lanchonete.service.VendedorService;
+import com.lanchonete.util.FormatadorMoeda;
+
+public class MenuController {
+
+    private PedidoService pedidoService;
+    private VendedorService vendedorService;
+
+    public MenuController() {
+        this.pedidoService = new PedidoService();
+        this.vendedorService = new VendedorService();
+    }
+
+    // Criar novo pedido
+    public Pedido novoPedido(String nomeCliente) {
+        if (nomeCliente == null || nomeCliente.trim().isEmpty()) {
+            return null;
+        }
+        return pedidoService.criarPedido(nomeCliente);
+    }
+
+    // Mostrar bônus do vendedor
+    public void mostrarBonus(Vendedor vendedor) {
+        if (vendedor == null) {
+            JOptionPane.showMessageDialog(null,
+                    "Erro ao acessar informações do vendedor.",
+                    "Erro", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        double codigo = vendedor.getCodigo();
+        double bonus = vendedor.getBonus();
+
+        JOptionPane.showMessageDialog(null,
+                "Vendedor: " + vendedor.getNome() + "\n" +
+                "Bônus Acumulado: " + FormatadorMoeda.formatar(bonus) + "\n" +
+                "Total a Receber: " + FormatadorMoeda.formatar(bonus),
+                "Informações do Vendedor",
+                JOptionPane.INFORMATION_MESSAGE);
+    }
+
+    // Encerrar turno
+    public void encerrarTurno(Vendedor vendedor) {
+        if (vendedor == null) {
+            JOptionPane.showMessageDialog(null,
+                    "Erro ao acessar informações do vendedor.",
+                    "Erro", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        int confirmacao = JOptionPane.showConfirmDialog(null,
+                "Deseja realmente encerrar o turno?",
+                "Confirmar Saída",
+                JOptionPane.YES_NO_OPTION);
+
+        if (confirmacao == JOptionPane.YES_OPTION) {
+            vendedorService.mostrarResumoFinalTurno(vendedor);
+
+            double codigo = vendedor.getCodigo();
+            double bonus = vendedor.getBonus();
+
+            JOptionPane.showMessageDialog(null,
+                    "==== RESUMO FINAL DO TURNO ====\n\n" +
+                    "Vendedor: " + vendedor.getNome() + "\n" +
+                    "Bônus Acumulado: " + FormatadorMoeda.formatar(bonus) + "\n" +
+                    "Total a Receber: " + FormatadorMoeda.formatar(bonus) + "\n\n" +
+                    "Volte sempre!",
+                    "Turno Encerrado",
+                    JOptionPane.INFORMATION_MESSAGE);
+
+            System.exit(0);
+        }
+    }
+}

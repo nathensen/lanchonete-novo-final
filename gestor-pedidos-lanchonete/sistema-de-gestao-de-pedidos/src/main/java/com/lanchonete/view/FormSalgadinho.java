@@ -1,120 +1,70 @@
 package com.lanchonete.view;
 
-import java.awt.BorderLayout;
-import java.awt.Font;
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JList;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.ListSelectionModel;
-
-import com.lanchonete.model.Salgadinho;
+import javax.swing.*;
+import java.awt.*;
+import com.lanchonete.controller.SalgadinhoController;
+import com.lanchonete.model.Pedido;
 
 public class FormSalgadinho extends JPanel {
     private MainFrame mainFrame;
     private JList<String> listSalgadinhos;
-    private List<Salgadinho> salgadinhos;
-    
-    // Usando as mesmas opções que estavam definidas em SalgadinhoFactory
-    private static final String[] NOMES_SALGADINHOS = {
-        "Coxinha de Carne",
-        "Coxinha de Frango",
-        "Pastel Frito de Carne",
-        "Pastel Frito de Frango",
-        "Pastel Assado de Carne",
-        "Pastel Assado de Frango",
-        "Empanado de Frango"
-    };
-    
+    private SalgadinhoController controller;
+
     public FormSalgadinho(MainFrame mainFrame) {
         this.mainFrame = mainFrame;
-        
+        this.controller = new SalgadinhoController();
+
         setLayout(new BorderLayout());
-        
+
         // Painel do título
         JPanel titlePanel = new JPanel();
         JLabel lblTitle = new JLabel("Escolha um Salgadinho");
         lblTitle.setFont(new Font("Arial", Font.BOLD, 20));
         titlePanel.add(lblTitle);
-        
-        // Criar lista de salgadinhos
-        salgadinhos = criarSalgadinhos();
-        
-        // Converter para array de strings para exibição
-        String[] opcoes = new String[salgadinhos.size()];
-        for (int i = 0; i < salgadinhos.size(); i++) {
-            Salgadinho s = salgadinhos.get(i);
-            opcoes[i] = NOMES_SALGADINHOS[i] + " - R$ " + String.format("%.2f", s.getPrecoVenda());
-        }
-        
-        listSalgadinhos = new JList<>(opcoes);
+
+        // Lista de opções
+        listSalgadinhos = new JList<>(controller.getNomesSalgadinhos());
         listSalgadinhos.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         JScrollPane scrollPane = new JScrollPane(listSalgadinhos);
-        
+
         // Botões
         JPanel buttonPanel = new JPanel();
         JButton btnAdicionar = new JButton("Adicionar ao Pedido");
         JButton btnVoltar = new JButton("Voltar ao Menu");
-        
         buttonPanel.add(btnAdicionar);
         buttonPanel.add(btnVoltar);
-        
-        // Adicionar ao layout
+
+        // Layout
         add(titlePanel, BorderLayout.NORTH);
         add(scrollPane, BorderLayout.CENTER);
         add(buttonPanel, BorderLayout.SOUTH);
-        
-        // Implementar ações
+
+        // Ações
         btnVoltar.addActionListener(e -> mainFrame.showPanel("menu"));
         btnAdicionar.addActionListener(e -> adicionarSalgadinho());
     }
-    
-    private List<Salgadinho> criarSalgadinhos() {
-        List<Salgadinho> lista = new ArrayList<>();
-        
-        // Usando exatamente os mesmos valores que estavam em SalgadinhoFactory
-        lista.add(new Salgadinho(3.0, "Coxinha", "Frita", "Carne"));
-        lista.add(new Salgadinho(3.0, "Coxinha", "Frita", "Frango"));
-        lista.add(new Salgadinho(4.0, "Pastel", "Frito", "Carne"));
-        lista.add(new Salgadinho(4.0, "Pastel", "Frito", "Frango"));
-        lista.add(new Salgadinho(5.0, "Pastel", "Assado", "Carne"));
-        lista.add(new Salgadinho(5.0, "Pastel", "Assado", "Frango"));
-        lista.add(new Salgadinho(6.0, "Empanado", "Frito", "Frango"));
-        
-        return lista;
-    }
-    
+
     private void adicionarSalgadinho() {
-        int selectedIndex = listSalgadinhos.getSelectedIndex();
-        
-        if (selectedIndex != -1) {
-            // Verifica se existe um pedido ativo
-            if (mainFrame.getPedidoAtual() == null) {
-                JOptionPane.showMessageDialog(this, 
-                        "Você deve iniciar um novo pedido primeiro.", 
-                        "Pedido não iniciado", JOptionPane.WARNING_MESSAGE);
-                mainFrame.showPanel("menu");
-                return;
-            }
-            
-            // Pega o salgadinho selecionado
-            Salgadinho salgadinhoSelecionado = salgadinhos.get(selectedIndex);
-            
-            // Adiciona ao pedido
-            mainFrame.getPedidoAtual().adicionarItem(salgadinhoSelecionado);
-            
-            JOptionPane.showMessageDialog(this, 
-                    NOMES_SALGADINHOS[selectedIndex] + " adicionado ao pedido com sucesso!", 
-                    "Item Adicionado", JOptionPane.INFORMATION_MESSAGE);
-        } else {
-            JOptionPane.showMessageDialog(this, 
-                    "Selecione um salgadinho primeiro.", 
+        int index = listSalgadinhos.getSelectedIndex();
+
+        if (index == -1) {
+            JOptionPane.showMessageDialog(this, "Selecione um salgadinho primeiro.",
                     "Nenhuma Seleção", JOptionPane.WARNING_MESSAGE);
+            return;
         }
+
+        Pedido pedido = mainFrame.getPedidoAtual();
+        if (pedido == null) {
+            JOptionPane.showMessageDialog(this, "Você deve iniciar um novo pedido primeiro.",
+                    "Pedido não iniciado", JOptionPane.WARNING_MESSAGE);
+            mainFrame.showPanel("menu");
+            return;
+        }
+
+        controller.adicionarAoPedido(pedido, index);
+
+        JOptionPane.showMessageDialog(this,
+                controller.getNomesSalgadinhos()[index] + " adicionado ao pedido com sucesso!",
+                "Item Adicionado", JOptionPane.INFORMATION_MESSAGE);
     }
 }

@@ -1,8 +1,20 @@
 package com.lanchonete.view;
 
-import javax.swing.*;
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.Font;
+
+import javax.swing.BorderFactory;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
-import java.awt.*;
+
+import com.lanchonete.controller.PedidoController;
 import com.lanchonete.model.ItemPedido;
 import com.lanchonete.model.Pedido;
 import com.lanchonete.service.PedidoService;
@@ -12,6 +24,7 @@ public class FormPedido extends JPanel {
     private MainFrame mainFrame;
     private PedidoService pedidoService;
     private VendedorService vendedorService;
+    private PedidoController controller;
     
     private DefaultTableModel tableModel;
     private JTable tblItens;
@@ -22,6 +35,7 @@ public class FormPedido extends JPanel {
         this.mainFrame = mainFrame;
         this.pedidoService = new PedidoService();
         this.vendedorService = new VendedorService();
+        this.controller = new PedidoController(mainFrame);
         
         setLayout(new BorderLayout());
         
@@ -43,7 +57,7 @@ public class FormPedido extends JPanel {
         tableModel = new DefaultTableModel(colunas, 0) {
             @Override
             public boolean isCellEditable(int row, int column) {
-                return false; // Impede edição das células
+                return false;
             }
         };
         tblItens = new JTable(tableModel);
@@ -63,15 +77,21 @@ public class FormPedido extends JPanel {
         pagamentoPanel.add(txtValorPago);
         
         JButton btnFinalizar = new JButton("Finalizar Pedido");
-        btnFinalizar.addActionListener(e -> finalizarPedido());
+        btnFinalizar.addActionListener(e -> {
+            boolean sucesso = controller.finalizarPedido(txtValorPago.getText().trim());
+            if (sucesso) {
+                atualizarTela();
+                txtValorPago.setText("");
+            }
+        });
         pagamentoPanel.add(btnFinalizar);
         
-        // Painel de botões
+        // Botão Voltar
         JPanel buttonPanel = new JPanel();
         JButton btnVoltar = new JButton("Voltar ao Menu");
         btnVoltar.addActionListener(e -> {
             mainFrame.showPanel("menu");
-            atualizarTela(); // Para quando voltar, os dados serem recarregados
+            atualizarTela();
         });
         buttonPanel.add(btnVoltar);
         
@@ -82,20 +102,18 @@ public class FormPedido extends JPanel {
         centerPanel.add(scrollPane, BorderLayout.CENTER);
         centerPanel.add(totalPanel, BorderLayout.SOUTH);
         
-        // Painel inferior combinado (pagamento + botões)
+        // Painel inferior
         JPanel bottomPanel = new JPanel(new BorderLayout());
         bottomPanel.add(pagamentoPanel, BorderLayout.CENTER);
         bottomPanel.add(buttonPanel, BorderLayout.SOUTH);
         
-        // Adiciona os painéis ao layout
+        // Layout final
         add(titlePanel, BorderLayout.NORTH);
         add(centerPanel, BorderLayout.CENTER);
         add(bottomPanel, BorderLayout.SOUTH);
     }
     
-    // Método para atualizar a exibição do pedido
     public void atualizarTela() {
-        // Limpa a tabela
         while (tableModel.getRowCount() > 0) {
             tableModel.removeRow(0);
         }
@@ -104,12 +122,10 @@ public class FormPedido extends JPanel {
         double total = 0;
         
         if (pedido != null) {
-            // Atualiza o nome do cliente
             JPanel clientePanel = (JPanel) ((JPanel) getComponent(1)).getComponent(0);
             JLabel lblCliente = (JLabel) clientePanel.getComponent(0);
             lblCliente.setText("Cliente: " + pedido.getNomeCliente());
             
-            // Preenche a tabela com os itens
             int i = 1;
             for (ItemPedido item : pedido.getItensConsumidos()) {
                 Object[] row = {
@@ -121,64 +137,9 @@ public class FormPedido extends JPanel {
                 total += item.getPrecoVenda();
                 i++;
             }
-            
-            // Atualiza o total
             lblTotal.setText(String.format("Total: R$ %.2f", total));
         } else {
             lblTotal.setText("Total: R$ 0,00");
-        }
-    }
-    
-    private void finalizarPedido() {
-        Pedido pedido = mainFrame.getPedidoAtual();
-        
-        if (pedido == null) {
-            JOptionPane.showMessageDialog(this, 
-                "Não há pedido em andamento.",
-                "Erro", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-        
-        if (pedido.getItensConsumidos().isEmpty()) {
-            JOptionPane.showMessageDialog(this,
-                "O pedido não possui itens.",
-                "Pedido Vazio", JOptionPane.WARNING_MESSAGE);
-            return;
-        }
-        
-        try {
-            double valorPago = Double.parseDouble(txtValorPago.getText().replace(",", "."));
-            double total = pedido.calcularTotal();
-            
-            if (valorPago < total) {
-                JOptionPane.showMessageDialog(this,
-                    "O valor pago é insuficiente. Total: R$ " + String.format("%.2f", total),
-                    "Valor Insuficiente", JOptionPane.WARNING_MESSAGE);
-                return;
-            }
-            
-            // Calcular o troco e o bônus do vendedor
-            double troco = valorPago - total;
-            double bonus = mainFrame.getVendedor().calcularBonus(total);
-            
-            // Mostrar resultado
-            JOptionPane.showMessageDialog(this,
-                "Pedido finalizado com sucesso!\n\n" +
-                "Total: R$ " + String.format("%.2f", total) + "\n" +
-                "Valor pago: R$ " + String.format("%.2f", valorPago) + "\n" +
-                "Troco: R$ " + String.format("%.2f", troco) + "\n" +
-                "Bônus do vendedor: R$ " + String.format("%.2f", bonus),
-                "Pedido Finalizado", JOptionPane.INFORMATION_MESSAGE);
-            
-            // Limpar o pedido atual
-            mainFrame.setPedidoAtual(null);
-            atualizarTela();
-            txtValorPago.setText("");
-            
-        } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this,
-                "Por favor, digite um valor numérico válido.",
-                "Erro de Formato", JOptionPane.ERROR_MESSAGE);
         }
     }
 }

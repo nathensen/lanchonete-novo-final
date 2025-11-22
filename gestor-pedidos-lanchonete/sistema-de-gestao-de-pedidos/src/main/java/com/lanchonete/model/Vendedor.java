@@ -33,12 +33,12 @@ public class Vendedor {
 
     // Setters
     public void setNome(String nome) {
-        Validador.validarString(nome, "Nome do vendedor não pode ser vazio");
+        Validador.validarString(nome, "Nome do vendedor não pode ser vazio!");
         this.nome = nome;
     }
 
     public void setCodigo(double codigo) {
-        Validador.validarNumero(codigo, 0, "Código não pode ser negativo");
+        Validador.validarNumero(codigo, 0, "Senha náo pode ser negativa!");
         this.codigo = codigo;
     }
 

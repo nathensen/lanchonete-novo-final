@@ -9,30 +9,18 @@ public class Lanche extends Prato {
 
     public Lanche(double precoVenda, String pao, String recheio, String molho) {
         super(precoVenda);
-        
         Validador.validarString(pao, "Tipo de pão não pode ser vazio");
         Validador.validarString(recheio, "Recheio não pode ser vazio");
         Validador.validarString(molho, "Molho não pode ser vazio");
-        
         this.pao = pao;
         this.recheio = recheio;
         this.molho = molho;
     }
 
-    // Getters
-    public String getPao() {
-        return pao;
-    }
+    public String getPao() { return pao; }
+    public String getRecheio() { return recheio; }
+    public String getMolho() { return molho; }
 
-    public String getRecheio() {
-        return recheio;
-    }
-
-    public String getMolho() {
-        return molho;
-    }
-
-    // Setters
     public void setPao(String pao) {
         Validador.validarString(pao, "Tipo de pão não pode ser vazio");
         this.pao = pao;
