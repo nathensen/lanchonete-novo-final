@@ -1,45 +1,48 @@
 package com.lanchonete.controller;
 
-import java.util.ArrayList;
 import java.util.List;
+
+import javax.swing.JOptionPane;
 
 import com.lanchonete.model.Lanche;
 import com.lanchonete.model.Pedido;
+import com.lanchonete.repository.LancheRepository;
+import com.lanchonete.view.MainFrame;
 
 public class LancheController {
 
-    private List<Lanche> lanches;
+    private MainFrame mainFrame;
+    private LancheRepository repository;
 
-    public LancheController() {
-        lanches = criarLanches();
-    }
-
-    private List<Lanche> criarLanches() {
-        List<Lanche> listaLanches = new ArrayList<>();
-
-        listaLanches.add(new Lanche(8.0, "Francês", "Queijo e Presunto", "Maionese"));                // Misto
-        listaLanches.add(new Lanche(10.0, "Brioche", "Carne", "Barbecue"));                           // Hambúrguer
-        listaLanches.add(new Lanche(12.0, "Australiano", "Carne, Queijo", "Maionese"));               // X-Burger
-        listaLanches.add(new Lanche(13.0, "Francês", "Carne, Ovo", "Maionese"));                      // X-Eggs
-        listaLanches.add(new Lanche(15.0, "Brioche", "Duas Carnes", "Barbecue"));                     // Duplo
-        listaLanches.add(new Lanche(14.0, "Australiano", "Carne, Calabresa", "Maionese"));            // X-Calabresa
-        listaLanches.add(new Lanche(16.0, "Francês", "Carne, Ovo, Calabresa", "Maionese"));           // X-Eggs Calabresa
-        listaLanches.add(new Lanche(15.0, "Brioche", "Carne, Bacon", "Barbecue"));                    // X-Bacon
-        listaLanches.add(new Lanche(17.0, "Francês", "Carne, Ovo, Bacon", "Maionese"));               // X-Eggs Bacon
-        listaLanches.add(new Lanche(18.0, "Brioche", "Duas Carnes, Bacon", "Barbecue"));              // X-Duplo com bacon
-        listaLanches.add(new Lanche(17.0, "Australiano", "Carne, Bacon, Calabresa", "Maionese"));     // X-Bacon com Calabresa
-        listaLanches.add(new Lanche(20.0, "Francês", "Carne, Ovo, Bacon, Calabresa, Queijo", "Maionese, Barbecue")); // X-Tudo
-
-        return listaLanches;
+    public LancheController(MainFrame mainFrame) {
+        this.mainFrame = mainFrame;
+        this.repository = new LancheRepository();
     }
 
     public List<Lanche> getLanches() {
-        return lanches;
+        return repository.listarLanches();
     }
 
-    public void adicionarAoPedido(Pedido pedido, int index) {
-        if (pedido != null && index >= 0 && index < lanches.size()) {
-            pedido.adicionarItem(lanches.get(index));
+    public void adicionarLanche(int index) {
+        Lanche lancheSelecionado = repository.getLanche(index);
+        if (lancheSelecionado == null) {
+            JOptionPane.showMessageDialog(null, "Selecione um lanche primeiro.", "Nenhuma Seleção", JOptionPane.WARNING_MESSAGE);
+            return;
         }
+
+        Pedido pedido = mainFrame.getPedidoAtual();
+        if (pedido == null) {
+            JOptionPane.showMessageDialog(null, "Você deve iniciar um novo pedido primeiro.", "Pedido não iniciado", JOptionPane.WARNING_MESSAGE);
+            mainFrame.showPanel("menu");
+            return;
+        }
+
+        if (pedido.getNomeCliente() == null || pedido.getNomeCliente().trim().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Informe o nome do cliente antes de adicionar produtos.", "Cliente não informado", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        pedido.adicionarItem(lancheSelecionado);
+        JOptionPane.showMessageDialog(null, lancheSelecionado.descricao() + " adicionado ao pedido com sucesso!", "Item Adicionado", JOptionPane.INFORMATION_MESSAGE);
     }
 }

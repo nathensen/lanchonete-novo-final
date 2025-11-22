@@ -1,61 +1,34 @@
 package com.lanchonete.controller;
 
-import com.lanchonete.model.Salgadinho;
-import com.lanchonete.model.Pedido;
-
-import java.util.ArrayList;
 import java.util.List;
 
+import com.lanchonete.model.Pedido;
+import com.lanchonete.model.Salgadinho;
+import com.lanchonete.repository.SalgadinhoRepository;
+import com.lanchonete.view.MainFrame;
+
 public class SalgadinhoController {
-    private List<Salgadinho> salgadinhos;
-    private static final String[] NOMES_SALGADINHOS = {
-        "Coxinha de Carne",
-        "Coxinha de Frango",
-        "Pastel Frito de Carne",
-        "Pastel Frito de Frango",
-        "Pastel Assado de Carne",
-        "Pastel Assado de Frango",
-        "Empanado de Frango"
-    };
+    private MainFrame mainFrame;
+    private SalgadinhoRepository repository;
 
-    public SalgadinhoController() {
-        salgadinhos = criarSalgadinhos();
+    public SalgadinhoController(MainFrame mainFrame) {
+        this.mainFrame = mainFrame;
+        this.repository = new SalgadinhoRepository();
     }
 
-    private List<Salgadinho> criarSalgadinhos() {
-        List<Salgadinho> lista = new ArrayList<>();
-        lista.add(new Salgadinho(3.0, "Coxinha", "Frita", "Carne"));
-        lista.add(new Salgadinho(3.0, "Coxinha", "Frita", "Frango"));
-        lista.add(new Salgadinho(4.0, "Pastel", "Frito", "Carne"));
-        lista.add(new Salgadinho(4.0, "Pastel", "Frito", "Frango"));
-        lista.add(new Salgadinho(5.0, "Pastel", "Assado", "Carne"));
-        lista.add(new Salgadinho(5.0, "Pastel", "Assado", "Frango"));
-        lista.add(new Salgadinho(6.0, "Empanado", "Frito", "Frango"));
-        return lista;
+    public List<Salgadinho> listarSalgadinhos() {
+        return repository.listarTodos();
     }
 
-    public List<Salgadinho> getSalgadinhos() {
-        return salgadinhos;
-    }
+    public boolean adicionarSalgadinhoAoPedido(int index) {
+        Pedido pedido = mainFrame.getPedidoAtual();
+        if (pedido == null) return false; // Nenhum pedido iniciado
 
-    public String[] getNomesSalgadinhos() {
-        String[] nomes = new String[salgadinhos.size()];
-        for (int i = 0; i < salgadinhos.size(); i++) {
-            Salgadinho s = salgadinhos.get(i);
-            nomes[i] = NOMES_SALGADINHOS[i] + " - R$ " + String.format("%.2f", s.getPrecoVenda());
+        Salgadinho salgadinho = repository.buscarPorIndice(index);
+        if (salgadinho != null) {
+            pedido.adicionarItem(salgadinho);
+            return true;
         }
-        return nomes;
-    }
-
-    public void adicionarAoPedido(Pedido pedido, int index) {
-        if (pedido == null) {
-            throw new IllegalStateException("Pedido não iniciado.");
-        }
-        if (index < 0 || index >= salgadinhos.size()) {
-            throw new IllegalArgumentException("Índice inválido.");
-        }
-
-        Salgadinho item = salgadinhos.get(index);
-        pedido.adicionarItem(item);
+        return false;
     }
 }

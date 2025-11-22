@@ -4,6 +4,8 @@ import javax.swing.JOptionPane;
 
 import com.lanchonete.model.Pedido;
 import com.lanchonete.model.Vendedor;
+import com.lanchonete.repository.IVendedorRepository;
+import com.lanchonete.repository.VendedorRepository;
 import com.lanchonete.service.PedidoService;
 import com.lanchonete.service.VendedorService;
 import com.lanchonete.util.FormatadorMoeda;
@@ -15,7 +17,8 @@ public class MenuController {
 
     public MenuController() {
         this.pedidoService = new PedidoService();
-        this.vendedorService = new VendedorService();
+        IVendedorRepository vendedorRepository = new VendedorRepository();
+        this.vendedorService = new VendedorService(vendedorRepository);
     }
 
     // Criar novo pedido
@@ -79,3 +82,4 @@ public class MenuController {
         }
     }
 }
+

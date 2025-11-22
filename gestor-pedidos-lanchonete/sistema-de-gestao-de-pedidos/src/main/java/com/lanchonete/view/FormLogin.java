@@ -20,13 +20,15 @@ import javax.swing.JTextField;
 
 import com.lanchonete.controller.LoginController;
 import com.lanchonete.model.Vendedor;
+import com.lanchonete.repository.IVendedorRepository;
+import com.lanchonete.repository.VendedorRepository;
 import com.lanchonete.service.VendedorService;
 
 public class FormLogin extends JPanel {
 
     private MainFrame mainFrame;
     private VendedorService vendedorService;
-    private LoginController loginController = new LoginController();
+    private LoginController loginController;
 
     private JTextField txtNome;
     private JPasswordField txtCodigo;
@@ -34,7 +36,12 @@ public class FormLogin extends JPanel {
 
     public FormLogin(MainFrame mainFrame) {
         this.mainFrame = mainFrame;
-        this.vendedorService = new VendedorService();
+
+        // Inicializa repository e service
+        IVendedorRepository vendedorRepository = new VendedorRepository();
+        this.vendedorService = new VendedorService(vendedorRepository);
+
+        this.loginController = new LoginController();
 
         // Fundo branco
         setLayout(new BorderLayout());
@@ -163,7 +170,12 @@ public class FormLogin extends JPanel {
             // Valida usando senha fixa
             loginController.autenticar(nome, codigo);
 
+            // Cria vendedor com código 0 (ajuste conforme sua lógica)
             Vendedor vendedor = vendedorService.criarVendedor(nome, 0);
+
+            // Salva no repository
+            vendedorService.salvarVendedor(vendedor);
+
             mainFrame.setVendedor(vendedor);
 
             JOptionPane.showMessageDialog(this, "Bem-vindo(a), " + nome + "!");

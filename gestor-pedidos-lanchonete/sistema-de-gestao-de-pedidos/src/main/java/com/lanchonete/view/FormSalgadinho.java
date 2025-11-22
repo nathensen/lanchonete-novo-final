@@ -1,18 +1,28 @@
 package com.lanchonete.view;
 
-import javax.swing.*;
-import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.Font;
+import java.util.List;
+
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JList;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.ListSelectionModel;
+
 import com.lanchonete.controller.SalgadinhoController;
-import com.lanchonete.model.Pedido;
+import com.lanchonete.model.Salgadinho;
 
 public class FormSalgadinho extends JPanel {
     private MainFrame mainFrame;
-    private JList<String> listSalgadinhos;
     private SalgadinhoController controller;
+    private JList<String> listSalgadinhos;
 
     public FormSalgadinho(MainFrame mainFrame) {
         this.mainFrame = mainFrame;
-        this.controller = new SalgadinhoController();
+        this.controller = new SalgadinhoController(mainFrame);
 
         setLayout(new BorderLayout());
 
@@ -22,8 +32,15 @@ public class FormSalgadinho extends JPanel {
         lblTitle.setFont(new Font("Arial", Font.BOLD, 20));
         titlePanel.add(lblTitle);
 
-        // Lista de opções
-        listSalgadinhos = new JList<>(controller.getNomesSalgadinhos());
+        // Lista de salgadinhos
+        List<Salgadinho> salgadinhos = controller.listarSalgadinhos();
+        String[] opcoes = new String[salgadinhos.size()];
+        for (int i = 0; i < salgadinhos.size(); i++) {
+            Salgadinho s = salgadinhos.get(i);
+            opcoes[i] = s.descricao() + " - R$ " + String.format("%.2f", s.getPrecoVenda());
+        }
+
+        listSalgadinhos = new JList<>(opcoes);
         listSalgadinhos.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         JScrollPane scrollPane = new JScrollPane(listSalgadinhos);
 
@@ -31,40 +48,31 @@ public class FormSalgadinho extends JPanel {
         JPanel buttonPanel = new JPanel();
         JButton btnAdicionar = new JButton("Adicionar ao Pedido");
         JButton btnVoltar = new JButton("Voltar ao Menu");
+
         buttonPanel.add(btnAdicionar);
         buttonPanel.add(btnVoltar);
 
-        // Layout
         add(titlePanel, BorderLayout.NORTH);
         add(scrollPane, BorderLayout.CENTER);
         add(buttonPanel, BorderLayout.SOUTH);
 
         // Ações
         btnVoltar.addActionListener(e -> mainFrame.showPanel("menu"));
-        btnAdicionar.addActionListener(e -> adicionarSalgadinho());
-    }
 
-    private void adicionarSalgadinho() {
-        int index = listSalgadinhos.getSelectedIndex();
+        btnAdicionar.addActionListener(e -> {
+            int index = listSalgadinhos.getSelectedIndex();
+            if (index == -1) {
+                JOptionPane.showMessageDialog(this, "Selecione um salgadinho primeiro.", "Aviso", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
 
-        if (index == -1) {
-            JOptionPane.showMessageDialog(this, "Selecione um salgadinho primeiro.",
-                    "Nenhuma Seleção", JOptionPane.WARNING_MESSAGE);
-            return;
-        }
-
-        Pedido pedido = mainFrame.getPedidoAtual();
-        if (pedido == null) {
-            JOptionPane.showMessageDialog(this, "Você deve iniciar um novo pedido primeiro.",
-                    "Pedido não iniciado", JOptionPane.WARNING_MESSAGE);
-            mainFrame.showPanel("menu");
-            return;
-        }
-
-        controller.adicionarAoPedido(pedido, index);
-
-        JOptionPane.showMessageDialog(this,
-                controller.getNomesSalgadinhos()[index] + " adicionado ao pedido com sucesso!",
-                "Item Adicionado", JOptionPane.INFORMATION_MESSAGE);
+            boolean sucesso = controller.adicionarSalgadinhoAoPedido(index);
+            if (sucesso) {
+                JOptionPane.showMessageDialog(this, "Item adicionado ao pedido com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(this, "Você deve iniciar um pedido antes.", "Erro", JOptionPane.WARNING_MESSAGE);
+                mainFrame.showPanel("menu");
+            }
+        });
     }
 }
