@@ -17,6 +17,7 @@ import javax.swing.JPanel;
 import com.lanchonete.model.Pedido;
 import com.lanchonete.service.PedidoService;
 import com.lanchonete.service.VendedorService;
+import com.lanchonete.util.FormatadorMoeda;
 
 public class FormMenu extends JPanel {
     private MainFrame mainFrame;

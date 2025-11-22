@@ -1,6 +1,6 @@
 package com.lanchonete.model;
 
-import com.lanchonete.view.Validador;
+import com.lanchonete.util.Validador;
 
 public class Salgadinho extends Prato {
     private String tipo;

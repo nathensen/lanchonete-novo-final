@@ -3,8 +3,8 @@ package com.lanchonete.model;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.lanchonete.view.FormatadorMoeda;
-import com.lanchonete.view.Validador;
+import com.lanchonete.util.FormatadorMoeda;
+import com.lanchonete.util.Validador;
 
 public class Pedido {
     private String nomeCliente;

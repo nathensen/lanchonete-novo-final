@@ -3,7 +3,6 @@ package com.lanchonete.service;
 import com.lanchonete.model.ItemPedido;
 import com.lanchonete.model.Pedido;
 import com.lanchonete.model.Vendedor;
-import com.lanchonete.view.FormatadorMoeda;
 
 public class PedidoService {
     public Pedido criarPedido(String nomeCliente) {

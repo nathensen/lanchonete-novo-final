@@ -1,7 +1,7 @@
 package com.lanchonete.service;
 
 import com.lanchonete.model.Vendedor;
-import com.lanchonete.view.FormatadorMoeda;
+import com.lanchonete.util.FormatadorMoeda;
 
 public class VendedorService {
     /**
