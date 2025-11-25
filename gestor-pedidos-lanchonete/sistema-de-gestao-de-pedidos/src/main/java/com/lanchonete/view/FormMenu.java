@@ -60,7 +60,6 @@ public class FormMenu extends JPanel {
 
     private JButton criarBotao(String texto, java.awt.event.ActionListener listener) {
         JButton btn = new JButton(texto) {
-
             @Override
             protected void paintComponent(java.awt.Graphics g) {
                 Graphics2D g2 = (Graphics2D) g.create();
@@ -106,7 +105,14 @@ public class FormMenu extends JPanel {
                 "Novo Pedido",
                 javax.swing.JOptionPane.QUESTION_MESSAGE);
 
-        Pedido pedido = controller.novoPedido(nomeCliente);
+        if (nomeCliente == null || nomeCliente.trim().isEmpty()) {
+            return;
+        }
+
+        Pedido pedido = controller.novoPedido(nomeCliente,
+                mainFrame.getPedidoAtual(),
+                mainFrame.getVendedor()); // passa também o vendedor logado
+
         if (pedido != null) {
             mainFrame.setPedidoAtual(pedido);
             javax.swing.JOptionPane.showMessageDialog(this,

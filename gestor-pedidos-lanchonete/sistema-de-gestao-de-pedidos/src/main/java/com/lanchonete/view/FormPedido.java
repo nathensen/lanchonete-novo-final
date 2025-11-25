@@ -15,157 +15,188 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
+import com.lanchonete.controller.PedidoController;
 import com.lanchonete.model.ItemPedido;
 import com.lanchonete.model.Pedido;
-import com.lanchonete.repository.IVendedorRepository;
-import com.lanchonete.repository.VendedorRepository;
-import com.lanchonete.service.PedidoService;
-import com.lanchonete.service.VendedorService;
 
 public class FormPedido extends JPanel {
+
     private MainFrame mainFrame;
-    private PedidoService pedidoService;
-    private VendedorService vendedorService;
+    private PedidoController pedidoController;
 
     private DefaultTableModel tableModel;
     private JTable tblItens;
     private JLabel lblTotal;
     private JTextField txtValorPago;
+    private JLabel lblCliente;
 
     public FormPedido(MainFrame mainFrame) {
         this.mainFrame = mainFrame;
-        this.pedidoService = new PedidoService();
-
-        // Inicializa repository e service
-        IVendedorRepository vendedorRepository = new VendedorRepository();
-        this.vendedorService = new VendedorService(vendedorRepository);
+        this.pedidoController = new PedidoController(mainFrame);
 
         setLayout(new BorderLayout());
 
-        // Título
+        // ------------------ TÍTULO ------------------
         JPanel titlePanel = new JPanel();
         JLabel lblTitle = new JLabel("Pedido Atual");
         lblTitle.setFont(new Font("Arial", Font.BOLD, 20));
         titlePanel.add(lblTitle);
 
-        // Cliente
+        // ------------------ CLIENTE ------------------
         JPanel clientePanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
         clientePanel.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 10));
-        JLabel lblCliente = new JLabel("Cliente: [Nenhum pedido iniciado]");
+        lblCliente = new JLabel("Cliente: [Nenhum pedido iniciado]");
         lblCliente.setFont(new Font("Arial", Font.PLAIN, 14));
         clientePanel.add(lblCliente);
 
-        // Tabela de itens
+        // ------------------ TABELA ------------------
         String[] colunas = {"Item", "Descrição", "Preço (R$)"};
         tableModel = new DefaultTableModel(colunas, 0) {
             @Override
-            public boolean isCellEditable(int row, int column) {
+            public boolean isCellEditable(int row, int col) {
                 return false;
             }
         };
         tblItens = new JTable(tableModel);
         JScrollPane scrollPane = new JScrollPane(tblItens);
-        scrollPane.setPreferredSize(new Dimension(400, 200));
+        scrollPane.setPreferredSize(new Dimension(500, 250));
 
-        // Total
+        // ------------------ TOTAL ------------------
         JPanel totalPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         lblTotal = new JLabel("Total: R$ 0,00");
-        lblTotal.setFont(new Font("Arial", Font.BOLD, 16));
+        lblTotal.setFont(new Font("Arial", Font.BOLD, 14));
         totalPanel.add(lblTotal);
 
-        // Pagamento
-        JPanel pagamentoPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
-        pagamentoPanel.add(new JLabel("Valor Pago: R$ "));
+        // ------------------ PAGAMENTO ------------------
+        JPanel pagamentoPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        pagamentoPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        JLabel lblValorPago = new JLabel("Valor Pago:");
         txtValorPago = new JTextField(10);
-        pagamentoPanel.add(txtValorPago);
-
         JButton btnFinalizar = new JButton("Finalizar Pedido");
-        btnFinalizar.addActionListener(e -> finalizarPedido());
+        pagamentoPanel.add(lblValorPago);
+        pagamentoPanel.add(txtValorPago);
         pagamentoPanel.add(btnFinalizar);
 
-        // Botão voltar
-        JPanel buttonPanel = new JPanel();
-        JButton btnVoltar = new JButton("Voltar ao Menu");
-        btnVoltar.addActionListener(e -> {
-            mainFrame.showPanel("menu");
-            atualizarTela();
-        });
-        buttonPanel.add(btnVoltar);
+        // ------------------ BOTÕES DE CONTROLE ------------------
+        JPanel controlePanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 10));
+        JButton btnMenu = new JButton("Menu Principal");
+        JButton btnSair = new JButton("Encerrar Sistema");
+        controlePanel.add(btnMenu);
+        controlePanel.add(btnSair);
 
-        // Painel central
-        JPanel centerPanel = new JPanel(new BorderLayout());
-        centerPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-        centerPanel.add(clientePanel, BorderLayout.NORTH);
-        centerPanel.add(scrollPane, BorderLayout.CENTER);
-        centerPanel.add(totalPanel, BorderLayout.SOUTH);
-
-        // Painel inferior
+        // ------------------ BOTTOM PANEL ------------------
         JPanel bottomPanel = new JPanel(new BorderLayout());
-        bottomPanel.add(pagamentoPanel, BorderLayout.CENTER);
-        bottomPanel.add(buttonPanel, BorderLayout.SOUTH);
-
-        // Layout final
-        add(titlePanel, BorderLayout.NORTH);
-        add(centerPanel, BorderLayout.CENTER);
+        bottomPanel.add(totalPanel, BorderLayout.NORTH);      // Total do pedido
+        bottomPanel.add(controlePanel, BorderLayout.SOUTH);   // Botões
         add(bottomPanel, BorderLayout.SOUTH);
-    }
 
-    public void atualizarTela() {
-        while (tableModel.getRowCount() > 0) {
-            tableModel.removeRow(0);
-        }
-
-        Pedido pedido = mainFrame.getPedidoAtual();
-        double total = 0;
-
-        if (pedido != null) {
-            JLabel lblCliente = (JLabel) ((JPanel)((JPanel)getComponent(1)).getComponent(0)).getComponent(0);
-            lblCliente.setText("Cliente: " + pedido.getNomeCliente());
-
-            int i = 1;
-            for (ItemPedido item : pedido.getItensConsumidos()) {
-                Object[] row = {"Item " + i, item.descricao(), String.format("%.2f", item.getPrecoVenda())};
-                tableModel.addRow(row);
-                total += item.getPrecoVenda();
-                i++;
+        // ------------------ EVENTOS ------------------
+        btnFinalizar.addActionListener(e -> finalizarPedido());
+        btnMenu.addActionListener(e -> mainFrame.showPanel("menu"));
+        btnSair.addActionListener(e -> {
+            int confirm = JOptionPane.showConfirmDialog(null,
+                    "Deseja realmente encerrar o sistema?",
+                    "Confirmação",
+                    JOptionPane.YES_NO_OPTION);
+            if (confirm == JOptionPane.YES_OPTION) {
+                System.exit(0);
             }
+        });
 
-            lblTotal.setText(String.format("Total: R$ %.2f", total));
-        } else {
-            lblTotal.setText("Total: R$ 0,00");
+        // ------------------ ADD PANELS ------------------
+        add(titlePanel, BorderLayout.NORTH);
+        add(clientePanel, BorderLayout.WEST);
+        add(scrollPane, BorderLayout.CENTER);
+        add(pagamentoPanel, BorderLayout.EAST);
+    }
+
+    // =====================================================
+    //          MÉTODOS DE ATUALIZAÇÃO DO FORM
+    // =====================================================
+    public void atualizarPedido(Pedido pedido) {
+        lblCliente.setText("Cliente: " + pedido.getNomeCliente());
+        atualizarTabela(pedido);
+        atualizarTotal(pedido);
+    }
+
+    public void atualizarTabela(Pedido pedido) {
+        tableModel.setRowCount(0);
+        int index = 1;
+        for (ItemPedido item : pedido.getItensConsumidos()) {
+            tableModel.addRow(new Object[]{
+                index++,
+                item.descricao(),
+                String.format("%.2f", item.getPrecoVenda())
+            });
         }
     }
 
+    public void atualizarTotal(Pedido pedido) {
+        lblTotal.setText("Total: R$ " + String.format("%.2f", pedido.calcularTotal()));
+    }
+
+    public void adicionarItemTabela(ItemPedido item) {
+        int index = tableModel.getRowCount() + 1;
+        tableModel.addRow(new Object[]{
+                index,
+                item.descricao(),
+                String.format("%.2f", item.getPrecoVenda())
+        });
+    }
+
+    // =====================================================
+    //                FINALIZAR PEDIDO
+    // =====================================================
     private void finalizarPedido() {
-        Pedido pedido = mainFrame.getPedidoAtual();
-
-        if (pedido == null) {
-            JOptionPane.showMessageDialog(this, "Não há pedido em andamento.", "Erro", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-
-        if (pedidoService.pedidoVazio(pedido)) {
-            JOptionPane.showMessageDialog(this, "O pedido não possui itens.", "Pedido Vazio", JOptionPane.WARNING_MESSAGE);
-            return;
-        }
-
+        String valorPagoTexto = txtValorPago.getText();
+        double valorPago;
+    
+        // Validação do valor pago
         try {
-            double valorPago = Double.parseDouble(txtValorPago.getText().replace(",", "."));
-            double troco = pedidoService.finalizarPedido(pedido, valorPago, mainFrame.getVendedor());
-
-            JOptionPane.showMessageDialog(this,
-                    "Pedido finalizado com sucesso!\n" +
-                    "Total: R$ " + String.format("%.2f", pedido.calcularTotal()) + "\n" +
-                    "Valor pago: R$ " + String.format("%.2f", valorPago) + "\n" +
-                    "Troco: R$ " + String.format("%.2f", troco),
-                    "Pedido Finalizado", JOptionPane.INFORMATION_MESSAGE);
-
-            mainFrame.setPedidoAtual(null);
-            atualizarTela();
-            txtValorPago.setText("");
-
+            valorPago = Double.parseDouble(valorPagoTexto.replace(",", "."));
         } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, "Por favor, digite um valor numérico válido.", "Erro de Formato", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Valor pago inválido!", "Erro", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+    
+        try {
+            Pedido pedido = mainFrame.getPedidoAtual();
+            if (pedido == null) {
+                JOptionPane.showMessageDialog(this, "Nenhum pedido iniciado.", "Erro", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+    
+            // Finaliza pedido
+            PedidoController.ResultadoPedido resultado = pedidoController.finalizarPedido(valorPago);
+            double troco = resultado.getTroco();
+            double bonusPedido = resultado.getBonusPedido();
+            double total = pedido.calcularTotal();
+    
+            // Campos seguros
+            String nomeCliente = pedido.getNomeCliente() != null ? pedido.getNomeCliente() : "[Cliente não informado]";
+            String nomeVendedor = (pedido.getVendedor() != null && pedido.getVendedor().getNome() != null)
+                    ? pedido.getVendedor().getNome() : "[Vendedor não informado]";
+    
+            // Mensagem detalhada
+            String mensagem = new StringBuilder()
+                .append("Cliente: ").append(nomeCliente).append("\n")
+                .append("Vendedor: ").append(nomeVendedor).append("\n")
+                .append("Total do Pedido: R$ ").append(String.format("%.2f", total)).append("\n")
+                .append("Bônus deste pedido: R$ ").append(String.format("%.2f", bonusPedido)).append("\n")
+                .append("Troco: R$ ").append(String.format("%.2f", troco))
+                .toString();
+    
+            JOptionPane.showMessageDialog(this, mensagem, "Pedido Finalizado", JOptionPane.INFORMATION_MESSAGE);
+    
+            // Limpa UI
+            mainFrame.setPedidoAtual(null);
+            lblCliente.setText("Cliente: [Nenhum pedido iniciado]");
+            tableModel.setRowCount(0);
+            lblTotal.setText("Total: R$ 0,00");
+            txtValorPago.setText("");
+    
+        } catch (IllegalStateException | IllegalArgumentException ex) {
+            JOptionPane.showMessageDialog(this, ex.getMessage(), "Erro", JOptionPane.WARNING_MESSAGE);
         }
     }
 }

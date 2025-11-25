@@ -14,7 +14,6 @@ public class LoginController {
             throw new Exception("Digite a senha.");
         }
 
-        // como é só uma senha fixa, nem vamos converter para número
         if (!codigoTexto.equals(SENHA_FIXA)) {
             throw new Exception("Senha incorreta!.");
         }

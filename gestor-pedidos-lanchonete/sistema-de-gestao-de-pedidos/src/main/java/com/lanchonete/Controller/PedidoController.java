@@ -1,71 +1,51 @@
 package com.lanchonete.controller;
 
-import javax.swing.JOptionPane;
-
 import com.lanchonete.model.Pedido;
 import com.lanchonete.model.Vendedor;
+import com.lanchonete.service.PedidoService;
+import com.lanchonete.util.HistoricoTXT;
 import com.lanchonete.view.MainFrame;
 
 public class PedidoController {
 
+    private PedidoService pedidoService;
     private MainFrame mainFrame;
 
     public PedidoController(MainFrame mainFrame) {
         this.mainFrame = mainFrame;
+        this.pedidoService = new PedidoService();
     }
 
-    public boolean finalizarPedido(String valorPagoTexto) {
+    public static class ResultadoPedido {
+        private final double troco;
+        private final double bonusPedido;
+
+        public ResultadoPedido(double troco, double bonusPedido) {
+            this.troco = troco;
+            this.bonusPedido = bonusPedido;
+        }
+
+        public double getTroco() { return troco; }
+        public double getBonusPedido() { return bonusPedido; }
+    }
+
+    public ResultadoPedido finalizarPedido(double valorPago) {
         Pedido pedido = mainFrame.getPedidoAtual();
+        Vendedor vendedor = mainFrame.getVendedor();
 
         if (pedido == null) {
-            JOptionPane.showMessageDialog(null,
-                    "Não há pedido em andamento.",
-                    "Erro", JOptionPane.ERROR_MESSAGE);
-            return false;
+            throw new IllegalStateException("Nenhum pedido ativo.");
         }
 
-        if (pedido.getItensConsumidos().isEmpty()) {
-            JOptionPane.showMessageDialog(null,
-                    "O pedido não possui itens.",
-                    "Pedido Vazio", JOptionPane.WARNING_MESSAGE);
-            return false;
-        }
+        // Chama o serviço que valida pagamento e atualiza bônus
+        double troco = pedidoService.finalizarPedido(pedido, valorPago, vendedor);
 
-        double valorPago;
+        // Salva pedido no histórico
+        HistoricoTXT.salvar(pedido, vendedor);
 
-        try {
-            valorPago = Double.parseDouble(valorPagoTexto.replace(",", "."));
-        } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(null,
-                    "Por favor, digite um valor numérico válido.",
-                    "Erro de Formato", JOptionPane.ERROR_MESSAGE);
-            return false; // Sai sem apagar o pedido
-        }
+        // Bônus do pedido (já atualizado)
+        double bonusPedido = vendedor.calcularBonus(pedido.calcularTotal());
 
-        double total = pedido.calcularTotal();
-
-        if (valorPago < total) {
-            JOptionPane.showMessageDialog(null,
-                    "O valor pago é insuficiente. Total: R$ " + String.format("%.2f", total),
-                    "Valor Insuficiente", JOptionPane.WARNING_MESSAGE);
-            return false;
-        }
-
-        // Calcular troco e bônus
-        double troco = valorPago - total;
-        Vendedor vendedor = mainFrame.getVendedor();
-        double bonus = vendedor.calcularBonus(total);
-
-        JOptionPane.showMessageDialog(null,
-                "Pedido finalizado com sucesso!\n\n" +
-                "Total: R$ " + String.format("%.2f", total) + "\n" +
-                "Valor pago: R$ " + String.format("%.2f", valorPago) + "\n" +
-                "Troco: R$ " + String.format("%.2f", troco) + "\n" +
-                "Bônus do vendedor: R$ " + String.format("%.2f", bonus),
-                "Pedido Finalizado", JOptionPane.INFORMATION_MESSAGE);
-
-        // Limpar o pedido atual
-        mainFrame.setPedidoAtual(null);
-        return true;
+        return new ResultadoPedido(troco, bonusPedido);
     }
 }

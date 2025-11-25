@@ -5,35 +5,44 @@ import com.lanchonete.model.Pedido;
 import com.lanchonete.model.Vendedor;
 
 public class PedidoService {
-    public Pedido criarPedido(String nomeCliente) {
-        return new Pedido(nomeCliente);
+
+    // Cria um novo pedido com vendedor
+    public Pedido criarPedido(String nomeCliente, Vendedor vendedor) {
+        return new Pedido(nomeCliente, vendedor);
     }
-    
+
+    // Adiciona item ao pedido
     public void adicionarItem(Pedido pedido, ItemPedido item) {
-        if (item != null) {
-            pedido.adicionarItem(item);
-        }
+        pedido.adicionarItem(item);
     }
-    
+
+    // Verifica se pedido está vazio
     public boolean pedidoVazio(Pedido pedido) {
-        return pedido.calcularTotal() == 0;
+        return pedido.getItensConsumidos().isEmpty();
     }
-    
-    public void mostrarFatura(Pedido pedido) {
-        pedido.mostrarFatura();
-    }
-    
-    public double calcularTroco(Pedido pedido, double valorPago) {
-        double total = pedido.calcularTotal();
-        return valorPago - total;
-    }
-    
+
+    // Finaliza o pedido: valida valor, atualiza bônus e calcula troco
     public double finalizarPedido(Pedido pedido, double valorPago, Vendedor vendedor) {
+        if (pedido == null) {
+            throw new IllegalArgumentException("Nenhum pedido ativo.");
+        }
+
         double total = pedido.calcularTotal();
-        double troco = valorPago - total;
-        // Processa o bônus mas não imprime nada.
-        vendedor.calcularBonus(total);
-        
-        return troco;
+
+        if (total <= 0) {
+            throw new IllegalArgumentException("O pedido está vazio.");
+        }
+
+        if (valorPago < total) {
+            throw new IllegalArgumentException(
+                "O valor pago é insuficiente. Total: R$ " + String.format("%.2f", total)
+            );
+        }
+
+        // Atualiza bônus do vendedor
+        double bonusPedido = vendedor.calcularBonus(total);
+
+        // Calcula troco
+        return valorPago - total;
     }
 }

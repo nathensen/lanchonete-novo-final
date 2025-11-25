@@ -21,15 +21,26 @@ public class MenuController {
         this.vendedorService = new VendedorService(vendedorRepository);
     }
 
-    // Criar novo pedido
-    public Pedido novoPedido(String nomeCliente) {
-        if (nomeCliente == null || nomeCliente.trim().isEmpty()) {
+    public Pedido novoPedido(String nomeCliente, Pedido pedidoAtual, Vendedor vendedorAtual) {
+        if (pedidoAtual != null) {
+            JOptionPane.showMessageDialog(null,
+                "Já existe um pedido em andamento. Finalize o pedido atual antes de criar um novo.",
+                "Pedido em Andamento",
+                JOptionPane.WARNING_MESSAGE);
             return null;
         }
-        return pedidoService.criarPedido(nomeCliente);
+
+        if (nomeCliente == null || nomeCliente.trim().isEmpty()) {
+            JOptionPane.showMessageDialog(null,
+                "Nome do cliente inválido.",
+                "Erro",
+                JOptionPane.ERROR_MESSAGE);
+            return null;
+        }
+
+        return pedidoService.criarPedido(nomeCliente, vendedorAtual);
     }
 
-    // Mostrar bônus do vendedor
     public void mostrarBonus(Vendedor vendedor) {
         if (vendedor == null) {
             JOptionPane.showMessageDialog(null,
@@ -38,9 +49,7 @@ public class MenuController {
             return;
         }
 
-        double codigo = vendedor.getCodigo();
         double bonus = vendedor.getBonus();
-
         JOptionPane.showMessageDialog(null,
                 "Vendedor: " + vendedor.getNome() + "\n" +
                 "Bônus Acumulado: " + FormatadorMoeda.formatar(bonus) + "\n" +
@@ -49,14 +58,8 @@ public class MenuController {
                 JOptionPane.INFORMATION_MESSAGE);
     }
 
-    // Encerrar turno
     public void encerrarTurno(Vendedor vendedor) {
-        if (vendedor == null) {
-            JOptionPane.showMessageDialog(null,
-                    "Erro ao acessar informações do vendedor.",
-                    "Erro", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
+        if (vendedor == null) return;
 
         int confirmacao = JOptionPane.showConfirmDialog(null,
                 "Deseja realmente encerrar o turno?",
@@ -64,11 +67,7 @@ public class MenuController {
                 JOptionPane.YES_NO_OPTION);
 
         if (confirmacao == JOptionPane.YES_OPTION) {
-            vendedorService.mostrarResumoFinalTurno(vendedor);
-
-            double codigo = vendedor.getCodigo();
             double bonus = vendedor.getBonus();
-
             JOptionPane.showMessageDialog(null,
                     "==== RESUMO FINAL DO TURNO ====\n\n" +
                     "Vendedor: " + vendedor.getNome() + "\n" +
@@ -77,9 +76,7 @@ public class MenuController {
                     "Volte sempre!",
                     "Turno Encerrado",
                     JOptionPane.INFORMATION_MESSAGE);
-
             System.exit(0);
         }
     }
 }
-

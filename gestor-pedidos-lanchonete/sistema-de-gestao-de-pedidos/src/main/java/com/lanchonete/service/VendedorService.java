@@ -1,19 +1,36 @@
+/**
+ * VendedorService
+ * ----------------
+ * Camada responsável pela REGRA DE NEGÓCIO dos vendedores.
+ *
+ * Ela não cuida de interface visual nem de persistência direta.
+ * Aqui fica:
+ *  - criação de vendedores
+ *  - cálculos (ex.: bônus, total a receber)
+ *  - geração de relatórios (resumo de turno, informações)
+ *
+ * O Repository é usado SOMENTE para salvar, remover e buscar os dados.
+ */
+
 package com.lanchonete.service;
+
+import java.util.List;
+
+import javax.swing.JOptionPane;
 
 import com.lanchonete.model.Vendedor;
 import com.lanchonete.repository.IVendedorRepository;
-import com.lanchonete.util.FormatadorMoeda;
-import java.util.List;
 
 public class VendedorService {
+
     private final IVendedorRepository repository;
 
     public VendedorService(IVendedorRepository repository) {
         this.repository = repository;
     }
 
-    // Cria um vendedor (não salva automaticamente)
-    public Vendedor criarVendedor(String nome, double codigo) {
+    // Cria vendedor (não salva automaticamente)
+    public Vendedor criarVendedor(String nome, int codigo) {
         return new Vendedor(nome, codigo);
     }
 
@@ -22,8 +39,8 @@ public class VendedorService {
         repository.salvar(vendedor);
     }
 
-    // Busca um vendedor pelo código
-    public Vendedor buscarPorCodigo(double codigo) {
+    // Busca vendedor pelo código
+    public Vendedor buscarPorCodigo(int codigo) {
         return repository.buscarPorCodigo(codigo);
     }
 
@@ -32,24 +49,35 @@ public class VendedorService {
         return repository.listarTodos();
     }
 
-    // Calcula total a receber (código + bônus)
+    // Calcula total a receber (apenas bônus aqui)
     public double calcularTotalReceber(Vendedor vendedor) {
-        return vendedor.getCodigo() + vendedor.getBonus();
+        return vendedor.getBonus();
     }
 
-    // Mostra informações do vendedor no console
-    public void mostrarInformacoes(Vendedor vendedor) {
-        System.out.println("\n=== Informações do Vendedor ===");
-        System.out.println("Nome: " + vendedor.getNome());
-        System.out.println("Código do Vendedor: " + FormatadorMoeda.formatar(vendedor.getCodigo()));
-        System.out.println("Bônus acumulado: " + FormatadorMoeda.formatar(vendedor.getBonus()));
-        System.out.println("Total a receber: " + FormatadorMoeda.formatar(calcularTotalReceber(vendedor)));
+    // Gera string de informações do vendedor
+    public String gerarInformacoes(Vendedor vendedor) {
+        return "=== Informações do Vendedor ===\n" +
+               "Nome: " + vendedor.getNome() + "\n" +
+               "Código: " + vendedor.getCodigo() + "\n" +
+               "Bônus acumulado: R$ " + String.format("%.2f", vendedor.getBonus()) + "\n" +
+               "Total a receber: R$ " + String.format("%.2f", calcularTotalReceber(vendedor)) + "\n";
     }
 
-    // Mostra resumo final do turno
+    // Gera RESUMO final do turno
+    public String gerarResumoFinalTurno(Vendedor vendedor) {
+        return "\n======== RESUMO FINAL DO TURNO ========\n" +
+               gerarInformacoes(vendedor) +
+               "=======================================\n";
+    }
+
+    /**
+     * Novo método: MOSTRA o resumo diretamente na tela
+     * (para combinação com o seu MenuController).
+     */
     public void mostrarResumoFinalTurno(Vendedor vendedor) {
-        System.out.println("\n======== RESUMO FINAL DO TURNO ========");
-        mostrarInformacoes(vendedor);
-        System.out.println("=======================================");
+        String resumo = gerarResumoFinalTurno(vendedor);
+        JOptionPane.showMessageDialog(null, resumo, 
+                "Resumo Final do Turno",
+                JOptionPane.INFORMATION_MESSAGE);
     }
 }

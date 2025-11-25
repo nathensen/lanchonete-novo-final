@@ -1,0 +1,102 @@
+===== PEDIDO FINALIZADO =====
+Cliente: guga
+Vendedor: natane
+Valor Total: R$ 18,00
+Itens:
+ - Carne no pão Triplo X-Burguer com molho Pão de forma | R$ 18,00
+-----------------------------
+
+===== PEDIDO FINALIZADO =====
+Cliente: guga
+Vendedor: natane
+Valor Total: R$ 18,00
+Itens:
+ - Carne no pão Triplo X-Burguer com molho Pão de forma | R$ 18,00
+-----------------------------
+
+===== PEDIDO FINALIZADO =====
+Cliente: julio
+Vendedor: natane
+Valor Total: R$ 2,00
+Itens:
+ - Água Mineral Natural Garrafa (250ml) | R$ 2,00
+-----------------------------
+
+===== PEDIDO FINALIZADO =====
+Cliente: julio
+Vendedor: natane
+Valor Total: R$ 2,00
+Itens:
+ - Água Mineral Natural Garrafa (250ml) | R$ 2,00
+-----------------------------
+
+===== PEDIDO FINALIZADO =====
+Cliente: guga
+Vendedor: natane
+Valor Total: R$ 18,00
+Itens:
+ - Carne no pão Triplo X-Burguer com molho Pão de forma | R$ 18,00
+-----------------------------
+
+===== PEDIDO FINALIZADO =====
+Cliente: fd
+Vendedor: natane
+Valor Total: R$ 5,00
+Itens:
+ - Pastel Assado com recheio de Carne | R$ 5,00
+-----------------------------
+
+===== PEDIDO FINALIZADO =====
+Cliente: hu
+Vendedor: natane
+Valor Total: R$ 12,00
+Itens:
+ - Refrigerante Guaraná Garrafa (2L) | R$ 12,00
+-----------------------------
+
+===== PEDIDO FINALIZADO =====
+Cliente: rute
+Vendedor: natane
+Valor Total: R$ 25,00
+Itens:
+ - Carne no pão Duplo X-Burguer com molho Pão de forma | R$ 16,00
+ - Pastel Assado com recheio de Carne | R$ 5,00
+ - Refrigerante Guaraná Lata (350ml) | R$ 4,00
+-----------------------------
+
+===== PEDIDO FINALIZADO =====
+Cliente: huhu
+Vendedor: natane
+Valor Total: R$ 15,00
+Itens:
+ - Coxinha Frita com recheio de Frango | R$ 3,00
+ - Refrigerante Coca-Cola Garrafa (2L) | R$ 12,00
+-----------------------------
+
+===== PEDIDO FINALIZADO =====
+Cliente: fe
+Vendedor: natane
+Valor Total: R$ 12,00
+Itens:
+ - Carne no pão Cheeseburger com molho Pão de hambúrguer | R$ 12,00
+-----------------------------
+
+===== PEDIDO FINALIZADO =====
+Cliente: gugu
+Vendedor: natane
+Valor Total: R$ 22,00
+Itens:
+ - Carne no pão Triplo X-Burguer com molho Pão de forma | R$ 18,00
+ - Pastel Frito com recheio de Carne | R$ 4,00
+-----------------------------
+
+===== PEDIDO FINALIZADO =====
+Cliente: gfgf
+Vendedor: natane
+Valor Total: R$ 41,00
+Itens:
+ - Atum no pão X-Atum com molho Pão de forma | R$ 19,00
+ - Carne no pão Cheeseburger com molho Pão de hambúrguer | R$ 12,00
+ - Carne no pão X-Burguer com molho Pão de forma | R$ 10,00
+-----------------------------
+
