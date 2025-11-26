@@ -1,9 +1,9 @@
 ===== PEDIDO FINALIZADO =====
-Cliente: asdfasdasd
-Vendedor: zxzxzxzx
-Valor Total: R$ 13,00
+Cliente: fssdfsd
+Vendedor: erewre
+Valor Total: R$ 4,00
 -----------------------------
 Itens:
- - Frango no pão Hambúrguer de Frango com molho Pão de hambúrguer | R$ 13,00
+ - Pastel Frito com recheio de Carne | R$ 4,00
 -----------------------------
 
