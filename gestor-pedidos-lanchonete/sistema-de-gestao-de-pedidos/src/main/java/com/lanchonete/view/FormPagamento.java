@@ -1,11 +1,21 @@
 package com.lanchonete.view;
 
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
 
 import com.lanchonete.controller.PagamentoController;
 import com.lanchonete.controller.PedidoController;
-import com.lanchonete.model.*;
+import com.lanchonete.model.BoletoPagamento;
+import com.lanchonete.model.CartaoPagamento;
+import com.lanchonete.model.Pagamento;
+import com.lanchonete.model.Pedido;
+import com.lanchonete.model.PixPagamento;
 
 public class FormPagamento extends JPanel {
 
@@ -16,12 +26,12 @@ public class FormPagamento extends JPanel {
     private JComboBox<String> cmbMetodo;
     private JTextArea txtResultado;
 
-    JLabel lblTipoCartao;
-    JComboBox<String> cmbTipoCartao;
-    JLabel lblParcelas;
-    JTextField txtParcelas;
+    private JLabel lblTipoCartao;
+    private JComboBox<String> cmbTipoCartao;
+    private JLabel lblParcelas;
+    private JTextField txtParcelas;
 
-    private Pedido pedido; // 🔥 Necessário para exibir total corretamente
+    private Pedido pedido;
 
     public FormPagamento(MainFrame mainFrame, PedidoController pedidoController, Pedido pedido) {
         this.mainFrame = mainFrame;
@@ -84,7 +94,7 @@ public class FormPagamento extends JPanel {
         cmbMetodo.addActionListener(e -> atualizarCampos());
         cmbTipoCartao.addActionListener(e -> atualizarParcelas());
 
-        btnConfirmar.addActionListener(e -> finalizarPagamentoReal());
+        btnConfirmar.addActionListener(e -> finalizarPagamento());
     }
 
     private void atualizarCampos() {
@@ -101,34 +111,31 @@ public class FormPagamento extends JPanel {
         txtParcelas.setVisible(isCredito);
     }
 
-    private void finalizarPagamentoReal() {
+    private void finalizarPagamento() {
 
         double total = pedido.calcularTotal();
 
         Pagamento forma = obterMetodo();
 
-        // pagamento interno
-        String tempResult = pagamentoController.realizarPagamento(forma, total);
-        txtResultado.append(tempResult + "\n\n");
+        // registra pagamento
+        String resultado = pagamentoController.realizarPagamento(forma, total);
+        txtResultado.append(resultado + "\n\n");
 
-        // finaliza pedido principal
-        PedidoController.ResultadoPedido resultado =
-                pedidoController.finalizarPedido(total);
+        // finaliza pedido (sem valor pago, sem troco)
+        PedidoController.ResultadoPedido res = pedidoController.finalizarPedido();
 
         JOptionPane.showMessageDialog(null,
                 "=== PAGAMENTO CONFIRMADO ===\n\n" +
                         "Cliente: " + pedido.getNomeCliente() + "\n" +
                         "Vendedor: " + mainFrame.getVendedor().getNome() + "\n" +
                         "Valor Total: R$ " + String.format("%.2f", total) + "\n" +
-                        "Bônus gerado: R$ " + String.format("%.2f", resultado.getBonusPedido()) + "\n" +
-                        "Troco: R$ " + String.format("%.2f", resultado.getTroco())
+                        "Bônus gerado: R$ " + String.format("%.2f", res.getBonusPedido())
         );
 
         mainFrame.showPanel("menu");
     }
 
     private Pagamento obterMetodo() {
-
         String metodo = (String) cmbMetodo.getSelectedItem();
 
         switch (metodo) {
@@ -137,10 +144,14 @@ public class FormPagamento extends JPanel {
 
             case "Cartão":
                 CartaoPagamento c = new CartaoPagamento();
-                c.setTipo(cmbTipoCartao.getSelectedItem().toString()); //erro aqui
+                c.setTipo(cmbTipoCartao.getSelectedItem().toString());
 
                 if (cmbTipoCartao.getSelectedItem().equals("Crédito")) {
-                    c.setParcelas(Integer.parseInt(txtParcelas.getText())); //erro aqui
+                    try {
+                        c.setParcelas(Integer.parseInt(txtParcelas.getText()));
+                    } catch (NumberFormatException e) {
+                        c.setParcelas(1); // padrão 1 parcela
+                    }
                 }
                 return c;
 

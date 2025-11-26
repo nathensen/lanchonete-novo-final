@@ -21,8 +21,8 @@ public class PedidoService {
         return pedido.getItensConsumidos().isEmpty();
     }
 
-    // Finaliza o pedido: valida valor, atualiza bônus e calcula troco
-    public double finalizarPedido(Pedido pedido, double valorPago, Vendedor vendedor) {
+    // Finaliza o pedido: apenas atualiza bônus
+    public void finalizarPedido(Pedido pedido, Vendedor vendedor) {
         if (pedido == null) {
             throw new IllegalArgumentException("Nenhum pedido ativo.");
         }
@@ -33,16 +33,7 @@ public class PedidoService {
             throw new IllegalArgumentException("O pedido está vazio.");
         }
 
-        if (valorPago < total) {
-            throw new IllegalArgumentException(
-                "O valor pago é insuficiente. Total: R$ " + String.format("%.2f", total)
-            );
-        }
-
         // Atualiza bônus do vendedor
-        double bonusPedido = vendedor.calcularBonus(total);
-
-        // Calcula troco
-        return valorPago - total;
+        vendedor.calcularBonus(total);
     }
 }

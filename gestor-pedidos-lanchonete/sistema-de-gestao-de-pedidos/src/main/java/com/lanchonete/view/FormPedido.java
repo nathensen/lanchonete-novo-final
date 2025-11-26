@@ -128,12 +128,7 @@ public class FormPedido extends JPanel {
 
         // ------------------ PAGAMENTO ------------------
         JPanel pagamentoPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        pagamentoPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-        JLabel lblValorPago = new JLabel("Valor Pago:");
-        txtValorPago = new JTextField(10);
-        JButton btnFinalizar = new JButton("Finalizar Pedido");
-        pagamentoPanel.add(lblValorPago);
-        pagamentoPanel.add(txtValorPago);
+        JButton btnFinalizar = new JButton("Forma de Pagamento");
         pagamentoPanel.add(btnFinalizar);
 
         // ------------------ BOTÕES ------------------
@@ -218,13 +213,9 @@ public class FormPedido extends JPanel {
             return;
         }
 
-        // ✔ Agora passando os 3 parâmetros corretamente
         FormPagamento form = new FormPagamento(mainFrame, pedidoController, pedido);
 
-        // ✔ Registrar o painel
         mainFrame.addPanel("pagamento", form);
-
-        // ✔ Mostrar painel corretamente
         mainFrame.showPanel("pagamento");
     }
 

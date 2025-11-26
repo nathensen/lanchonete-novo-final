@@ -1,9 +1,10 @@
 ===== PEDIDO FINALIZADO =====
-Cliente: guga
-Vendedor: natane
-Valor Total: R$ 6,00
+Cliente: fulano fulano
+Vendedor: natane hensen
+Valor Total: R$ 32,00
 -----------------------------
 Itens:
- - Água Mineral Natural Garrafa (2L) | R$ 6,00
+ - Calabresa no pão X-Calabresa com molho Pão de forma | R$ 17,00
+ - Carne no pão X-Bacon com molho Pão de forma | R$ 15,00
 -----------------------------
 

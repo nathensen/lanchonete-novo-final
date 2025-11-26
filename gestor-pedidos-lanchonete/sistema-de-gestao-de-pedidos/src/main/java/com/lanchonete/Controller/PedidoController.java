@@ -17,19 +17,17 @@ public class PedidoController {
     }
 
     public static class ResultadoPedido {
-        private final double troco;
         private final double bonusPedido;
 
-        public ResultadoPedido(double troco, double bonusPedido) {
-            this.troco = troco;
+        public ResultadoPedido(double bonusPedido) {
             this.bonusPedido = bonusPedido;
         }
 
-        public double getTroco() { return troco; }
         public double getBonusPedido() { return bonusPedido; }
     }
 
-    public ResultadoPedido finalizarPedido(double valorPago) {
+    // FINALIZA O PEDIDO (sem troco)
+    public ResultadoPedido finalizarPedido() {
         Pedido pedido = mainFrame.getPedidoAtual();
         Vendedor vendedor = mainFrame.getVendedor();
 
@@ -37,15 +35,15 @@ public class PedidoController {
             throw new IllegalStateException("Nenhum pedido ativo.");
         }
 
-        // Chama o serviço que valida pagamento e atualiza bônus
-        double troco = pedidoService.finalizarPedido(pedido, valorPago, vendedor);
+        // Chama o service para validar e atualizar bônus
+        pedidoService.finalizarPedido(pedido, vendedor);
 
         // Salva pedido no histórico
         HistoricoTXT.salvar(pedido, vendedor);
 
-        // Bônus do pedido (já atualizado)
-        double bonusPedido = vendedor.calcularBonus(pedido.calcularTotal());
+        // Retorna o bônus gerado
+        double bonusPedido = pedido.getVendedor().getBonus();
 
-        return new ResultadoPedido(troco, bonusPedido);
+        return new ResultadoPedido(bonusPedido);
     }
 }
