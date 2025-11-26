@@ -20,22 +20,23 @@ public class MainFrame extends JFrame {
     private FormBebidas bebidasPanel;
     private FormPedido pedidoPanel;
 
+    // Painéis adicionados dinamicamente (ex: pagamento)
+    // ---> não precisa declarar aqui, vai ser registrado pelo addPanel()
+
     // Dados da aplicação
     private Vendedor vendedor;
     private Pedido pedidoAtual;
 
     public MainFrame() {
-        // Configurações básicas da janela
         setTitle("Sistema de Lanchonete");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(800, 600);
-        setLocationRelativeTo(null); // Centraliza a janela
+        setLocationRelativeTo(null);
 
-        // Configuração do CardLayout para navegação entre telas
         cardLayout = new CardLayout();
         cardPanel = new JPanel(cardLayout);
 
-        // Inicialização dos painéis
+        // Inicialização dos painéis fixos
         loginPanel = new FormLogin(this);
         menuPanel = new FormMenu(this);
         lanchePanel = new FormLanche(this);
@@ -43,7 +44,7 @@ public class MainFrame extends JFrame {
         bebidasPanel = new FormBebidas(this);
         pedidoPanel = new FormPedido(this);
 
-        // Adiciona painéis ao cardLayout
+        // Registro dos painéis fixos
         cardPanel.add(loginPanel, "login");
         cardPanel.add(menuPanel, "menu");
         cardPanel.add(lanchePanel, "lanche");
@@ -51,24 +52,29 @@ public class MainFrame extends JFrame {
         cardPanel.add(bebidasPanel, "bebida");
         cardPanel.add(pedidoPanel, "pedido");
 
-        // Adiciona o painel principal ao frame
         add(cardPanel);
 
-        // Inicia com o painel de login
         showPanel("login");
     }
 
-    // Métodos para navegação
+    // ---------------------------------------------
+    // NOVO: permite registrar novos painéis (Pagamento)
+    // ---------------------------------------------
+    public void addPanel(String name, JPanel panel) {
+        cardPanel.add(panel, name);
+    }
+
+    // Métodos de navegação
     public void showPanel(String panelName) {
         cardLayout.show(cardPanel, panelName);
 
-        // Atualiza o painel de pedido se necessário
+        // Atualiza o painel de pedido quando ele é aberto
         if (panelName.equals("pedido") && pedidoPanel != null && pedidoAtual != null) {
             pedidoPanel.atualizarPedido(pedidoAtual);
         }
     }
 
-    // Getters e setters
+    // Getters e Setters
     public Vendedor getVendedor() {
         return vendedor;
     }

@@ -1,4 +1,4 @@
-package tecdes.pagamento.model;
+package com.lanchonete.model;
 
 public class PixPagamento implements Pagamento{
 

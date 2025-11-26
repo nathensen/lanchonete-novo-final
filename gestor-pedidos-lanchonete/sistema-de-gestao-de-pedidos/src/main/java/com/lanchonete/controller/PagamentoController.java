@@ -1,15 +1,15 @@
-package tecdes.pagamento.controller;
+package com.lanchonete.controller;
 
 import java.util.List;
 
-import tecdes.pagamento.model.Pagamento;
-import tecdes.pagamento.repository.RepositoryPagamento;
+import com.lanchonete.model.Pagamento;
+import com.lanchonete.repository.RepositoryPagamento;
 
-public class ControllerPagamento {
+public class PagamentoController {
 
     private RepositoryPagamento repository;
 
-    public ControllerPagamento(){
+    public PagamentoController(){
         repository = new RepositoryPagamento();
 
     }

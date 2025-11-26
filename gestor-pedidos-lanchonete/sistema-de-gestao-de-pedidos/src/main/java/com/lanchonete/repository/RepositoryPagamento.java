@@ -1,4 +1,4 @@
-package tecdes.pagamento.repository;
+package com.lanchonete.repository;
 
 import java.util.ArrayList;
 import java.util.List;

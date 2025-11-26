@@ -1,3 +1,5 @@
+// ================= FORM PEDIDO COMPLETO E CORRIGIDO ==================
+
 package com.lanchonete.view;
 
 import java.awt.BorderLayout;
@@ -65,7 +67,6 @@ public class FormPedido extends JPanel {
         JMenuItem opcExcluir = new JMenuItem("Excluir item");
         menu.add(opcExcluir);
 
-        // Detecta o clique direito do mouse
         tblItens.addMouseListener(new java.awt.event.MouseAdapter() {
             @Override
             public void mousePressed(java.awt.event.MouseEvent e) {
@@ -86,40 +87,35 @@ public class FormPedido extends JPanel {
             }
         });
 
-            opcExcluir.addActionListener(e -> {
-        int linha = tblItens.getSelectedRow();
+        opcExcluir.addActionListener(e -> {
+            int linha = tblItens.getSelectedRow();
 
-        if (linha != -1) {
+            if (linha != -1) {
 
-            int confirmar = JOptionPane.showConfirmDialog(null,
-                    "Deseja excluir este item?",
-                    "Confirmar exclusão",
-                    JOptionPane.YES_NO_OPTION);
+                int confirmar = JOptionPane.showConfirmDialog(null,
+                        "Deseja excluir este item?",
+                        "Confirmar exclusão",
+                        JOptionPane.YES_NO_OPTION);
 
-            if (confirmar == JOptionPane.YES_OPTION) {
+                if (confirmar == JOptionPane.YES_OPTION) {
 
-                // Remove da tabela
-                tableModel.removeRow(linha);
+                    tableModel.removeRow(linha);
 
-                // Reorganiza os índices da coluna "Item"
-                for (int i = 0; i < tableModel.getRowCount(); i++) {
-                    tableModel.setValueAt(i + 1, i, 0);
-                }
+                    for (int i = 0; i < tableModel.getRowCount(); i++) {
+                        tableModel.setValueAt(i + 1, i, 0);
+                    }
 
-                // Remove também do Pedido atual
-                Pedido pedido = mainFrame.getPedidoAtual();
-                if (pedido != null && linha < pedido.getItensConsumidos().size()) {
-                    pedido.getItensConsumidos().remove(linha);
-                }
+                    Pedido pedido = mainFrame.getPedidoAtual();
+                    if (pedido != null && linha < pedido.getItensConsumidos().size()) {
+                        pedido.getItensConsumidos().remove(linha);
+                    }
 
-                // Atualiza o total exibido
-                if (pedido != null) {
-                    atualizarTotal(pedido);
+                    if (pedido != null) {
+                        atualizarTotal(pedido);
+                    }
                 }
             }
-        }
-    });
-
+        });
 
         JScrollPane scrollPane = new JScrollPane(tblItens);
         scrollPane.setPreferredSize(new Dimension(500, 250));
@@ -140,21 +136,19 @@ public class FormPedido extends JPanel {
         pagamentoPanel.add(txtValorPago);
         pagamentoPanel.add(btnFinalizar);
 
-        // ------------------ BOTÕES DE CONTROLE ------------------
+        // ------------------ BOTÕES ------------------
         JPanel controlePanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 10));
         JButton btnMenu = new JButton("Menu Principal");
         JButton btnSair = new JButton("Encerrar Sistema");
         controlePanel.add(btnMenu);
         controlePanel.add(btnSair);
 
-        // ------------------ BOTTOM PANEL ------------------
         JPanel bottomPanel = new JPanel(new BorderLayout());
-        bottomPanel.add(totalPanel, BorderLayout.NORTH);      // Total do pedido
-        bottomPanel.add(controlePanel, BorderLayout.SOUTH);   // Botões
+        bottomPanel.add(totalPanel, BorderLayout.NORTH);
+        bottomPanel.add(controlePanel, BorderLayout.SOUTH);
         add(bottomPanel, BorderLayout.SOUTH);
 
-        // ------------------ EVENTOS ------------------
-        btnFinalizar.addActionListener(e -> finalizarPedido());
+        btnFinalizar.addActionListener(e -> abrirPagamento());
         btnMenu.addActionListener(e -> mainFrame.showPanel("menu"));
         btnSair.addActionListener(e -> {
             int confirm = JOptionPane.showConfirmDialog(null,
@@ -174,7 +168,7 @@ public class FormPedido extends JPanel {
     }
 
     // =====================================================
-    //          MÉTODOS DE ATUALIZAÇÃO DO FORM
+    //              MÉTODOS DO FORM
     // =====================================================
     public void atualizarPedido(Pedido pedido) {
         lblCliente.setText("Cliente: " + pedido.getNomeCliente());
@@ -187,9 +181,9 @@ public class FormPedido extends JPanel {
         int index = 1;
         for (ItemPedido item : pedido.getItensConsumidos()) {
             tableModel.addRow(new Object[]{
-                index++,
-                item.descricao(),
-                String.format("%.2f", item.getPrecoVenda())
+                    index++,
+                    item.descricao(),
+                    String.format("%.2f", item.getPrecoVenda())
             });
         }
     }
@@ -208,58 +202,30 @@ public class FormPedido extends JPanel {
     }
 
     // =====================================================
-    //                FINALIZAR PEDIDO
+    //             ABRIR TELA DE PAGAMENTO
     // =====================================================
-    private void finalizarPedido() {
-        String valorPagoTexto = txtValorPago.getText();
-        double valorPago;
-    
-        // Validação do valor pago
-        try {
-            valorPago = Double.parseDouble(valorPagoTexto.replace(",", "."));
-        } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, "Valor pago inválido!", "Erro", JOptionPane.ERROR_MESSAGE);
+    private void abrirPagamento() {
+
+        Pedido pedido = mainFrame.getPedidoAtual();
+
+        if (pedido == null) {
+            JOptionPane.showMessageDialog(this, "Nenhum pedido iniciado.", "Erro", JOptionPane.ERROR_MESSAGE);
             return;
         }
-    
-        try {
-            Pedido pedido = mainFrame.getPedidoAtual();
-            if (pedido == null) {
-                JOptionPane.showMessageDialog(this, "Nenhum pedido iniciado.", "Erro", JOptionPane.ERROR_MESSAGE);
-                return;
-            }
-    
-            // Finaliza pedido
-            PedidoController.ResultadoPedido resultado = pedidoController.finalizarPedido(valorPago);
-            double troco = resultado.getTroco();
-            double bonusPedido = resultado.getBonusPedido();
-            double total = pedido.calcularTotal();
-    
-            // Campos seguros
-            String nomeCliente = pedido.getNomeCliente() != null ? pedido.getNomeCliente() : "[Cliente não informado]";
-            String nomeVendedor = (pedido.getVendedor() != null && pedido.getVendedor().getNome() != null)
-                    ? pedido.getVendedor().getNome() : "[Vendedor não informado]";
-    
-            // Mensagem detalhada
-            String mensagem = new StringBuilder()
-                .append("Cliente: ").append(nomeCliente).append("\n")
-                .append("Vendedor: ").append(nomeVendedor).append("\n")
-                .append("Total do Pedido: R$ ").append(String.format("%.2f", total)).append("\n")
-                .append("Bônus deste pedido: R$ ").append(String.format("%.2f", bonusPedido)).append("\n")
-                .append("Troco: R$ ").append(String.format("%.2f", troco))
-                .toString();
-    
-            JOptionPane.showMessageDialog(this, mensagem, "Pedido Finalizado", JOptionPane.INFORMATION_MESSAGE);
-    
-            // Limpa UI
-            mainFrame.setPedidoAtual(null);
-            lblCliente.setText("Cliente: [Nenhum pedido iniciado]");
-            tableModel.setRowCount(0);
-            lblTotal.setText("Total: R$ 0,00");
-            txtValorPago.setText("");
-    
-        } catch (IllegalStateException | IllegalArgumentException ex) {
-            JOptionPane.showMessageDialog(this, ex.getMessage(), "Erro", JOptionPane.WARNING_MESSAGE);
+
+        if (pedido.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "O pedido está vazio.", "Erro", JOptionPane.ERROR_MESSAGE);
+            return;
         }
+
+        // ✔ Agora passando os 3 parâmetros corretamente
+        FormPagamento form = new FormPagamento(mainFrame, pedidoController, pedido);
+
+        // ✔ Registrar o painel
+        mainFrame.addPanel("pagamento", form);
+
+        // ✔ Mostrar painel corretamente
+        mainFrame.showPanel("pagamento");
     }
+
 }

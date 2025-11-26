@@ -1,10 +1,9 @@
 ===== PEDIDO FINALIZADO =====
-Cliente: SDC
-Vendedor: lkjhgf
-Valor Total: R$ 19,00
+Cliente: guga
+Vendedor: natane
+Valor Total: R$ 6,00
 -----------------------------
-
 Itens:
- - Atum no pão X-Atum com molho Pão de forma | R$ 19,00
+ - Água Mineral Natural Garrafa (2L) | R$ 6,00
 -----------------------------
 
