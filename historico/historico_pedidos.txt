@@ -72,3 +72,21 @@ Itens:
  - Refrigerante GuaranÃ¡ Garrafa (2L) | R$ 12,00
 -----------------------------
 
+===== PEDIDO FINALIZADO =====
+Cliente: juliio
+Vendedor: natane
+Valor Total: R$ 12,00
+-----------------------------
+Itens:
+ - Carne no pão Cheeseburger com molho Pão de hambúrguer | R$ 12,00
+-----------------------------
+
+===== PEDIDO FINALIZADO =====
+Cliente: thiago
+Vendedor: natane
+Valor Total: R$ 17,00
+-----------------------------
+Itens:
+ - Calabresa no pão X-Calabresa com molho Pão de forma | R$ 17,00
+-----------------------------
+
