@@ -158,8 +158,8 @@ public class FormPagamento extends JPanel {
         );
 
         // =================== RESETAR PEDIDO ===================
-        pedido.getItensConsumidos().clear();  // limpa itens
-        mainFrame.showPanel("menu");          // volta ao menu
+        mainFrame.setPedidoAtual(null);   // <---- zera o pedido atual
+        mainFrame.showPanel("menu");      // volta ao menu
     }
 
     private Pagamento obterMetodo() {
@@ -187,16 +187,25 @@ public class FormPagamento extends JPanel {
                 return new PixPagamento();
 
             case "Dinheiro":
-                String valorStr = JOptionPane.showInputDialog(this, "Digite o valor entregue pelo cliente:");
-                try {
-                    double recebido = Double.parseDouble(valorStr);
-                    return new DinheiroPagamento(recebido);
-                } catch (Exception e) {
-                    JOptionPane.showMessageDialog(this, "Valor inválido!", "Erro", JOptionPane.ERROR_MESSAGE);
-                    return null;
+                while (true) { // loop até o usuário digitar valor válido e suficiente
+                    String valorStr = JOptionPane.showInputDialog(this, "Digite o valor entregue pelo cliente:");
+                    if (valorStr == null) return null; // cancelou a entrada
+                    try {
+                        double recebido = Double.parseDouble(valorStr);
+                        if (recebido < pedido.calcularTotal()) {
+                            JOptionPane.showMessageDialog(this,
+                                "Valor insuficiente! O total é R$ " + String.format("%.2f", pedido.calcularTotal()),
+                                "Erro", JOptionPane.ERROR_MESSAGE);
+                            continue; // repete o input
+                        }
+                        return new DinheiroPagamento(recebido);
+                    } catch (NumberFormatException e) {
+                        JOptionPane.showMessageDialog(this, "Valor inválido!", "Erro", JOptionPane.ERROR_MESSAGE);
+                    }
                 }
         }
 
         return null;
     }
+
 }

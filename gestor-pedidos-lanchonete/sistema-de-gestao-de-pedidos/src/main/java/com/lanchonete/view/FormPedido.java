@@ -20,7 +20,6 @@ import com.lanchonete.controller.PedidoController;
 import com.lanchonete.model.ItemPedido;
 import com.lanchonete.model.Pedido;
 
-
 public class FormPedido extends JPanel {
 
     private MainFrame mainFrame;
@@ -86,23 +85,18 @@ public class FormPedido extends JPanel {
 
         opcExcluir.addActionListener(e -> {
             int linha = tblItens.getSelectedRow();
+            Pedido pedido = mainFrame.getPedidoAtual();
 
-            if (linha != -1) {
-
+            if (linha != -1 && pedido != null) {
                 int confirmar = JOptionPane.showConfirmDialog(null,
                         "Deseja excluir este item?",
                         "Confirmar exclusão",
                         JOptionPane.YES_NO_OPTION);
 
                 if (confirmar == JOptionPane.YES_OPTION) {
-
-                    tableModel.removeRow(linha);
-
-                    Pedido pedido = mainFrame.getPedidoAtual();
-                    if (pedido != null && linha < pedido.getItensConsumidos().size()) {
+                    if (linha < pedido.getItensConsumidos().size()) {
                         pedido.getItensConsumidos().remove(linha);
                     }
-
                     atualizarTabela(pedido);
                     atualizarTotal(pedido);
                 }
@@ -127,18 +121,9 @@ public class FormPedido extends JPanel {
         // ------------------ BOTÕES ------------------
         JPanel controlePanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 10));
         JButton btnMenu = new JButton("Menu Principal");
-        JButton btnSair = new JButton("Encerrar Sistema");
         controlePanel.add(btnMenu);
-        controlePanel.add(btnSair);
 
         btnMenu.addActionListener(e -> mainFrame.showPanel("menu"));
-        btnSair.addActionListener(e -> {
-            int confirm = JOptionPane.showConfirmDialog(null,
-                    "Deseja realmente encerrar o sistema?",
-                    "Confirmação",
-                    JOptionPane.YES_NO_OPTION);
-            if (confirm == JOptionPane.YES_OPTION) System.exit(0);
-        });
 
         JPanel bottomPanel = new JPanel(new BorderLayout());
         bottomPanel.add(totalPanel, BorderLayout.NORTH);
@@ -156,22 +141,16 @@ public class FormPedido extends JPanel {
     //              MÉTODOS DO FORM
     // =====================================================
     public void atualizarPedido(Pedido pedido) {
-
-        if (pedido == null) {
-            // limpar tudo visualmente
+        if (pedido != null) {
+            lblCliente.setText("Cliente: " + pedido.getNomeCliente());
+        } else {
             lblCliente.setText("Cliente: [Nenhum pedido iniciado]");
-            tableModel.setRowCount(0);
-            lblTotal.setText("Total: R$ 0,00");
-            return;
         }
-
-        lblCliente.setText("Cliente: " + pedido.getNomeCliente());
         atualizarTabela(pedido);
         atualizarTotal(pedido);
     }
 
     public void atualizarTabela(Pedido pedido) {
-
         tableModel.setRowCount(0);
         if (pedido == null) return;
 
@@ -197,7 +176,6 @@ public class FormPedido extends JPanel {
     //             ABRIR TELA DE PAGAMENTO
     // =====================================================
     private void abrirPagamento() {
-
         Pedido pedido = mainFrame.getPedidoAtual();
 
         if (pedido == null) {

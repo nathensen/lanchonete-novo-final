@@ -35,3 +35,40 @@ Itens:
  - Carne no pão X-Tudo com molho Pão de forma | R$ 14,00
 -----------------------------
 
+===== PEDIDO FINALIZADO =====
+Cliente: MARILENE
+Vendedor: FERNANDA
+Valor Total: R$ 16,00
+-----------------------------
+Itens:
+ - Carne no pão Duplo X-Burguer com molho Pão de forma | R$ 16,00
+-----------------------------
+
+===== PEDIDO FINALIZADO =====
+Cliente: JULIA
+Vendedor: FERNANDA
+Valor Total: R$ 5,00
+-----------------------------
+Itens:
+ - Pastel Assado com recheio de Frango | R$ 5,00
+-----------------------------
+
+===== PEDIDO FINALIZADO =====
+Cliente: bento
+Vendedor: matheus
+Valor Total: R$ 13,00
+-----------------------------
+Itens:
+ - Frango no pão Hambúrguer de Frango com molho Pão de hambúrguer | R$ 13,00
+-----------------------------
+
+===== PEDIDO FINALIZADO =====
+Cliente: fernanda
+Vendedor: natane
+Valor Total: R$ 28,00
+-----------------------------
+Itens:
+ - Carne no pão Duplo X-Burguer com molho Pão de forma | R$ 16,00
+ - Refrigerante Guaraná Garrafa (2L) | R$ 12,00
+-----------------------------
+
