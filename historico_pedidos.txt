@@ -1,10 +1,9 @@
 ===== PEDIDO FINALIZADO =====
-Cliente: fulano fulano
-Vendedor: natane hensen
-Valor Total: R$ 32,00
+Cliente: asdfasdasd
+Vendedor: zxzxzxzx
+Valor Total: R$ 13,00
 -----------------------------
 Itens:
- - Calabresa no pão X-Calabresa com molho Pão de forma | R$ 17,00
- - Carne no pão X-Bacon com molho Pão de forma | R$ 15,00
+ - Frango no pão Hambúrguer de Frango com molho Pão de hambúrguer | R$ 13,00
 -----------------------------
 

@@ -1,5 +1,3 @@
-// ================= FORM PEDIDO COMPLETO E CORRIGIDO ==================
-
 package com.lanchonete.view;
 
 import java.awt.BorderLayout;
@@ -16,7 +14,6 @@ import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
 import com.lanchonete.controller.PedidoController;
@@ -31,7 +28,6 @@ public class FormPedido extends JPanel {
     private DefaultTableModel tableModel;
     private JTable tblItens;
     private JLabel lblTotal;
-    private JTextField txtValorPago;
     private JLabel lblCliente;
 
     public FormPedido(MainFrame mainFrame) {
@@ -101,18 +97,13 @@ public class FormPedido extends JPanel {
 
                     tableModel.removeRow(linha);
 
-                    for (int i = 0; i < tableModel.getRowCount(); i++) {
-                        tableModel.setValueAt(i + 1, i, 0);
-                    }
-
                     Pedido pedido = mainFrame.getPedidoAtual();
                     if (pedido != null && linha < pedido.getItensConsumidos().size()) {
                         pedido.getItensConsumidos().remove(linha);
                     }
 
-                    if (pedido != null) {
-                        atualizarTotal(pedido);
-                    }
+                    atualizarTabela(pedido);
+                    atualizarTotal(pedido);
                 }
             }
         });
@@ -129,6 +120,7 @@ public class FormPedido extends JPanel {
         // ------------------ PAGAMENTO ------------------
         JPanel pagamentoPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
         JButton btnFinalizar = new JButton("Forma de Pagamento");
+        btnFinalizar.addActionListener(e -> abrirPagamento());
         pagamentoPanel.add(btnFinalizar);
 
         // ------------------ BOTÕES ------------------
@@ -138,41 +130,50 @@ public class FormPedido extends JPanel {
         controlePanel.add(btnMenu);
         controlePanel.add(btnSair);
 
-        JPanel bottomPanel = new JPanel(new BorderLayout());
-        bottomPanel.add(totalPanel, BorderLayout.NORTH);
-        bottomPanel.add(controlePanel, BorderLayout.SOUTH);
-        add(bottomPanel, BorderLayout.SOUTH);
-
-        btnFinalizar.addActionListener(e -> abrirPagamento());
         btnMenu.addActionListener(e -> mainFrame.showPanel("menu"));
         btnSair.addActionListener(e -> {
             int confirm = JOptionPane.showConfirmDialog(null,
                     "Deseja realmente encerrar o sistema?",
                     "Confirmação",
                     JOptionPane.YES_NO_OPTION);
-            if (confirm == JOptionPane.YES_OPTION) {
-                System.exit(0);
-            }
+            if (confirm == JOptionPane.YES_OPTION) System.exit(0);
         });
+
+        JPanel bottomPanel = new JPanel(new BorderLayout());
+        bottomPanel.add(totalPanel, BorderLayout.NORTH);
+        bottomPanel.add(controlePanel, BorderLayout.SOUTH);
 
         // ------------------ ADD PANELS ------------------
         add(titlePanel, BorderLayout.NORTH);
         add(clientePanel, BorderLayout.WEST);
         add(scrollPane, BorderLayout.CENTER);
         add(pagamentoPanel, BorderLayout.EAST);
+        add(bottomPanel, BorderLayout.SOUTH);
     }
 
     // =====================================================
     //              MÉTODOS DO FORM
     // =====================================================
     public void atualizarPedido(Pedido pedido) {
+
+        if (pedido == null) {
+            // limpar tudo visualmente
+            lblCliente.setText("Cliente: [Nenhum pedido iniciado]");
+            tableModel.setRowCount(0);
+            lblTotal.setText("Total: R$ 0,00");
+            return;
+        }
+
         lblCliente.setText("Cliente: " + pedido.getNomeCliente());
         atualizarTabela(pedido);
         atualizarTotal(pedido);
     }
 
     public void atualizarTabela(Pedido pedido) {
+
         tableModel.setRowCount(0);
+        if (pedido == null) return;
+
         int index = 1;
         for (ItemPedido item : pedido.getItensConsumidos()) {
             tableModel.addRow(new Object[]{
@@ -184,16 +185,11 @@ public class FormPedido extends JPanel {
     }
 
     public void atualizarTotal(Pedido pedido) {
+        if (pedido == null) {
+            lblTotal.setText("Total: R$ 0,00");
+            return;
+        }
         lblTotal.setText("Total: R$ " + String.format("%.2f", pedido.calcularTotal()));
-    }
-
-    public void adicionarItemTabela(ItemPedido item) {
-        int index = tableModel.getRowCount() + 1;
-        tableModel.addRow(new Object[]{
-                index,
-                item.descricao(),
-                String.format("%.2f", item.getPrecoVenda())
-        });
     }
 
     // =====================================================
@@ -214,9 +210,7 @@ public class FormPedido extends JPanel {
         }
 
         FormPagamento form = new FormPagamento(mainFrame, pedidoController, pedido);
-
         mainFrame.addPanel("pagamento", form);
         mainFrame.showPanel("pagamento");
     }
-
 }

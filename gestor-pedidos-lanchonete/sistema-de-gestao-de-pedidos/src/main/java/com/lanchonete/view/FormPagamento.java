@@ -13,6 +13,7 @@ import com.lanchonete.controller.PagamentoController;
 import com.lanchonete.controller.PedidoController;
 import com.lanchonete.model.BoletoPagamento;
 import com.lanchonete.model.CartaoPagamento;
+import com.lanchonete.model.DinheiroPagamento;
 import com.lanchonete.model.Pagamento;
 import com.lanchonete.model.Pedido;
 import com.lanchonete.model.PixPagamento;
@@ -57,7 +58,7 @@ public class FormPagamento extends JPanel {
         lblMetodo.setBounds(40, 60, 150, 25);
         add(lblMetodo);
 
-        cmbMetodo = new JComboBox<>(new String[]{"Boleto", "Cartão", "PIX"});
+        cmbMetodo = new JComboBox<>(new String[]{"Boleto", "Cartão", "PIX", "Dinheiro"});
         cmbMetodo.setBounds(190, 60, 160, 25);
         add(cmbMetodo);
 
@@ -85,16 +86,26 @@ public class FormPagamento extends JPanel {
         btnConfirmar.setBounds(120, 190, 200, 35);
         add(btnConfirmar);
 
+        JButton btnMenu = new JButton("Menu Principal");
+        btnMenu.setBounds(120, 240, 200, 35);
+        add(btnMenu);
+
+        JButton btnVoltar = new JButton("Voltar para Pedido");
+        btnVoltar.setBounds(120, 290, 200, 35);
+        add(btnVoltar);
+
         txtResultado = new JTextArea();
         txtResultado.setEditable(false);
         JScrollPane scroll = new JScrollPane(txtResultado);
-        scroll.setBounds(40, 240, 360, 140);
+        scroll.setBounds(40, 340, 360, 140);
         add(scroll);
 
         cmbMetodo.addActionListener(e -> atualizarCampos());
         cmbTipoCartao.addActionListener(e -> atualizarParcelas());
 
         btnConfirmar.addActionListener(e -> finalizarPagamento());
+        btnMenu.addActionListener(e -> mainFrame.showPanel("menu"));
+        btnVoltar.addActionListener(e -> mainFrame.showPanel("pedido"));
     }
 
     private void atualizarCampos() {
@@ -116,12 +127,17 @@ public class FormPagamento extends JPanel {
         double total = pedido.calcularTotal();
 
         Pagamento forma = obterMetodo();
+        if (forma == null) {
+            JOptionPane.showMessageDialog(this,
+                    "Selecione um método de pagamento válido.",
+                    "Erro",
+                    JOptionPane.ERROR_MESSAGE);
+            return;
+        }
 
-        // registra pagamento
         String resultado = pagamentoController.realizarPagamento(forma, total);
         txtResultado.append(resultado + "\n\n");
 
-        // finaliza pedido (sem valor pago, sem troco)
         PedidoController.ResultadoPedido res = pedidoController.finalizarPedido();
 
         JOptionPane.showMessageDialog(null,
@@ -132,11 +148,14 @@ public class FormPagamento extends JPanel {
                         "Bônus gerado: R$ " + String.format("%.2f", res.getBonusPedido())
         );
 
-        mainFrame.showPanel("menu");
+        // =================== RESETAR PEDIDO ===================
+        pedido.getItensConsumidos().clear();  // limpa itens
+        mainFrame.showPanel("menu");          // volta ao menu
     }
 
     private Pagamento obterMetodo() {
         String metodo = (String) cmbMetodo.getSelectedItem();
+        if (metodo == null) return null;
 
         switch (metodo) {
             case "Boleto":
@@ -145,18 +164,23 @@ public class FormPagamento extends JPanel {
             case "Cartão":
                 CartaoPagamento c = new CartaoPagamento();
                 c.setTipo(cmbTipoCartao.getSelectedItem().toString());
-
                 if (cmbTipoCartao.getSelectedItem().equals("Crédito")) {
                     try {
                         c.setParcelas(Integer.parseInt(txtParcelas.getText()));
                     } catch (NumberFormatException e) {
-                        c.setParcelas(1); // padrão 1 parcela
+                        c.setParcelas(1);
                     }
                 }
                 return c;
 
-            default:
+            case "Dinheiro":
+                return new DinheiroPagamento();
+
+            case "PIX":
                 return new PixPagamento();
+
+            default:
+                return null;
         }
     }
 }
