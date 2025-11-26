@@ -140,11 +140,20 @@ public class FormPagamento extends JPanel {
 
         PedidoController.ResultadoPedido res = pedidoController.finalizarPedido();
 
+        // ================= CALCULAR TROCO =================
+        double troco = 0;
+        if (forma instanceof DinheiroPagamento) {
+            DinheiroPagamento dp = (DinheiroPagamento) forma;
+            troco = dp.getValorRecebido() - total;
+        }
+
+        // ================= MENSAGEM FINAL =================
         JOptionPane.showMessageDialog(null,
                 "=== PAGAMENTO CONFIRMADO ===\n\n" +
                         "Cliente: " + pedido.getNomeCliente() + "\n" +
                         "Vendedor: " + mainFrame.getVendedor().getNome() + "\n" +
                         "Valor Total: R$ " + String.format("%.2f", total) + "\n" +
+                        (troco > 0 ? "Troco: R$ " + String.format("%.2f", troco) + "\n" : "") +
                         "Bônus gerado: R$ " + String.format("%.2f", res.getBonusPedido())
         );
 
@@ -173,14 +182,21 @@ public class FormPagamento extends JPanel {
                 }
                 return c;
 
-            case "Dinheiro":
-                return new DinheiroPagamento();
-
+            case "Pix":
             case "PIX":
                 return new PixPagamento();
 
-            default:
-                return null;
+            case "Dinheiro":
+                String valorStr = JOptionPane.showInputDialog(this, "Digite o valor entregue pelo cliente:");
+                try {
+                    double recebido = Double.parseDouble(valorStr);
+                    return new DinheiroPagamento(recebido);
+                } catch (Exception e) {
+                    JOptionPane.showMessageDialog(this, "Valor inválido!", "Erro", JOptionPane.ERROR_MESSAGE);
+                    return null;
+                }
         }
+
+        return null;
     }
 }

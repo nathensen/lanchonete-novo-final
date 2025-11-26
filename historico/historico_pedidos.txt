@@ -17,3 +17,21 @@ Itens:
  - Pastel Frito com recheio de Frango | R$ 4,00
 -----------------------------
 
+===== PEDIDO FINALIZADO =====
+Cliente: junior
+Vendedor: NATANE
+Valor Total: R$ 12,00
+-----------------------------
+Itens:
+ - Carne no pão Cheeseburger com molho Pão de hambúrguer | R$ 12,00
+-----------------------------
+
+===== PEDIDO FINALIZADO =====
+Cliente: JULIO
+Vendedor: NATANE HENSEN
+Valor Total: R$ 14,00
+-----------------------------
+Itens:
+ - Carne no pão X-Tudo com molho Pão de forma | R$ 14,00
+-----------------------------
+
