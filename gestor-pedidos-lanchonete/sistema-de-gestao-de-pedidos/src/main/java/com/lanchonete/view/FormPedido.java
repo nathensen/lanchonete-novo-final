@@ -8,8 +8,10 @@ import java.awt.Font;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
@@ -58,6 +60,67 @@ public class FormPedido extends JPanel {
             }
         };
         tblItens = new JTable(tableModel);
+
+        JPopupMenu menu = new JPopupMenu();
+        JMenuItem opcExcluir = new JMenuItem("Excluir item");
+        menu.add(opcExcluir);
+
+        // Detecta o clique direito do mouse
+        tblItens.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
+            public void mousePressed(java.awt.event.MouseEvent e) {
+                if (e.isPopupTrigger()) showMenu(e);
+            }
+
+            @Override
+            public void mouseReleased(java.awt.event.MouseEvent e) {
+                if (e.isPopupTrigger()) showMenu(e);
+            }
+
+            private void showMenu(java.awt.event.MouseEvent e) {
+                int row = tblItens.rowAtPoint(e.getPoint());
+                if (row != -1) {
+                    tblItens.setRowSelectionInterval(row, row);
+                    menu.show(tblItens, e.getX(), e.getY());
+                }
+            }
+        });
+
+            opcExcluir.addActionListener(e -> {
+        int linha = tblItens.getSelectedRow();
+
+        if (linha != -1) {
+
+            int confirmar = JOptionPane.showConfirmDialog(null,
+                    "Deseja excluir este item?",
+                    "Confirmar exclusão",
+                    JOptionPane.YES_NO_OPTION);
+
+            if (confirmar == JOptionPane.YES_OPTION) {
+
+                // Remove da tabela
+                tableModel.removeRow(linha);
+
+                // Reorganiza os índices da coluna "Item"
+                for (int i = 0; i < tableModel.getRowCount(); i++) {
+                    tableModel.setValueAt(i + 1, i, 0);
+                }
+
+                // Remove também do Pedido atual
+                Pedido pedido = mainFrame.getPedidoAtual();
+                if (pedido != null && linha < pedido.getItensConsumidos().size()) {
+                    pedido.getItensConsumidos().remove(linha);
+                }
+
+                // Atualiza o total exibido
+                if (pedido != null) {
+                    atualizarTotal(pedido);
+                }
+            }
+        }
+    });
+
+
         JScrollPane scrollPane = new JScrollPane(tblItens);
         scrollPane.setPreferredSize(new Dimension(500, 250));
 
