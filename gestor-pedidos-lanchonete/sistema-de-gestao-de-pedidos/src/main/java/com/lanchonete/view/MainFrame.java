@@ -20,9 +20,6 @@ public class MainFrame extends JFrame {
     private FormBebidas bebidasPanel;
     private FormPedido pedidoPanel;
 
-    // Painéis adicionados dinamicamente (ex: pagamento)
-    // ---> não precisa declarar aqui, vai ser registrado pelo addPanel()
-
     // Dados da aplicação
     private Vendedor vendedor;
     private Pedido pedidoAtual;
@@ -49,7 +46,10 @@ public class MainFrame extends JFrame {
         cardPanel.add(menuPanel, "menu");
         cardPanel.add(lanchePanel, "lanche");
         cardPanel.add(salgadinhoPanel, "salgadinho");
-        cardPanel.add(bebidasPanel, "bebida");
+
+        // 🔧 Ajustado: manter nome consistente
+        cardPanel.add(bebidasPanel, "bebidas");
+
         cardPanel.add(pedidoPanel, "pedido");
 
         add(cardPanel);
@@ -57,18 +57,15 @@ public class MainFrame extends JFrame {
         showPanel("login");
     }
 
-    // ---------------------------------------------
-    // NOVO: permite registrar novos painéis (Pagamento)
-    // ---------------------------------------------
+    // Registrar novos painéis (ex.: pagamento)
     public void addPanel(String name, JPanel panel) {
         cardPanel.add(panel, name);
     }
 
-    // Métodos de navegação
+    // Navegação
     public void showPanel(String panelName) {
         cardLayout.show(cardPanel, panelName);
 
-        // Atualiza o painel de pedido quando ele é aberto
         if (panelName.equals("pedido") && pedidoPanel != null && pedidoAtual != null) {
             pedidoPanel.atualizarPedido(pedidoAtual);
         }
@@ -89,5 +86,15 @@ public class MainFrame extends JFrame {
 
     public void setPedidoAtual(Pedido pedidoAtual) {
         this.pedidoAtual = pedidoAtual;
+
+        // Atualiza automaticamente
+        if (pedidoPanel != null) {
+            pedidoPanel.atualizarPedido(pedidoAtual);
+        }
+    }
+
+    // 🔧 Getter útil para acessar painel de pedido
+    public FormPedido getFormPedido() {
+        return pedidoPanel;
     }
 }

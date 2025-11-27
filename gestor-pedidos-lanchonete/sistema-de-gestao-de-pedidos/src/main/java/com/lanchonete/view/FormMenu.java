@@ -11,116 +11,106 @@ public class FormMenu extends JPanel {
 
     private MainFrame mainFrame;
     private MenuController controller;
-    private JButton btnLanches;
-    private JButton btnSalgadinhos;
-    private JButton btnBebidas;
 
+    private JButton btnNovoPedido, btnLanches, btnSalgadinhos, btnBebidas;
+    private JButton btnVerPedido, btnBonus, btnStatus, btnEncerrarTurno;
 
     public FormMenu(MainFrame mainFrame) {
         this.mainFrame = mainFrame;
         this.controller = new MenuController();
-        setLayout(new BorderLayout());
 
-        // Painel de boas-vindas
-        JPanel welcomePanel = new JPanel();
-        JLabel lblWelcome = new JLabel("Menu Principal");
-        lblWelcome.setFont(new Font("Arial", Font.BOLD, 24));
-        welcomePanel.add(lblWelcome);
+        setLayout(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
 
-        // Painel de botões com layout absoluto
-        JPanel buttonPanel = new JPanel();
-        buttonPanel.setLayout(null); // permite posicionamento manual
+        gbc.insets = new Insets(10, 10, 10, 10);
+        gbc.fill = GridBagConstraints.HORIZONTAL;
 
-        // Fonte e cores compartilhadas
-        Font botaoFonte = new Font("SansSerif", Font.BOLD, 26);
-        Color botaoCor = Color.BLACK;
+        Font fonte = new Font("SansSerif", Font.BOLD, 24);
+        Color cor = Color.BLACK;
 
-       // Cada botão é separado, com tamanho e posição definidos
-        JButton btnNovoPedido = new JButton("Novo Pedido");
-        btnNovoPedido.setFont(botaoFonte);
-        btnNovoPedido.setForeground(botaoCor);
+        // ---------------- ROW 0: TÍTULO ----------------
+        JLabel lblTitulo = new JLabel("MENU PRINCIPAL", SwingConstants.CENTER);
+        lblTitulo.setFont(new Font("Arial", Font.BOLD, 30));
+        gbc.gridx = 0; gbc.gridy = 0;
+        gbc.gridwidth = 3;
+        add(lblTitulo, gbc);
+
+        gbc.gridwidth = 1;
+
+        // ---------------- ROW 1 ----------------
+        btnNovoPedido = criarBotao("Novo Pedido", fonte, cor);
         btnNovoPedido.addActionListener(e -> novoPedido());
-        btnNovoPedido.setBounds(20, 20, 250, 70); // x, y, largura, altura
-        buttonPanel.add(btnNovoPedido);
+        adicionar(gbc, btnNovoPedido, 0, 1);
 
-        btnLanches = new JButton("Lanches");
-        btnLanches.setFont(botaoFonte);
-        btnLanches.setForeground(botaoCor);
-        btnLanches.addActionListener(e -> mainFrame.showPanel("lanche"));
-        btnLanches.setBounds(580, 110, 250, 70);
-        buttonPanel.add(btnLanches);
-        if (btnLanches != null)btnLanches.setVisible(false);
-
-        btnSalgadinhos = new JButton("Salgadinhos");
-        btnSalgadinhos.setFont(botaoFonte);
-        btnSalgadinhos.setForeground(botaoCor);
-        btnSalgadinhos.addActionListener(e -> mainFrame.showPanel("salgadinho"));
-        btnSalgadinhos.setBounds(300, 110, 250, 70);
-        buttonPanel.add(btnSalgadinhos);
-        if (btnSalgadinhos != null)btnSalgadinhos.setVisible(false);
-
-        btnBebidas = new JButton("Bebidas");
-        btnBebidas.setFont(botaoFonte);
-        btnBebidas.setForeground(botaoCor);
-        btnBebidas.addActionListener(e -> mainFrame.showPanel("bebida"));
-        btnBebidas.setBounds(20, 110, 250, 70);
-        buttonPanel.add(btnBebidas);
-        if (btnBebidas != null)btnBebidas.setVisible(false);
-
-        JButton btnVerPedido = new JButton("Ver Pedido Atual");
-        btnVerPedido.setFont(botaoFonte);
-        btnVerPedido.setForeground(botaoCor);
+        btnVerPedido = criarBotao("Ver Pedido Atual", fonte, cor);
         btnVerPedido.addActionListener(e -> mainFrame.showPanel("pedido"));
-        btnVerPedido.setBounds(300, 20, 250, 70);
-        buttonPanel.add(btnVerPedido);
+        adicionar(gbc, btnVerPedido, 1, 1);
 
-        JButton btnBonus = new JButton("Bônus do Vendedor");
-        btnBonus.setFont(botaoFonte);
-        btnBonus.setForeground(botaoCor);
-        btnBonus.addActionListener(e -> mostrarBonus());
-        btnBonus.setBounds(580, 20, 250, 70); 
-        buttonPanel.add(btnBonus);
+        btnBonus = criarBotao("Bônus do Vendedor", fonte, cor);
+        btnBonus.addActionListener(e -> controller.mostrarBonus(mainFrame.getVendedor()));
+        adicionar(gbc, btnBonus, 2, 1);
 
-        JButton btnStatus = new JButton("Status do Pedido");
-        btnStatus.setFont(botaoFonte);
-        btnStatus.setForeground(botaoCor);
+        // ---------------- ROW 2 ----------------
+        btnLanches = criarBotao("Lanches", fonte, cor);
+        btnLanches.addActionListener(e -> mainFrame.showPanel("lanche"));
+        btnLanches.setVisible(false);
+        adicionar(gbc, btnLanches, 0, 2);
+
+        btnSalgadinhos = criarBotao("Salgadinhos", fonte, cor);
+        btnSalgadinhos.addActionListener(e -> mainFrame.showPanel("salgadinho"));
+        btnSalgadinhos.setVisible(false);
+        adicionar(gbc, btnSalgadinhos, 1, 2);
+
+        btnBebidas = criarBotao("Bebidas", fonte, cor);
+        btnBebidas.addActionListener(e -> mainFrame.showPanel("bebidas"));
+        btnBebidas.setVisible(false);
+        adicionar(gbc, btnBebidas, 2, 2);
+
+        // ---------------- ROW 3 ----------------
+        btnStatus = criarBotao("Status do Pedido", fonte, cor);
         btnStatus.addActionListener(e -> mainFrame.showPanel("status"));
-        btnStatus.setBounds(300, 200, 250, 70);
-        buttonPanel.add(btnStatus);
+        adicionar(gbc, btnStatus, 1, 3);
 
-        // Painel inferior com botão de logout
-        JPanel bottomPanel = new JPanel();
-        JButton btnLogout = new JButton("Encerrar Turno e Sair");
-        btnLogout.setFont(botaoFonte);
-        btnLogout.setForeground(botaoCor);
-        btnLogout.addActionListener(e -> encerrarTurno());
-        bottomPanel.add(btnLogout);
+        // ---------------- ROW 4 ----------------
+        btnEncerrarTurno = criarBotao("Encerrar Turno e Sair", fonte, cor);
+        btnEncerrarTurno.addActionListener(e -> controller.encerrarTurno(mainFrame.getVendedor()));
+        gbc.gridx = 0; gbc.gridy = 4;
+        gbc.gridwidth = 3;
+        add(btnEncerrarTurno, gbc);
+    }
 
-        add(welcomePanel, BorderLayout.NORTH);
-        add(buttonPanel, BorderLayout.CENTER);
-        add(bottomPanel, BorderLayout.SOUTH);
+    private JButton criarBotao(String texto, Font font, Color color) {
+        JButton btn = new JButton(texto);
+        btn.setFont(font);
+        btn.setForeground(color);
+        btn.setPreferredSize(new Dimension(250, 60));
+        return btn;
+    }
+
+    private void adicionar(GridBagConstraints gbc, JButton btn, int x, int y) {
+        gbc.gridx = x;
+        gbc.gridy = y;
+        add(btn, gbc);
     }
 
     private void novoPedido() {
-        String nomeCliente = JOptionPane.showInputDialog(this, "Nome do cliente:", "Novo Pedido", JOptionPane.QUESTION_MESSAGE);
+        String nomeCliente = JOptionPane.showInputDialog(this, "Nome do cliente:");
         if (nomeCliente == null || nomeCliente.trim().isEmpty()) return;
-        Pedido pedido = controller.novoPedido(nomeCliente, mainFrame.getPedidoAtual(), mainFrame.getVendedor());
+
+        Pedido pedido = controller.novoPedido(
+                nomeCliente,
+                mainFrame.getPedidoAtual(),
+                mainFrame.getVendedor()
+        );
+
         if (pedido != null) {
-            if (btnLanches != null)btnLanches.setVisible(true);
-            if (btnSalgadinhos != null)btnSalgadinhos.setVisible(true);
-            if (btnBebidas != null)btnBebidas.setVisible(true);
+            btnLanches.setVisible(true);
+            btnSalgadinhos.setVisible(true);
+            btnBebidas.setVisible(true);
+
             mainFrame.setPedidoAtual(pedido);
-            JOptionPane.showMessageDialog(this, "Pedido criado para: " + nomeCliente, "Pedido Iniciado", JOptionPane.INFORMATION_MESSAGE);
+
+            JOptionPane.showMessageDialog(this, "Pedido criado para: " + nomeCliente);
         }
-    }
-
-    private void mostrarBonus() {
-        Vendedor vendedor = mainFrame.getVendedor();
-        controller.mostrarBonus(vendedor);
-    }
-
-    private void encerrarTurno() {
-        Vendedor vendedor = mainFrame.getVendedor();
-        controller.encerrarTurno(vendedor);
     }
 }

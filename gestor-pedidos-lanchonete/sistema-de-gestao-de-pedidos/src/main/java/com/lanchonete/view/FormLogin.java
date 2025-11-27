@@ -19,7 +19,6 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 import com.lanchonete.controller.LoginController;
-import com.lanchonete.model.Vendedor;
 import com.lanchonete.repository.IVendedorRepository;
 import com.lanchonete.repository.VendedorRepository;
 import com.lanchonete.service.VendedorService;
@@ -37,13 +36,14 @@ public class FormLogin extends JPanel {
     public FormLogin(MainFrame mainFrame) {
         this.mainFrame = mainFrame;
 
-        // Inicializa repository e service
+        // Repository + service
         IVendedorRepository vendedorRepository = new VendedorRepository();
         this.vendedorService = new VendedorService(vendedorRepository);
 
-        this.loginController = new LoginController();
+        // Controller recebendo service (CORRETO!)
+        this.loginController = new LoginController(vendedorService);
 
-        // Fundo branco
+        // Layout geral
         setLayout(new BorderLayout());
         setBackground(Color.WHITE);
 
@@ -58,7 +58,7 @@ public class FormLogin extends JPanel {
         titlePanel.add(lblTitle);
         add(titlePanel, BorderLayout.NORTH);
 
-        // Formulário central
+        // Formulário
         JPanel formPanel = new JPanel(new GridBagLayout());
         formPanel.setBackground(Color.WHITE);
 
@@ -66,73 +66,59 @@ public class FormLogin extends JPanel {
         gbc.insets = new Insets(12, 12, 12, 12);
         gbc.fill = GridBagConstraints.HORIZONTAL;
 
-        // Labels
         JLabel lblNome = new JLabel("Nome do Vendedor:");
         lblNome.setFont(new Font("SansSerif", Font.BOLD, 18));
-        lblNome.setForeground(Color.BLACK);
 
         JLabel lblCodigo = new JLabel("Senha:");
         lblCodigo.setFont(new Font("SansSerif", Font.BOLD, 18));
-        lblCodigo.setForeground(Color.BLACK);
 
-        // Campos
         txtNome = new JTextField(18);
         txtNome.setFont(new Font("SansSerif", Font.PLAIN, 16));
 
         txtCodigo = new JPasswordField(18);
         txtCodigo.setFont(new Font("SansSerif", Font.PLAIN, 16));
 
-        // Adiciona os campos
-        gbc.gridx = 0; 
-        gbc.gridy = 0;
+        gbc.gridx = 0; gbc.gridy = 0;
         formPanel.add(lblNome, gbc);
 
         gbc.gridx = 1;
         formPanel.add(txtNome, gbc);
 
-        gbc.gridx = 0; 
-        gbc.gridy = 1;
+        gbc.gridx = 0; gbc.gridy = 1;
         formPanel.add(lblCodigo, gbc);
 
         gbc.gridx = 1;
         formPanel.add(txtCodigo, gbc);
 
-        // Botão estilizado igual ao menu
-        btnEntrar = criarBotao("Entrar no Sistema", e -> login());
+        btnEntrar = criarBotao("Entrar no Sistema", e -> executarLogin());
 
-        gbc.gridx = 0;
-        gbc.gridy = 2;
+        gbc.gridx = 0; gbc.gridy = 2;
         gbc.gridwidth = 2;
         formPanel.add(btnEntrar, gbc);
 
         add(formPanel, BorderLayout.CENTER);
     }
 
-    // ---- BOTÃO ESTILIZADO ----
+    // ---- Botão estilizado ----
     private JButton criarBotao(String texto, java.awt.event.ActionListener listener) {
 
         JButton btn = new JButton(texto) {
 
-        // Azul padrão do botão
-        Color topo = new Color(0, 120, 215);       // azul principal
-        Color base = new Color(0, 100, 180);       // azul mais escuro para degradê/base
-
-        // Azul quando o mouse passa por cima (hover)
-        Color topoHover = new Color(0, 100, 190);  // azul hover mais claro
-        Color baseHover = new Color(0, 80, 160);   // azul hover mais escuro
+            Color topo = new Color(0, 120, 215);
+            Color base = new Color(0, 100, 180);
+            Color topoHover = new Color(0, 100, 190);
+            Color baseHover = new Color(0, 80, 160);
 
             boolean hover = false;
 
             @Override
             protected void paintComponent(Graphics g) {
                 Graphics2D g2 = (Graphics2D) g.create();
-                g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
-                        RenderingHints.VALUE_ANTIALIAS_ON);
+                g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
                 GradientPaint grad = new GradientPaint(
                         0, 0, hover ? topoHover : topo,
-                        0, getHeight(), hover ? baseHover : base
-                );
+                        0, getHeight(), hover ? baseHover : base);
 
                 g2.setPaint(grad);
                 g2.fillRoundRect(0, 0, getWidth(), getHeight(), 30, 30);
@@ -163,29 +149,19 @@ public class FormLogin extends JPanel {
         return btn;
     }
 
-    // ---- LÓGICA DO LOGIN (COM SENHA FIXA 1234) ----
-    private void login() {
+    // ---- CHAMA O CONTROLLER ----
+    private void executarLogin() {
+        String nome = txtNome.getText().trim();
+        String codigo = String.valueOf(txtCodigo.getPassword()).trim();
+
         try {
-            String nome = txtNome.getText().trim();
-            String codigo = String.valueOf(txtCodigo.getPassword()).trim();                                              
-
-            // Valida usando senha fixa
-            loginController.autenticar(nome, codigo);
-
-            // Cria vendedor com código 0 (ajuste conforme sua lógica)
-            Vendedor vendedor = vendedorService.criarVendedor(nome, 0);
-
-            // Salva no repository
-            vendedorService.salvarVendedor(vendedor);
-
-            mainFrame.setVendedor(vendedor);
-
-            JOptionPane.showMessageDialog(this, "Bem-vindo(a), " + nome + "!");
-            mainFrame.showPanel("menu");
+            loginController.login(nome, codigo, mainFrame);
 
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e.getMessage(),
-                    "Erro no Login", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this,
+                    e.getMessage(),
+                    "Erro no Login",
+                    JOptionPane.ERROR_MESSAGE);
         }
     }
 }
