@@ -1,7 +1,17 @@
 package com.lanchonete.view;
 
-import java.awt.*;
-import javax.swing.*;
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.Font;
+import java.awt.GridLayout;
+
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 import com.lanchonete.controller.PedidoController;
@@ -37,7 +47,7 @@ public class FormPedido extends JPanel {
         clientePanel.add(lblCliente);
         add(clientePanel, BorderLayout.WEST);
 
-        // Tabela de itens
+        // Tabela
         String[] colunas = {"Item", "Descrição", "Preço (R$)"};
         tableModel = new DefaultTableModel(colunas, 0) {
             @Override
@@ -49,24 +59,40 @@ public class FormPedido extends JPanel {
         scrollPane.setPreferredSize(new Dimension(500, 250));
         add(scrollPane, BorderLayout.CENTER);
 
-        // Total
+        // Painel inferior com total
         JPanel totalPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         lblTotal = new JLabel("Total: R$ 0,00");
         lblTotal.setFont(new Font("Arial", Font.BOLD, 14));
         totalPanel.add(lblTotal);
         add(totalPanel, BorderLayout.SOUTH);
 
-        // Botões
-        JPanel controlePanel = new JPanel(new FlowLayout());
+        // Painel com os 2 botões na vertical
+        JPanel painelVertical = new JPanel(new GridLayout(2, 1, 5, 5));
+
         JButton btnMenu = new JButton("Menu Principal");
         btnMenu.addActionListener(e -> mainFrame.showPanel("menu"));
+
+        JButton btnExcluirItem = new JButton("Excluir Item");
+        btnExcluirItem.addActionListener(e -> excluirItem());
+
+        painelVertical.add(btnMenu);
+        painelVertical.add(btnExcluirItem);
+
+        // Botão pagamento separado
+        JPanel painelPagamento = new JPanel(new FlowLayout());
         JButton btnPagamento = new JButton("Forma de Pagamento");
         btnPagamento.addActionListener(e -> abrirPagamento());
-        controlePanel.add(btnMenu);
-        controlePanel.add(btnPagamento);
-        add(controlePanel, BorderLayout.EAST);
+        painelPagamento.add(btnPagamento);
+
+        // Une tudo na direita
+        JPanel painelDireita = new JPanel(new BorderLayout());
+        painelDireita.add(painelVertical, BorderLayout.NORTH);
+        painelDireita.add(painelPagamento, BorderLayout.SOUTH);
+
+        add(painelDireita, BorderLayout.EAST);
     }
 
+    // Atualizar cliente + tabela + total
     public void atualizarPedido(Pedido pedido) {
         if (pedido != null) lblCliente.setText("Cliente: " + pedido.getNomeCliente());
         else lblCliente.setText("Cliente: [Nenhum pedido iniciado]");
@@ -105,5 +131,21 @@ public class FormPedido extends JPanel {
         FormPagamento form = new FormPagamento(mainFrame, pedidoController, pedido);
         mainFrame.addPanel("pagamento", form);
         mainFrame.showPanel("pagamento");
+    }
+
+    private void excluirItem() {
+        int linha = tblItens.getSelectedRow();
+        if (linha == -1) {
+            JOptionPane.showMessageDialog(this, "Selecione um item para excluir.", "Aviso", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        Pedido pedido = mainFrame.getPedidoAtual();
+        if (pedido == null) return;
+
+        pedido.getItensConsumidos().remove(linha);
+
+        atualizarTabela(pedido);
+        atualizarTotal(pedido);
     }
 }
