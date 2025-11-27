@@ -1,9 +1,0 @@
-===== PEDIDO FINALIZADO =====
-Cliente: fssdfsd
-Vendedor: erewre
-Valor Total: R$ 4,00
------------------------------
-Itens:
- - Pastel Frito com recheio de Carne | R$ 4,00
------------------------------
-

@@ -11,6 +11,10 @@ public class FormMenu extends JPanel {
 
     private MainFrame mainFrame;
     private MenuController controller;
+    private JButton btnLanches;
+    private JButton btnSalgadinhos;
+    private JButton btnBebidas;
+
 
     public FormMenu(MainFrame mainFrame) {
         this.mainFrame = mainFrame;
@@ -39,26 +43,29 @@ public class FormMenu extends JPanel {
         btnNovoPedido.setBounds(20, 20, 250, 70); // x, y, largura, altura
         buttonPanel.add(btnNovoPedido);
 
-        JButton btnLanches = new JButton("Lanches");
+        btnLanches = new JButton("Lanches");
         btnLanches.setFont(botaoFonte);
         btnLanches.setForeground(botaoCor);
         btnLanches.addActionListener(e -> mainFrame.showPanel("lanche"));
         btnLanches.setBounds(580, 110, 250, 70);
         buttonPanel.add(btnLanches);
+        if (btnLanches != null)btnLanches.setVisible(false);
 
-        JButton btnSalgadinhos = new JButton("Salgadinhos");
+        btnSalgadinhos = new JButton("Salgadinhos");
         btnSalgadinhos.setFont(botaoFonte);
         btnSalgadinhos.setForeground(botaoCor);
         btnSalgadinhos.addActionListener(e -> mainFrame.showPanel("salgadinho"));
         btnSalgadinhos.setBounds(300, 110, 250, 70);
         buttonPanel.add(btnSalgadinhos);
+        if (btnSalgadinhos != null)btnSalgadinhos.setVisible(false);
 
-        JButton btnBebidas = new JButton("Bebidas");
+        btnBebidas = new JButton("Bebidas");
         btnBebidas.setFont(botaoFonte);
         btnBebidas.setForeground(botaoCor);
         btnBebidas.addActionListener(e -> mainFrame.showPanel("bebida"));
         btnBebidas.setBounds(20, 110, 250, 70);
         buttonPanel.add(btnBebidas);
+        if (btnBebidas != null)btnBebidas.setVisible(false);
 
         JButton btnVerPedido = new JButton("Ver Pedido Atual");
         btnVerPedido.setFont(botaoFonte);
@@ -99,6 +106,9 @@ public class FormMenu extends JPanel {
         if (nomeCliente == null || nomeCliente.trim().isEmpty()) return;
         Pedido pedido = controller.novoPedido(nomeCliente, mainFrame.getPedidoAtual(), mainFrame.getVendedor());
         if (pedido != null) {
+            if (btnLanches != null)btnLanches.setVisible(true);
+            if (btnSalgadinhos != null)btnSalgadinhos.setVisible(true);
+            if (btnBebidas != null)btnBebidas.setVisible(true);
             mainFrame.setPedidoAtual(pedido);
             JOptionPane.showMessageDialog(this, "Pedido criado para: " + nomeCliente, "Pedido Iniciado", JOptionPane.INFORMATION_MESSAGE);
         }

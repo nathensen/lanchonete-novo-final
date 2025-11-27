@@ -113,11 +113,13 @@ public class FormLogin extends JPanel {
 
         JButton btn = new JButton(texto) {
 
-            Color topo = new Color(0, 100, 0);
-            Color base = new Color(0, 150, 0);
+        // Azul padrão do botão
+        Color topo = new Color(0, 120, 215);       // azul principal
+        Color base = new Color(0, 100, 180);       // azul mais escuro para degradê/base
 
-            Color topoHover = new Color(0, 70, 0);
-            Color baseHover = new Color(0, 110, 0);
+        // Azul quando o mouse passa por cima (hover)
+        Color topoHover = new Color(0, 100, 190);  // azul hover mais claro
+        Color baseHover = new Color(0, 80, 160);   // azul hover mais escuro
 
             boolean hover = false;
 
