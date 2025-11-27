@@ -1,11 +1,29 @@
 package com.lanchonete.view;
 
-import java.awt.*;
-import javax.swing.*;
+import java.awt.Component;
+import java.awt.Dimension;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+
+import javax.swing.Box;
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
 
 import com.lanchonete.controller.PagamentoController;
 import com.lanchonete.controller.PedidoController;
-import com.lanchonete.model.*;
+import com.lanchonete.model.BoletoPagamento;
+import com.lanchonete.model.CartaoPagamento;
+import com.lanchonete.model.DinheiroPagamento;
+import com.lanchonete.model.Pagamento;
+import com.lanchonete.model.Pedido;
+import com.lanchonete.model.PixPagamento;
 
 public class FormPagamento extends JPanel {
 
@@ -29,63 +47,91 @@ public class FormPagamento extends JPanel {
         this.pedido = pedido;
         this.pagamentoController = new PagamentoController();
 
-        setLayout(null);
-        setBounds(0,0,460,540);
+        setLayout(new GridBagLayout()); // CENTRALIZA TUDO
         initComponents();
     }
 
     private void initComponents() {
         double total = pedido.calcularTotal();
 
+        JPanel content = new JPanel();
+        content.setLayout(new BoxLayout(content, BoxLayout.Y_AXIS));
+        content.setPreferredSize(new Dimension(450, 500));
+
+        // ---------- COMPONENTES ----------
+
         JLabel lblTotal = new JLabel("Total a pagar: R$ " + String.format("%.2f", total));
-        lblTotal.setBounds(40,20,300,25);
-        add(lblTotal);
+        lblTotal.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         JLabel lblMetodo = new JLabel("Método de Pagamento:");
-        lblMetodo.setBounds(40,60,150,25);
-        add(lblMetodo);
+        lblMetodo.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         cmbMetodo = new JComboBox<>(new String[]{"Boleto","Cartão","PIX","Dinheiro"});
-        cmbMetodo.setBounds(190,60,160,25);
-        add(cmbMetodo);
+        cmbMetodo.setMaximumSize(new Dimension(250, 30));
+        cmbMetodo.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         lblTipoCartao = new JLabel("Tipo de cartão:");
-        lblTipoCartao.setBounds(40,100,120,25);
         lblTipoCartao.setVisible(false);
-        add(lblTipoCartao);
+        lblTipoCartao.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         cmbTipoCartao = new JComboBox<>(new String[]{"Débito","Crédito"});
-        cmbTipoCartao.setBounds(160,100,190,25);
         cmbTipoCartao.setVisible(false);
-        add(cmbTipoCartao);
+        cmbTipoCartao.setMaximumSize(new Dimension(250, 30));
+        cmbTipoCartao.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         lblParcelas = new JLabel("Parcelas:");
-        lblParcelas.setBounds(40,140,120,25);
         lblParcelas.setVisible(false);
-        add(lblParcelas);
+        lblParcelas.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         txtParcelas = new JTextField();
-        txtParcelas.setBounds(160,140,60,25);
+        txtParcelas.setMaximumSize(new Dimension(60, 30));
         txtParcelas.setVisible(false);
-        add(txtParcelas);
+        txtParcelas.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         JButton btnConfirmar = new JButton("Confirmar Pagamento");
-        btnConfirmar.setBounds(120,190,200,35);
-        add(btnConfirmar);
+        btnConfirmar.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         JButton btnMenu = new JButton("Menu Principal");
-        btnMenu.setBounds(120,240,200,35);
-        add(btnMenu);
+        btnMenu.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         JButton btnVoltar = new JButton("Voltar para Pedido");
-        btnVoltar.setBounds(120,290,200,35);
-        add(btnVoltar);
+        btnVoltar.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        txtResultado = new JTextArea();
+        txtResultado = new JTextArea(6, 30);
         txtResultado.setEditable(false);
         JScrollPane scroll = new JScrollPane(txtResultado);
-        scroll.setBounds(40,340,360,140);
-        add(scroll);
+        scroll.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        // ---------- ADICIONA NO CONTENT ----------
+
+        content.add(Box.createVerticalStrut(10));
+        content.add(lblTotal);
+        content.add(Box.createVerticalStrut(20));
+        content.add(lblMetodo);
+        content.add(cmbMetodo);
+        content.add(Box.createVerticalStrut(20));
+        content.add(lblTipoCartao);
+        content.add(cmbTipoCartao);
+        content.add(Box.createVerticalStrut(10));
+        content.add(lblParcelas);
+        content.add(txtParcelas);
+        content.add(Box.createVerticalStrut(25));
+        content.add(btnConfirmar);
+        content.add(Box.createVerticalStrut(10));
+        content.add(btnMenu);
+        content.add(Box.createVerticalStrut(10));
+        content.add(btnVoltar);
+        content.add(Box.createVerticalStrut(20));
+        content.add(scroll);
+
+        // ---------- CENTRALIZA NO PAINEL ----------
+
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        add(content, gbc);
+
+        // ---------- EVENTOS ----------
 
         cmbMetodo.addActionListener(e -> atualizarCampos());
         cmbTipoCartao.addActionListener(e -> atualizarParcelas());
@@ -113,7 +159,7 @@ public class FormPagamento extends JPanel {
         double total = pedido.calcularTotal();
         Pagamento forma = obterMetodo();
         if (forma == null) {
-            JOptionPane.showMessageDialog(this, "Selecione um método de pagamento válido.", "Erro", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Selecione um método válido", "Erro", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
@@ -123,8 +169,7 @@ public class FormPagamento extends JPanel {
         PedidoController.ResultadoPedido res = pedidoController.finalizarPedido();
 
         double troco = 0;
-        if (forma instanceof DinheiroPagamento) {
-            DinheiroPagamento dp = (DinheiroPagamento) forma;
+        if (forma instanceof DinheiroPagamento dp) {
             troco = dp.getValorRecebido() - total;
         }
 
@@ -133,7 +178,7 @@ public class FormPagamento extends JPanel {
             "Cliente: " + pedido.getNomeCliente() + "\n" +
             "Vendedor: " + mainFrame.getVendedor().getNome() + "\n" +
             "Valor Total: R$ " + String.format("%.2f", total) + "\n" +
-            (troco>0 ? "Troco: R$ "+String.format("%.2f", troco)+"\n":"") +
+            (troco>0 ? "Troco: R$ "+String.format("%.2f", troco)+"\n" : "") +
             "Bônus gerado: R$ " + String.format("%.2f", res.getBonusPedido())
         );
 
@@ -143,7 +188,7 @@ public class FormPagamento extends JPanel {
 
     private Pagamento obterMetodo() {
         String metodo = (String)cmbMetodo.getSelectedItem();
-        if (metodo==null) return null;
+        if (metodo == null) return null;
 
         switch(metodo) {
             case "Boleto": return new BoletoPagamento();
@@ -152,23 +197,27 @@ public class FormPagamento extends JPanel {
                 c.setTipo(cmbTipoCartao.getSelectedItem().toString());
                 if (cmbTipoCartao.getSelectedItem().equals("Crédito")) {
                     try { c.setParcelas(Integer.parseInt(txtParcelas.getText())); }
-                    catch(NumberFormatException e) { c.setParcelas(1);}
+                    catch(NumberFormatException e) { c.setParcelas(1); }
                 }
                 return c;
-            case "Pix": case "PIX": return new PixPagamento();
+
+            case "PIX": case "Pix": return new PixPagamento();
+
             case "Dinheiro":
-                while(true) {
+                while (true) {
                     String valorStr = JOptionPane.showInputDialog(this, "Digite o valor entregue pelo cliente:");
-                    if (valorStr==null) return null;
+                    if (valorStr == null) return null;
                     try {
                         double recebido = Double.parseDouble(valorStr);
-                        if(recebido < pedido.calcularTotal()) {
-                            JOptionPane.showMessageDialog(this,"Valor insuficiente! Total R$ "+String.format("%.2f",pedido.calcularTotal()),"Erro",JOptionPane.ERROR_MESSAGE);
+                        if (recebido < pedido.calcularTotal()) {
+                            JOptionPane.showMessageDialog(this, "Valor insuficiente!",
+                                "Erro", JOptionPane.ERROR_MESSAGE);
                             continue;
                         }
                         return new DinheiroPagamento(recebido);
-                    } catch(NumberFormatException e) {
-                        JOptionPane.showMessageDialog(this,"Valor inválido!","Erro",JOptionPane.ERROR_MESSAGE);
+                    } catch (NumberFormatException e) {
+                        JOptionPane.showMessageDialog(this, "Valor inválido!",
+                            "Erro", JOptionPane.ERROR_MESSAGE);
                     }
                 }
         }
