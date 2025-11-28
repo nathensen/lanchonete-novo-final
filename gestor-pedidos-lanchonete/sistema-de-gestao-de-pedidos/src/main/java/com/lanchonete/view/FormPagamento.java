@@ -24,6 +24,7 @@ import com.lanchonete.model.DinheiroPagamento;
 import com.lanchonete.model.Pagamento;
 import com.lanchonete.model.Pedido;
 import com.lanchonete.model.PixPagamento;
+import com.lanchonete.util.HistoricoTXT;
 
 public class FormPagamento extends JPanel {
 
@@ -166,7 +167,13 @@ public class FormPagamento extends JPanel {
         String resultado = pagamentoController.realizarPagamento(forma, total);
         txtResultado.append(resultado + "\n\n");
 
+        // Finaliza o pedido
         PedidoController.ResultadoPedido res = pedidoController.finalizarPedido();
+
+        if (res != null) {
+            // SALVAR NO HISTÓRICO
+            HistoricoTXT.salvar(pedido, mainFrame.getVendedor());
+        }
 
         double troco = 0;
         if (forma instanceof DinheiroPagamento dp) {
@@ -182,6 +189,7 @@ public class FormPagamento extends JPanel {
             "Bônus gerado: R$ " + String.format("%.2f", res.getBonusPedido())
         );
 
+        // Limpa pedido atual e retorna ao menu
         mainFrame.setPedidoAtual(null);
         mainFrame.showPanel("menu");
     }
@@ -192,6 +200,7 @@ public class FormPagamento extends JPanel {
 
         switch(metodo) {
             case "Boleto": return new BoletoPagamento();
+
             case "Cartão":
                 CartaoPagamento c = new CartaoPagamento();
                 c.setTipo(cmbTipoCartao.getSelectedItem().toString());

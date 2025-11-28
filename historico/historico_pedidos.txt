@@ -90,3 +90,32 @@ Itens:
  - Calabresa no pão X-Calabresa com molho Pão de forma | R$ 17,00
 -----------------------------
 
+===== PEDIDO FINALIZADO =====
+Cliente: brunão
+Vendedor: natane
+Valor Total: R$ 5,00
+-----------------------------
+Itens:
+ - Pastel Assado com recheio de Frango | R$ 5,00
+-----------------------------
+
+===== PEDIDO FINALIZADO =====
+Cliente: huhuhu
+Vendedor: natane
+Valor Total: R$ 21,00
+-----------------------------
+Itens:
+ - Frango no pão Hambúrguer de Frango com molho Pão de hambúrguer | R$ 13,00
+ - Refrigerante Guaraná Garrafa (1L) | R$ 8,00
+-----------------------------
+
+===== PEDIDO FINALIZADO =====
+Cliente: tru
+Vendedor: natane
+Valor Total: R$ 23,00
+-----------------------------
+Itens:
+ - Pastel Assado com recheio de Frango | R$ 5,00
+ - Carne no pão Triplo X-Burguer com molho Pão de forma | R$ 18,00
+-----------------------------
+
