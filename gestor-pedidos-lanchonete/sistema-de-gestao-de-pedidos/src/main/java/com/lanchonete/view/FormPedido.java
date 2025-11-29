@@ -43,7 +43,7 @@ public class FormPedido extends JPanel {
         // Cliente
         JPanel clientePanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
         lblCliente = new JLabel("Cliente: [Nenhum pedido iniciado]");
-        lblCliente.setFont(new Font("Arial", Font.PLAIN, 14));
+        lblCliente.setFont(new Font("Arial", Font.BOLD, 20));
         clientePanel.add(lblCliente);
         add(clientePanel, BorderLayout.WEST);
 
@@ -54,6 +54,10 @@ public class FormPedido extends JPanel {
             public boolean isCellEditable(int row, int col) { return false; }
         };
         tblItens = new JTable(tableModel);
+        tblItens.setFont(new Font("Arial", Font.BOLD, 22));
+        tblItens.setRowHeight(28);
+        tblItens.getTableHeader().setFont(new Font("Arial", Font.BOLD, 18));
+
 
         JScrollPane scrollPane = new JScrollPane(tblItens);
         scrollPane.setPreferredSize(new Dimension(500, 250));
@@ -62,32 +66,33 @@ public class FormPedido extends JPanel {
         // Painel inferior com total
         JPanel totalPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         lblTotal = new JLabel("Total: R$ 0,00");
-        lblTotal.setFont(new Font("Arial", Font.BOLD, 14));
+        lblTotal.setFont(new Font("Arial", Font.BOLD, 25));
         totalPanel.add(lblTotal);
         add(totalPanel, BorderLayout.SOUTH);
 
         // Painel com os 2 botões na vertical
         JPanel painelVertical = new JPanel(new GridLayout(2, 1, 5, 5));
 
-        JButton btnMenu = new JButton("Menu Principal");
-        btnMenu.addActionListener(e -> mainFrame.showPanel("menu"));
+        JButton btnPagamento = new JButton("Forma de Pagamento");
+        btnPagamento.addActionListener(e -> abrirPagamento());
 
         JButton btnExcluirItem = new JButton("Excluir Item");
         btnExcluirItem.addActionListener(e -> excluirItem());
 
-        painelVertical.add(btnMenu);
+        painelVertical.add(btnPagamento);
         painelVertical.add(btnExcluirItem);
 
-        // Botão pagamento separado
-        JPanel painelPagamento = new JPanel(new FlowLayout());
-        JButton btnPagamento = new JButton("Forma de Pagamento");
-        btnPagamento.addActionListener(e -> abrirPagamento());
-        painelPagamento.add(btnPagamento);
+        // Botão menu separado
+        JPanel painelMenu = new JPanel(new BorderLayout());
+        JButton btnMenu = new JButton("Voltar ao Menu");
+        btnMenu.addActionListener(e -> mainFrame.showPanel("menu"));
+        painelMenu.add(btnMenu, BorderLayout.CENTER);
+        painelMenu.add(btnMenu);
 
         // Une tudo na direita
         JPanel painelDireita = new JPanel(new BorderLayout());
         painelDireita.add(painelVertical, BorderLayout.NORTH);
-        painelDireita.add(painelPagamento, BorderLayout.SOUTH);
+        painelDireita.add(painelMenu, BorderLayout.SOUTH);
 
         add(painelDireita, BorderLayout.EAST);
     }

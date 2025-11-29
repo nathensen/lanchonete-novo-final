@@ -83,7 +83,7 @@ import com.lanchonete.model.Pedido;
         btnLanches.setVisible(false);
         adicionar(painelCentro, gbc, btnLanches, 0, 1);
 
-        btnSalgadinhos = criarBotao("Salgadinhos", fonte, cor);
+        btnSalgadinhos = criarBotao("Salgados", fonte, cor);
         btnSalgadinhos.addActionListener(e -> mainFrame.showPanel("salgadinho"));
         btnSalgadinhos.setVisible(false);
         adicionar(painelCentro, gbc, btnSalgadinhos, 1, 1);

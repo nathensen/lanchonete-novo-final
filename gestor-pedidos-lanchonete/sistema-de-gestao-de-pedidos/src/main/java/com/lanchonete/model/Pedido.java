@@ -21,6 +21,10 @@ public class Pedido {
         this.itensConsumidos = new ArrayList<>();
     }
 
+    public String getStatusEntrega() { 
+    return statusEntrega; 
+    }
+
     public void adicionarItem(ItemPedido item) {
         if (item != null) itensConsumidos.add(item);
     }
@@ -61,6 +65,7 @@ public class Pedido {
         sb.append(" | Total: ").append(FormatadorMoeda.formatar(calcularTotal()))
           .append(" | Status: ").append(statusEntrega);
         return sb.toString();
+        
     }
 
     public String getNomeCliente() { return nomeCliente; }
@@ -68,6 +73,5 @@ public class Pedido {
     public void setVendedor(Vendedor vendedor) { this.vendedor = vendedor; }
     public boolean isEmpty() { return itensConsumidos.isEmpty(); }
     public List<ItemPedido> getItensConsumidos() { return itensConsumidos; }
-    public String getStatusEntrega() { return statusEntrega; }
     public void setStatusEntrega(String statusEntrega) { this.statusEntrega = statusEntrega; }
 }

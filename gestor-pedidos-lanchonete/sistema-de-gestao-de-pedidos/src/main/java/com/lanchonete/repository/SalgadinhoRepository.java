@@ -1,8 +1,9 @@
 package com.lanchonete.repository;
 
-import com.lanchonete.model.Salgadinho;
 import java.util.ArrayList;
 import java.util.List;
+
+import com.lanchonete.model.Salgadinho;
 
 public class SalgadinhoRepository {
     private List<Salgadinho> salgadinhos;

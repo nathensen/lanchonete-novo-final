@@ -3,6 +3,7 @@ package com.lanchonete.view;
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.Font;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
@@ -75,15 +76,29 @@ public class FormStatusPedido extends JPanel {
     }
 
     private static class PedidoCellRenderer extends JLabel implements ListCellRenderer<Pedido> {
-        @Override
-        public Component getListCellRendererComponent(JList<? extends Pedido> list, Pedido value, int index,
-                                                      boolean isSelected, boolean cellHasFocus) {
-            setText(value.getNomeCliente() + " - Status: " + value.getStatusEntrega() + 
-                    " | Total: R$ " + String.format("%.2f", value.calcularTotal()));
-            setOpaque(true);
-            setBackground(isSelected ? list.getSelectionBackground() : list.getBackground());
-            setForeground(isSelected ? list.getSelectionForeground() : list.getForeground());
-            return this;
-        }
+    @Override
+    public Component getListCellRendererComponent(JList<? extends Pedido> list, Pedido value, int index,
+                                                  boolean isSelected, boolean cellHasFocus) {
+
+        String status = value.getStatusEntrega();
+
+        // HTML para pintar apenas o status em verde
+        String texto = "<html>"
+                + value.getNomeCliente()
+                + " - Status: <span style='color:green;'><b>" + status + "</b></span>"
+                + " | Total: R$ " + String.format("%.2f", value.calcularTotal())
+                + "</html>";
+
+        setText(texto);
+
+        setFont(new Font("Arial", Font.BOLD, 25));
+
+        setOpaque(true);
+        setBackground(isSelected ? list.getSelectionBackground() : list.getBackground());
+        setForeground(isSelected ? list.getSelectionForeground() : java.awt.Color.BLACK);
+
+        return this;
     }
+}
+
 }

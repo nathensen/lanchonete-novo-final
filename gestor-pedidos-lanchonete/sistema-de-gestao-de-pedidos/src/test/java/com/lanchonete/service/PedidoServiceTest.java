@@ -1,4 +1,4 @@
-package com.lanchonete;
+package com.lanchonete.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.Test;
@@ -6,7 +6,6 @@ import org.junit.jupiter.api.Test;
 import com.lanchonete.model.ItemPedido;
 import com.lanchonete.model.Pedido;
 import com.lanchonete.model.Vendedor;
-import com.lanchonete.service.PedidoService;
 
 class PedidoServiceTest {
 

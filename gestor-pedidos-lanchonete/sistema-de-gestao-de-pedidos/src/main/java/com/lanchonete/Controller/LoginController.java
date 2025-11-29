@@ -19,7 +19,10 @@ import com.lanchonete.view.MainFrame;
  */
 public class LoginController {
 
-    private static final String SENHA_FIXA = "1234";
+    private static final String Usuario_permitido1 = "NATANE_HENSEN";
+    private static final String Usuario_permitido2 = "PATRICK_CAMPESTRINI";
+    private static final String Usuario_permitido3 = "THIAGO_BIAVATTI";
+    private static final String Senha_Fixa = "1234"; 
 
     private final VendedorService vendedorService;
 
@@ -52,20 +55,21 @@ public class LoginController {
                 "Bem-vindo(a), " + nome + "!");
     }
 
-    /**
-     * Valida nome + senha.
-     */
     public void autenticar(String nome, String senhaDigitada) throws Exception {
 
         if (nome == null || nome.isBlank()) {
-            throw new Exception("Digite o nome do vendedor.");
+            throw new Exception("Digite o login.");
         }
 
         if (senhaDigitada == null || senhaDigitada.isBlank()) {
             throw new Exception("Digite a senha.");
         }
 
-        if (!senhaDigitada.equals(SENHA_FIXA)) {
+        if (!nome.equals(Usuario_permitido1) && !nome.equals(Usuario_permitido2) && !nome.equals(Usuario_permitido3)) {
+            throw new Exception("Usuario nao cadastrado!");
+        }
+
+        if (!senhaDigitada.equals(Senha_Fixa)) {
             throw new Exception("Senha incorreta!");
         }
     }

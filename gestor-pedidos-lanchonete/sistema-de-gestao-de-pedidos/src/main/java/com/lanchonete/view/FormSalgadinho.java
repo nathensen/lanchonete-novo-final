@@ -28,7 +28,7 @@ public class FormSalgadinho extends JPanel {
 
         // Painel do título
         JPanel titlePanel = new JPanel();
-        JLabel lblTitle = new JLabel("Escolha um Salgadinho");
+        JLabel lblTitle = new JLabel("Escolha um Salgado");
         lblTitle.setFont(new Font("Arial", Font.BOLD, 20));
         titlePanel.add(lblTitle);
 
@@ -63,7 +63,7 @@ public class FormSalgadinho extends JPanel {
         btnAdicionar.addActionListener(e -> {
             int index = listSalgadinhos.getSelectedIndex();
             if (index == -1) {
-                JOptionPane.showMessageDialog(this, "Selecione um salgadinho primeiro.", "Aviso", JOptionPane.WARNING_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Selecione um salgado primeiro.", "Aviso", JOptionPane.WARNING_MESSAGE);
                 return;
             }
 

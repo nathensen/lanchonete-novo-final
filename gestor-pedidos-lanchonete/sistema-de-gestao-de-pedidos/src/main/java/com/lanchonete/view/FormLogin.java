@@ -82,7 +82,7 @@ public class FormLogin extends BackgroundPanel {
         gbc.insets = new Insets(12, 12, 12, 12);
         gbc.fill = GridBagConstraints.HORIZONTAL;
 
-        JLabel lblNome = new JLabel("Nome do Vendedor:");
+        JLabel lblNome = new JLabel("Login:");
         lblNome.setFont(new Font("SansSerif", Font.BOLD, 18));
 
         JLabel lblCodigo = new JLabel("Senha:");
