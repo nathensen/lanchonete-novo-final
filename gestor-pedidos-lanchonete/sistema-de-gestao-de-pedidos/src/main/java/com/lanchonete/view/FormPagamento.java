@@ -60,7 +60,6 @@ public class FormPagamento extends JPanel {
         content.setPreferredSize(new Dimension(450, 500));
 
         // ---------- COMPONENTES ----------
-
         JLabel lblTotal = new JLabel("Total a pagar: R$ " + String.format("%.2f", total));
         lblTotal.setAlignmentX(Component.CENTER_ALIGNMENT);
 
@@ -104,7 +103,6 @@ public class FormPagamento extends JPanel {
         scroll.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         // ---------- ADICIONA NO CONTENT ----------
-
         content.add(Box.createVerticalStrut(10));
         content.add(lblTotal);
         content.add(Box.createVerticalStrut(20));
@@ -126,14 +124,12 @@ public class FormPagamento extends JPanel {
         content.add(scroll);
 
         // ---------- CENTRALIZA NO PAINEL ----------
-
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.gridx = 0;
         gbc.gridy = 0;
         add(content, gbc);
 
         // ---------- EVENTOS ----------
-
         cmbMetodo.addActionListener(e -> atualizarCampos());
         cmbTipoCartao.addActionListener(e -> atualizarParcelas());
 
@@ -173,6 +169,11 @@ public class FormPagamento extends JPanel {
         if (res != null) {
             // SALVAR NO HISTÓRICO
             HistoricoTXT.salvar(pedido, mainFrame.getVendedor());
+
+            // 🔹 Enviar para StatusPedido sem alterar layout
+            if (mainFrame.getStatusPedidoPanel() != null) {
+                mainFrame.getStatusPedidoPanel().adicionarPedido(pedido);
+            }
         }
 
         double troco = 0;

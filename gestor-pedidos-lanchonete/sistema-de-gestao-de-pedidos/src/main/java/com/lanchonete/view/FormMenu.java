@@ -93,7 +93,10 @@ public class FormMenu extends JPanel {
 
         // ---------- ROW 3 ----------
         btnStatus = criarBotao("Status do Pedido", fonte, cor);
-        btnStatus.addActionListener(e -> mainFrame.showPanel("status"));
+        btnStatus.addActionListener(e -> {
+            mainFrame.getStatusPedidoPanel().atualizarLista(); // Atualiza pedidos pagos
+            mainFrame.showPanel("statusPedido"); // Mostra o painel StatusPedido
+        });
         adicionar(painelCentro, gbc, btnStatus, 1, 2);
 
         add(painelCentro, BorderLayout.CENTER);

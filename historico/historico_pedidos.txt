@@ -119,3 +119,100 @@ Itens:
  - Carne no p�o Triplo X-Burguer com molho P�o de forma | R$ 18,00
 -----------------------------
 
+===== PEDIDO FINALIZADO =====
+Cliente: sdsdasd
+Vendedor: natane
+Valor Total: R$ 17,00
+-----------------------------
+Itens:
+ - Calabresa no pão X-Calabresa com molho Pão de forma | R$ 17,00
+-----------------------------
+
+===== PEDIDO FINALIZADO =====
+Cliente: dsfsdfsd
+Vendedor: dsfsdfd
+Valor Total: R$ 34,00
+-----------------------------
+Itens:
+ - Calabresa no pão X-Calabresa com molho Pão de forma | R$ 17,00
+ - Pastel Assado com recheio de Carne | R$ 5,00
+ - Refrigerante Guaraná Garrafa (2L) | R$ 12,00
+-----------------------------
+
+===== PEDIDO FINALIZADO =====
+Cliente: dfgdf
+Vendedor: dsfsdfd
+Valor Total: R$ 12,00
+-----------------------------
+Itens:
+ - Carne no pão Cheeseburger com molho Pão de hambúrguer | R$ 12,00
+-----------------------------
+
+===== PEDIDO FINALIZADO =====
+Cliente: piopio
+Vendedor: ewrwer
+Valor Total: R$ 16,00
+-----------------------------
+Itens:
+ - Carne no pão Duplo X-Burguer com molho Pão de forma | R$ 16,00
+-----------------------------
+
+===== PEDIDO FINALIZADO =====
+Cliente: ouioui
+Vendedor: zxczxc
+Valor Total: R$ 20,00
+-----------------------------
+Itens:
+ - Frango e Bacon no pão X-Frango Bacon com molho Pão de forma | R$ 20,00
+-----------------------------
+
+===== PEDIDO FINALIZADO =====
+Cliente: lçklç
+Vendedor: sdfsdf
+Valor Total: R$ 12,00
+-----------------------------
+Itens:
+ - Carne no pão Cheeseburger com molho Pão de hambúrguer | R$ 12,00
+-----------------------------
+
+===== PEDIDO FINALIZADO =====
+Cliente: dfgdfgdf
+Vendedor: sdfsdf
+Valor Total: R$ 16,00
+-----------------------------
+Itens:
+ - Carne no pão Duplo X-Burguer com molho Pão de forma | R$ 16,00
+-----------------------------
+
+===== PEDIDO FINALIZADO =====
+Cliente: fgdfgdfgdf
+Vendedor: sdfsdf
+Valor Total: R$ 29,00
+-----------------------------
+Itens:
+ - Pastel Frito com recheio de Frango | R$ 4,00
+ - Refrigerante Guaraná Garrafa (2L) | R$ 12,00
+ - Frango no pão Hambúrguer de Frango com molho Pão de hambúrguer | R$ 13,00
+-----------------------------
+
+===== PEDIDO FINALIZADO =====
+Cliente: dasdasdas
+Vendedor: sdfsdf
+Valor Total: R$ 32,00
+-----------------------------
+Itens:
+ - Atum no pão X-Atum com molho Pão de forma | R$ 19,00
+ - Pastel Assado com recheio de Frango | R$ 5,00
+ - Refrigerante Guaraná Garrafa (1L) | R$ 8,00
+-----------------------------
+
+===== PEDIDO FINALIZADO =====
+Cliente: khjkhjk
+Vendedor: sdfsdf
+Valor Total: R$ 27,00
+-----------------------------
+Itens:
+ - Carne no pão X-Bacon com molho Pão de forma | R$ 15,00
+ - Refrigerante Coca-Cola Garrafa (2L) | R$ 12,00
+-----------------------------
+

@@ -2,38 +2,47 @@ package com.lanchonete.view;
 
 import java.awt.CardLayout;
 
-import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import com.lanchonete.controller.StatusPedidoController;
 import com.lanchonete.model.Pedido;
 import com.lanchonete.model.Vendedor;
 
-public class MainFrame extends JFrame {
+public class MainFrame extends javax.swing.JFrame {
+
     private CardLayout cardLayout;
     private JPanel cardPanel;
 
-    // Painéis da aplicação
+    // Painéis
     private FormLogin loginPanel;
     private FormMenu menuPanel;
     private FormLanche lanchePanel;
     private FormSalgadinho salgadinhoPanel;
     private FormBebidas bebidasPanel;
     private FormPedido pedidoPanel;
+    private FormPagamento pagamentoPanel;
+    private FormStatusPedido statusPedidoPanel;
 
-    // Dados da aplicação
+    // Controller
+    private StatusPedidoController statusPedidoController;
+
+    // Dados
     private Vendedor vendedor;
     private Pedido pedidoAtual;
 
     public MainFrame() {
         setTitle("Sistema de Lanchonete");
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
         setSize(800, 600);
         setLocationRelativeTo(null);
 
         cardLayout = new CardLayout();
         cardPanel = new JPanel(cardLayout);
 
-        // Inicialização dos painéis fixos
+        // Controller de status
+        statusPedidoController = new StatusPedidoController();
+
+        // Inicialização dos painéis
         loginPanel = new FormLogin(this);
         menuPanel = new FormMenu(this);
         lanchePanel = new FormLanche(this);
@@ -41,28 +50,27 @@ public class MainFrame extends JFrame {
         bebidasPanel = new FormBebidas(this);
         pedidoPanel = new FormPedido(this);
 
-        // Registro dos painéis fixos
+        // Status
+        statusPedidoPanel = new FormStatusPedido(this, statusPedidoController);
+
+        // Registro dos painéis
         cardPanel.add(loginPanel, "login");
         cardPanel.add(menuPanel, "menu");
         cardPanel.add(lanchePanel, "lanche");
         cardPanel.add(salgadinhoPanel, "salgadinho");
-
-        // 🔧 Ajustado: manter nome consistente
         cardPanel.add(bebidasPanel, "bebidas");
-
         cardPanel.add(pedidoPanel, "pedido");
+        cardPanel.add(statusPedidoPanel, "statusPedido");
 
         add(cardPanel);
 
         showPanel("login");
     }
 
-    // Registrar novos painéis (ex.: pagamento)
     public void addPanel(String name, JPanel panel) {
         cardPanel.add(panel, name);
     }
 
-    // Navegação
     public void showPanel(String panelName) {
         cardLayout.show(cardPanel, panelName);
 
@@ -72,29 +80,15 @@ public class MainFrame extends JFrame {
     }
 
     // Getters e Setters
-    public Vendedor getVendedor() {
-        return vendedor;
-    }
+    public Vendedor getVendedor() { return vendedor; }
+    public void setVendedor(Vendedor vendedor) { this.vendedor = vendedor; }
 
-    public void setVendedor(Vendedor vendedor) {
-        this.vendedor = vendedor;
-    }
-
-    public Pedido getPedidoAtual() {
-        return pedidoAtual;
-    }
-
+    public Pedido getPedidoAtual() { return pedidoAtual; }
     public void setPedidoAtual(Pedido pedidoAtual) {
         this.pedidoAtual = pedidoAtual;
-
-        // Atualiza automaticamente
-        if (pedidoPanel != null) {
-            pedidoPanel.atualizarPedido(pedidoAtual);
-        }
+        if (pedidoPanel != null) pedidoPanel.atualizarPedido(pedidoAtual);
     }
 
-    // 🔧 Getter útil para acessar painel de pedido
-    public FormPedido getFormPedido() {
-        return pedidoPanel;
-    }
+    public FormPedido getFormPedido() { return pedidoPanel; }
+    public FormStatusPedido getStatusPedidoPanel() { return statusPedidoPanel; }
 }

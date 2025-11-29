@@ -1,74 +1,89 @@
 package com.lanchonete.view;
 
-import java.awt.*;
-import java.util.List;
-import javax.swing.*;
-import javax.swing.table.DefaultTableModel;
-import com.lanchonete.controller.PedidoController;
+import java.awt.BorderLayout;
+import java.awt.Component;
+import java.awt.Dimension;
+
+import javax.swing.DefaultListModel;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JList;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.ListCellRenderer;
+
+import com.lanchonete.controller.StatusPedidoController;
 import com.lanchonete.model.Pedido;
 
 public class FormStatusPedido extends JPanel {
 
     private MainFrame mainFrame;
-    private PedidoController pedidoController;
-    private DefaultTableModel tableModel;
-    private JTable tblPedidos;
+    private StatusPedidoController controller;
+    private DefaultListModel<Pedido> listModel;
+    private JList<Pedido> listaPedidos;
+    private JButton btnMenu, btnConfirmarEntrega;
 
-    public FormStatusPedido(MainFrame mainFrame) {
+    public FormStatusPedido(MainFrame mainFrame, StatusPedidoController controller) {
         this.mainFrame = mainFrame;
-        this.pedidoController = new PedidoController(mainFrame);
-
+        this.controller = controller;
         setLayout(new BorderLayout());
-        JLabel lblTitle = new JLabel("Status dos Pedidos");
-        lblTitle.setFont(new Font("Arial", Font.BOLD, 20));
-        add(lblTitle, BorderLayout.NORTH);
-
-        String[] colunas = {"Cliente", "Itens", "Total", "Status"};
-        tableModel = new DefaultTableModel(colunas, 0) {
-            @Override
-            public boolean isCellEditable(int row, int col) { return false; }
-        };
-
-        tblPedidos = new JTable(tableModel);
-        JScrollPane scroll = new JScrollPane(tblPedidos);
-        scroll.setPreferredSize(new Dimension(600, 300));
-        add(scroll, BorderLayout.CENTER);
-
-        JPanel bottomPanel = new JPanel(new FlowLayout());
-        JButton btnAtualizar = new JButton("Atualizar Status");
-        btnAtualizar.addActionListener(e -> atualizarStatusSelecionado());
-        JButton btnVoltar = new JButton("Menu Principal");
-        btnVoltar.addActionListener(e -> mainFrame.showPanel("menu"));
-        bottomPanel.add(btnAtualizar);
-        bottomPanel.add(btnVoltar);
-
-        add(bottomPanel, BorderLayout.SOUTH);
-        atualizarTabela();
+        initComponents();
     }
 
-    private void atualizarTabela() {
-        List<Pedido> pedidos = pedidoController.listarPedidosFinalizados();
-        tableModel.setRowCount(0);
-        for (Pedido p : pedidos) {
-            String itens = String.join(", ", p.getItensConsumidos().stream().map(i -> i.descricao()).toList());
-            tableModel.addRow(new Object[]{ p.getNomeCliente(), itens, String.format("%.2f", p.calcularTotal()), p.getStatusEntrega() });
+    private void initComponents() {
+        listModel = new DefaultListModel<>();
+        listaPedidos = new JList<>(listModel);
+        listaPedidos.setCellRenderer(new PedidoCellRenderer());
+
+        JScrollPane scroll = new JScrollPane(listaPedidos);
+        scroll.setPreferredSize(new Dimension(600, 400));
+
+        btnMenu = new JButton("Menu Principal");
+        btnConfirmarEntrega = new JButton("Confirmar Entrega ao Cliente");
+
+        JPanel painelBotoes = new JPanel();
+        painelBotoes.add(btnConfirmarEntrega);
+        painelBotoes.add(btnMenu);
+
+        add(scroll, BorderLayout.CENTER);
+        add(painelBotoes, BorderLayout.SOUTH);
+
+        btnMenu.addActionListener(e -> mainFrame.showPanel("menu"));
+
+        btnConfirmarEntrega.addActionListener(e -> {
+            Pedido selecionado = listaPedidos.getSelectedValue();
+            if (selecionado != null) {
+                controller.confirmarEntrega(selecionado);
+                atualizarLista();
+            } else {
+                JOptionPane.showMessageDialog(this, "Selecione um pedido para confirmar entrega.");
+            }
+        });
+    }
+
+    public void adicionarPedido(Pedido pedido) {
+        controller.adicionarPedido(pedido);
+        atualizarLista();
+    }
+
+    public void atualizarLista() {
+        listModel.clear();
+        for (Pedido p : controller.listarPedidos()) {
+            listModel.addElement(p);
         }
     }
 
-    private void atualizarStatusSelecionado() {
-        int row = tblPedidos.getSelectedRow();
-        if (row == -1) { JOptionPane.showMessageDialog(this, "Selecione um pedido para atualizar.", "Erro", JOptionPane.ERROR_MESSAGE); return; }
-        String cliente = (String) tableModel.getValueAt(row, 0);
-        Pedido pedido = pedidoController.buscarPedidoPorCliente(cliente);
-        if (pedido != null) {
-            if (pedido.getStatusEntrega().equals("entregue")) {
-                JOptionPane.showMessageDialog(this, "Este pedido já foi entregue.", "Info", JOptionPane.INFORMATION_MESSAGE);
-            } else {
-                pedido.setStatusEntrega("entregue");
-                pedidoController.atualizarPedido(pedido);
-                JOptionPane.showMessageDialog(this, "Pedido marcado como entregue.", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
-                atualizarTabela();
-            }
+    private static class PedidoCellRenderer extends JLabel implements ListCellRenderer<Pedido> {
+        @Override
+        public Component getListCellRendererComponent(JList<? extends Pedido> list, Pedido value, int index,
+                                                      boolean isSelected, boolean cellHasFocus) {
+            setText(value.getNomeCliente() + " - Status: " + value.getStatusEntrega() + 
+                    " | Total: R$ " + String.format("%.2f", value.calcularTotal()));
+            setOpaque(true);
+            setBackground(isSelected ? list.getSelectionBackground() : list.getBackground());
+            setForeground(isSelected ? list.getSelectionForeground() : list.getForeground());
+            return this;
         }
     }
 }
