@@ -12,6 +12,7 @@ import java.awt.Insets;
 import java.awt.RenderingHints;
 
 import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -35,6 +36,7 @@ public class FormLogin extends JPanel {
 
     public FormLogin(MainFrame mainFrame) {
         this.mainFrame = mainFrame;
+        mainFrame.setExtendedState(JFrame.MAXIMIZED_BOTH);
 
         // Repository + service
         IVendedorRepository vendedorRepository = new VendedorRepository();

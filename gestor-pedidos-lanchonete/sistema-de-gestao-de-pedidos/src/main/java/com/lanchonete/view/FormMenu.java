@@ -31,6 +31,7 @@ public class FormMenu extends JPanel {
     public FormMenu(MainFrame mainFrame) {
         this.mainFrame = mainFrame;
         this.controller = new MenuController();
+
         mainFrame.setExtendedState(JFrame.MAXIMIZED_BOTH);
 
         setLayout(new BorderLayout());
