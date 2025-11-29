@@ -11,6 +11,7 @@ import java.awt.Insets;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -30,6 +31,7 @@ public class FormMenu extends JPanel {
     public FormMenu(MainFrame mainFrame) {
         this.mainFrame = mainFrame;
         this.controller = new MenuController();
+        mainFrame.setExtendedState(JFrame.MAXIMIZED_BOTH);
 
         setLayout(new BorderLayout());
 
