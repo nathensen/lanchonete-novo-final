@@ -8,9 +8,11 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.Image;
 import java.awt.Insets;
 import java.awt.RenderingHints;
 
+import javax.imageio.ImageIO;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -24,7 +26,7 @@ import com.lanchonete.repository.IVendedorRepository;
 import com.lanchonete.repository.VendedorRepository;
 import com.lanchonete.service.VendedorService;
 
-public class FormLogin extends JPanel {
+public class FormLogin extends BackgroundPanel {
 
     private MainFrame mainFrame;
     private VendedorService vendedorService;
@@ -35,8 +37,18 @@ public class FormLogin extends JPanel {
     private JButton btnEntrar;
 
     public FormLogin(MainFrame mainFrame) {
+
+           Image img = null;
+        try {
+            img = ImageIO.read(BackgroundPanel.class.getResourceAsStream("/com/lanchonete/resources/fundoMenu.jpg"));
+        } catch (Exception ex) {
+            System.err.println("Não foi possível carregar imagem de fundo: " + ex.getMessage());
+        }
+
         this.mainFrame = mainFrame;
         mainFrame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+
+
 
         // Repository + service
         IVendedorRepository vendedorRepository = new VendedorRepository();
@@ -47,11 +59,12 @@ public class FormLogin extends JPanel {
 
         // Layout geral
         setLayout(new BorderLayout());
-        setBackground(Color.WHITE);
+        setBackground(null);
 
         // Título
         JPanel titlePanel = new JPanel();
-        titlePanel.setBackground(Color.WHITE);
+        titlePanel.setBackground(null);
+        titlePanel.setOpaque(false);
 
         JLabel lblTitle = new JLabel("Sistema de Lanchonete");
         lblTitle.setFont(new Font("SansSerif", Font.BOLD, 30));
@@ -62,7 +75,8 @@ public class FormLogin extends JPanel {
 
         // Formulário
         JPanel formPanel = new JPanel(new GridBagLayout());
-        formPanel.setBackground(Color.WHITE);
+        formPanel.setBackground(null);
+        formPanel.setOpaque(false);
 
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(12, 12, 12, 12);
