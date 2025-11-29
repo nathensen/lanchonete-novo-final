@@ -44,6 +44,7 @@ public class FormBebidas extends JPanel {
 
         listBebidas = new JList<>(listModel);
         listBebidas.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        listBebidas.setFont(new Font("Arial", Font.BOLD, 27));
         JScrollPane scrollPane = new JScrollPane(listBebidas);
 
         // Botões
