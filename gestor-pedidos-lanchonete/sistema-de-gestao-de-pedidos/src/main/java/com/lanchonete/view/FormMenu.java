@@ -7,8 +7,10 @@ import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.Image;
 import java.awt.Insets;
 
+import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -20,15 +22,23 @@ import javax.swing.SwingConstants;
 import com.lanchonete.controller.MenuController;
 import com.lanchonete.model.Pedido;
 
-public class FormMenu extends JPanel {
+    public class FormMenu extends BackgroundPanel {
 
-    private MainFrame mainFrame;
-    private MenuController controller;
+        private MainFrame mainFrame;
+        private MenuController controller;
 
-    private JButton btnNovoPedido, btnLanches, btnSalgadinhos, btnBebidas;
-    private JButton btnVerPedido, btnBonus, btnStatus, btnEncerrarTurno;
+        private JButton btnNovoPedido, btnLanches, btnSalgadinhos, btnBebidas;
+        private JButton btnVerPedido, btnBonus, btnStatus, btnEncerrarTurno;
 
-    public FormMenu(MainFrame mainFrame) {
+        public FormMenu(MainFrame mainFrame) {
+        
+        Image img = null;
+        try {
+            img = ImageIO.read(BackgroundPanel.class.getResourceAsStream("/com/lanchonete/resources/fundoMenu.jpg"));
+        } catch (Exception ex) {
+            System.err.println("Não foi possível carregar imagem de fundo: " + ex.getMessage());
+        }
+
         this.mainFrame = mainFrame;
         this.controller = new MenuController();
 
@@ -36,9 +46,6 @@ public class FormMenu extends JPanel {
 
         setLayout(new BorderLayout());
 
-        // =========================
-        // PAINEL SUPERIOR (TÍTULO)
-        // =========================
         JPanel painelTopo = new JPanel(new FlowLayout(FlowLayout.CENTER));
         painelTopo.setOpaque(false);
         painelTopo.setBorder(BorderFactory.createEmptyBorder(20, 0, 10, 0)); // perto da borda superior
@@ -50,9 +57,6 @@ public class FormMenu extends JPanel {
 
         add(painelTopo, BorderLayout.NORTH);
 
-        // =========================
-        // PAINEL CENTRAL (MENU)
-        // =========================
         JPanel painelCentro = new JPanel(new GridBagLayout());
         painelCentro.setOpaque(false);
         GridBagConstraints gbc = new GridBagConstraints();
@@ -62,7 +66,6 @@ public class FormMenu extends JPanel {
         Font fonte = new Font("SansSerif", Font.BOLD, 24);
         Color cor = Color.BLACK;
 
-        // ---------- ROW 1 ----------
         btnNovoPedido = criarBotao("Novo Pedido", fonte, cor);
         btnNovoPedido.addActionListener(e -> novoPedido());
         adicionar(painelCentro, gbc, btnNovoPedido, 0, 0);
@@ -75,7 +78,6 @@ public class FormMenu extends JPanel {
         btnBonus.addActionListener(e -> controller.mostrarBonus(mainFrame.getVendedor()));
         adicionar(painelCentro, gbc, btnBonus, 2, 0);
 
-        // ---------- ROW 2 ----------
         btnLanches = criarBotao("Lanches", fonte, cor);
         btnLanches.addActionListener(e -> mainFrame.showPanel("lanche"));
         btnLanches.setVisible(false);
@@ -91,16 +93,12 @@ public class FormMenu extends JPanel {
         btnBebidas.setVisible(false);
         adicionar(painelCentro, gbc, btnBebidas, 2, 1);
 
-        // ---------- ROW 3 ----------
         btnStatus = criarBotao("Status do Pedido", fonte, cor);
         btnStatus.addActionListener(e -> mainFrame.showPanel("status"));
         adicionar(painelCentro, gbc, btnStatus, 1, 2);
 
         add(painelCentro, BorderLayout.CENTER);
 
-        // =========================
-        // PAINEL INFERIOR (RODAPÉ)
-        // =========================
         JPanel painelRodape = new JPanel(new FlowLayout(FlowLayout.CENTER));
         painelRodape.setBorder(BorderFactory.createEmptyBorder(40, 0, 20, 0));
 
@@ -113,7 +111,6 @@ public class FormMenu extends JPanel {
         btnEncerrarTurno.setPreferredSize(new Dimension(250, 45));
         btnEncerrarTurno.addActionListener(e -> controller.encerrarTurno(mainFrame.getVendedor()));
 
-        // Hover do botão
         btnEncerrarTurno.addMouseListener(new java.awt.event.MouseAdapter() {
             @Override
             public void mouseEntered(java.awt.event.MouseEvent evt) {
@@ -128,6 +125,7 @@ public class FormMenu extends JPanel {
 
         painelRodape.add(btnEncerrarTurno);
         add(painelRodape, BorderLayout.SOUTH);
+        painelRodape.setOpaque(false);
     }
 
     private JButton criarBotao(String texto, Font font, Color color) {
