@@ -43,6 +43,7 @@ public class FormLanche extends JPanel {
 
         listLanches = new JList<>(listModel);
         listLanches.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        listLanches.setFont(new Font("Arial", Font.BOLD, 27));
         JScrollPane scrollPane = new JScrollPane(listLanches);
 
         // Botões

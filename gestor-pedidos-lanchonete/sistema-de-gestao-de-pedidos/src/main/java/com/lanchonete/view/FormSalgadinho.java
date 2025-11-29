@@ -42,6 +42,7 @@ public class FormSalgadinho extends JPanel {
 
         listSalgadinhos = new JList<>(opcoes);
         listSalgadinhos.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        listSalgadinhos.setFont(new Font("Arial", Font.BOLD, 27));
         JScrollPane scrollPane = new JScrollPane(listSalgadinhos);
 
         // Botões
