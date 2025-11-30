@@ -30,13 +30,10 @@ public class PedidoService {
         throw new IllegalArgumentException("O pedido está vazio.");
     }
 
-    // ➤ Soma no total vendido
     vendedor.adicionarVenda(total);
 
-    // ➤ Calcula bônus (0,5%)
-    double bonus = total * 0.005;
+    double bonus = total * 0.05;
 
-    // ➤ Acumula bônus no vendedor
     vendedor.adicionarBonus(bonus);
     
     }

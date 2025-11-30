@@ -6,7 +6,7 @@ public class Vendedor {
     private int codigo;
 
     private double bonus;
-    private double totalVendido; // NOVO
+    private double totalVendido;
 
     public Vendedor(String nome, int codigo) {
         this.nome = nome;

@@ -35,7 +35,7 @@ public class PedidoController {
         repository.salvar(pedido);
 
         // Retorna o bônus real adicionado ao vendedor
-        double bonusAplicado = pedido.calcularTotal() * 0.005;
+        double bonusAplicado = pedido.calcularTotal() * 0.05;
 
         return new ResultadoPedido(bonusAplicado);
     }

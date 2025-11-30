@@ -229,3 +229,95 @@ Itens:
  - Pastel Assado com recheio de Carne | R$ 5,00
 -----------------------------
 
+===== PEDIDO FINALIZADO =====
+Cliente: qwdsd
+Vendedor: PATRICK_CAMPESTRINI
+Valor Total: R$ 69,00
+-----------------------------
+Itens:
+ - Frango e Bacon no pão X-Frango Bacon com molho Pão de forma | R$ 20,00
+ - Frango e Bacon no pão X-Frango Bacon com molho Pão de forma | R$ 20,00
+ - Carne no pão X-Burguer com molho Pão de forma | R$ 10,00
+ - Atum no pão X-Atum com molho Pão de forma | R$ 19,00
+-----------------------------
+
+===== PEDIDO FINALIZADO =====
+Cliente: xzcvdt
+Vendedor: PATRICK_CAMPESTRINI
+Valor Total: R$ 69,00
+-----------------------------
+Itens:
+ - Frango e Bacon no pão X-Frango Bacon com molho Pão de forma | R$ 20,00
+ - Frango e Bacon no pão X-Frango Bacon com molho Pão de forma | R$ 20,00
+ - Carne no pão X-Burguer com molho Pão de forma | R$ 10,00
+ - Atum no pão X-Atum com molho Pão de forma | R$ 19,00
+-----------------------------
+
+===== PEDIDO FINALIZADO =====
+Cliente: kjhg
+Vendedor: PATRICK_CAMPESTRINI
+Valor Total: R$ 680,00
+-----------------------------
+Itens:
+ - Frango e Bacon no pão X-Frango Bacon com molho Pão de forma | R$ 20,00
+ - Frango e Bacon no pão X-Frango Bacon com molho Pão de forma | R$ 20,00
+ - Frango e Bacon no pão X-Frango Bacon com molho Pão de forma | R$ 20,00
+ - Frango e Bacon no pão X-Frango Bacon com molho Pão de forma | R$ 20,00
+ - Frango e Bacon no pão X-Frango Bacon com molho Pão de forma | R$ 20,00
+ - Frango e Bacon no pão X-Frango Bacon com molho Pão de forma | R$ 20,00
+ - Frango e Bacon no pão X-Frango Bacon com molho Pão de forma | R$ 20,00
+ - Frango e Bacon no pão X-Frango Bacon com molho Pão de forma | R$ 20,00
+ - Frango e Bacon no pão X-Frango Bacon com molho Pão de forma | R$ 20,00
+ - Frango e Bacon no pão X-Frango Bacon com molho Pão de forma | R$ 20,00
+ - Frango e Bacon no pão X-Frango Bacon com molho Pão de forma | R$ 20,00
+ - Frango e Bacon no pão X-Frango Bacon com molho Pão de forma | R$ 20,00
+ - Frango e Bacon no pão X-Frango Bacon com molho Pão de forma | R$ 20,00
+ - Frango e Bacon no pão X-Frango Bacon com molho Pão de forma | R$ 20,00
+ - Frango e Bacon no pão X-Frango Bacon com molho Pão de forma | R$ 20,00
+ - Frango e Bacon no pão X-Frango Bacon com molho Pão de forma | R$ 20,00
+ - Frango e Bacon no pão X-Frango Bacon com molho Pão de forma | R$ 20,00
+ - Frango e Bacon no pão X-Frango Bacon com molho Pão de forma | R$ 20,00
+ - Frango e Bacon no pão X-Frango Bacon com molho Pão de forma | R$ 20,00
+ - Frango e Bacon no pão X-Frango Bacon com molho Pão de forma | R$ 20,00
+ - Frango e Bacon no pão X-Frango Bacon com molho Pão de forma | R$ 20,00
+ - Frango e Bacon no pão X-Frango Bacon com molho Pão de forma | R$ 20,00
+ - Frango e Bacon no pão X-Frango Bacon com molho Pão de forma | R$ 20,00
+ - Frango e Bacon no pão X-Frango Bacon com molho Pão de forma | R$ 20,00
+ - Frango e Bacon no pão X-Frango Bacon com molho Pão de forma | R$ 20,00
+ - Frango e Bacon no pão X-Frango Bacon com molho Pão de forma | R$ 20,00
+ - Frango e Bacon no pão X-Frango Bacon com molho Pão de forma | R$ 20,00
+ - Frango e Bacon no pão X-Frango Bacon com molho Pão de forma | R$ 20,00
+ - Frango e Bacon no pão X-Frango Bacon com molho Pão de forma | R$ 20,00
+ - Frango e Bacon no pão X-Frango Bacon com molho Pão de forma | R$ 20,00
+ - Frango e Bacon no pão X-Frango Bacon com molho Pão de forma | R$ 20,00
+ - Frango e Bacon no pão X-Frango Bacon com molho Pão de forma | R$ 20,00
+ - Frango e Bacon no pão X-Frango Bacon com molho Pão de forma | R$ 20,00
+ - Frango e Bacon no pão X-Frango Bacon com molho Pão de forma | R$ 20,00
+-----------------------------
+
+===== PEDIDO FINALIZADO =====
+Cliente: poj
+Vendedor: PATRICK_CAMPESTRINI
+Valor Total: R$ 100,00
+-----------------------------
+Itens:
+ - Frango e Bacon no pão X-Frango Bacon com molho Pão de forma | R$ 20,00
+ - Frango e Bacon no pão X-Frango Bacon com molho Pão de forma | R$ 20,00
+ - Frango e Bacon no pão X-Frango Bacon com molho Pão de forma | R$ 20,00
+ - Frango e Bacon no pão X-Frango Bacon com molho Pão de forma | R$ 20,00
+ - Frango e Bacon no pão X-Frango Bacon com molho Pão de forma | R$ 20,00
+-----------------------------
+
+===== PEDIDO FINALIZADO =====
+Cliente: jl;kl
+Vendedor: PATRICK_CAMPESTRINI
+Valor Total: R$ 100,00
+-----------------------------
+Itens:
+ - Frango e Bacon no pão X-Frango Bacon com molho Pão de forma | R$ 20,00
+ - Frango e Bacon no pão X-Frango Bacon com molho Pão de forma | R$ 20,00
+ - Frango e Bacon no pão X-Frango Bacon com molho Pão de forma | R$ 20,00
+ - Frango e Bacon no pão X-Frango Bacon com molho Pão de forma | R$ 20,00
+ - Frango e Bacon no pão X-Frango Bacon com molho Pão de forma | R$ 20,00
+-----------------------------
+
