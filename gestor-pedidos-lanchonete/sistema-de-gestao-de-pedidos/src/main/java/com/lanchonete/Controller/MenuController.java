@@ -50,6 +50,7 @@ public class MenuController {
         }
 
         double bonus = vendedor.getBonus();
+
         JOptionPane.showMessageDialog(null,
                 "Vendedor: " + vendedor.getNome() + "\n" +
                 "Bônus Acumulado: " + FormatadorMoeda.formatar(bonus) + "\n" +
@@ -68,14 +69,16 @@ public class MenuController {
 
         if (confirmacao == JOptionPane.YES_OPTION) {
             double bonus = vendedor.getBonus();
+
             JOptionPane.showMessageDialog(null,
                     "==== RESUMO FINAL DO TURNO ====\n\n" +
                     "Vendedor: " + vendedor.getNome() + "\n" +
                     "Bônus Acumulado: " + FormatadorMoeda.formatar(bonus) + "\n" +
-                    "Total a Receber: " + FormatadorMoeda.formatar(bonus) + "\n\n" +
+                    "Total de Vendas: " + FormatadorMoeda.formatar(bonus) + "\n\n" +
                     "Volte sempre!",
                     "Turno Encerrado",
                     JOptionPane.INFORMATION_MESSAGE);
+
             System.exit(0);
         }
     }

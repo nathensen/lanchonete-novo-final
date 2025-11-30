@@ -29,8 +29,5 @@ public class PedidoService {
         if (total <= 0) {
             throw new IllegalArgumentException("O pedido está vazio.");
         }
-
-        // Agora usa o método correto do seu Vendedor
-        vendedor.adicionarBonus(total);
     }
 }

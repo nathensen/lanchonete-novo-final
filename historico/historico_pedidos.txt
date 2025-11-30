@@ -1,0 +1,69 @@
+===== PEDIDO FINALIZADO =====
+Cliente: asfd
+Vendedor: NATANE_HENSEN
+Valor Total: R$ 80,00
+-----------------------------
+Itens:
+ - Frango e Bacon no pão X-Frango Bacon com molho Pão de forma | R$ 20,00
+ - Frango e Bacon no pão X-Frango Bacon com molho Pão de forma | R$ 20,00
+ - Frango e Bacon no pão X-Frango Bacon com molho Pão de forma | R$ 20,00
+ - Frango e Bacon no pão X-Frango Bacon com molho Pão de forma | R$ 20,00
+-----------------------------
+
+===== PEDIDO FINALIZADO =====
+Cliente: asd
+Vendedor: NATANE_HENSEN
+Valor Total: R$ 17,00
+-----------------------------
+Itens:
+ - Calabresa no pão X-Calabresa com molho Pão de forma | R$ 17,00
+-----------------------------
+
+===== PEDIDO FINALIZADO =====
+Cliente: asd
+Vendedor: NATANE_HENSEN
+Valor Total: R$ 20,00
+-----------------------------
+Itens:
+ - Frango e Bacon no pão X-Frango Bacon com molho Pão de forma | R$ 20,00
+-----------------------------
+
+===== PEDIDO FINALIZADO =====
+Cliente: asd
+Vendedor: NATANE_HENSEN
+Valor Total: R$ 20,00
+-----------------------------
+Itens:
+ - Frango e Bacon no pão X-Frango Bacon com molho Pão de forma | R$ 20,00
+-----------------------------
+
+===== PEDIDO FINALIZADO =====
+Cliente: sad
+Vendedor: NATANE_HENSEN
+Valor Total: R$ 69,00
+-----------------------------
+Itens:
+ - Frango e Bacon no pão X-Frango Bacon com molho Pão de forma | R$ 20,00
+ - Frango e Bacon no pão X-Frango Bacon com molho Pão de forma | R$ 20,00
+ - Carne no pão X-Burguer com molho Pão de forma | R$ 10,00
+ - Atum no pão X-Atum com molho Pão de forma | R$ 19,00
+-----------------------------
+
+===== PEDIDO FINALIZADO =====
+Cliente: asdasd
+Vendedor: NATANE_HENSEN
+Valor Total: R$ 17,00
+-----------------------------
+Itens:
+ - Calabresa no pão X-Calabresa com molho Pão de forma | R$ 17,00
+-----------------------------
+
+===== PEDIDO FINALIZADO =====
+Cliente: asd
+Vendedor: NATANE_HENSEN
+Valor Total: R$ 20,00
+-----------------------------
+Itens:
+ - Frango e Bacon no pão X-Frango Bacon com molho Pão de forma | R$ 20,00
+-----------------------------
+

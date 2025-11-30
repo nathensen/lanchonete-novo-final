@@ -5,8 +5,8 @@ import java.util.Optional;
 
 import com.lanchonete.model.Pedido;
 import com.lanchonete.model.Vendedor;
-import com.lanchonete.service.PedidoService;
 import com.lanchonete.repository.PedidoRepository;
+import com.lanchonete.service.PedidoService;
 import com.lanchonete.view.MainFrame;
 
 public class PedidoController {
@@ -22,21 +22,36 @@ public class PedidoController {
     }
 
     public Pedido novoPedido(String nomeCliente, Pedido pedidoAtual, Vendedor vendedor) {
-        Pedido p = service.criarPedido(nomeCliente, vendedor);
-        return p;
+        return service.criarPedido(nomeCliente, vendedor);
     }
 
     public ResultadoPedido finalizarPedido() {
         Pedido pedido = mainFrame.getPedidoAtual();
-        if (pedido == null) return new ResultadoPedido(0);
-        service.finalizarPedido(pedido, mainFrame.getVendedor());
+        Vendedor vendedor = mainFrame.getVendedor();
+
+        if (pedido == null) {
+            throw new IllegalStateException("Nenhum pedido ativo.");
+        }
+
+        // Finaliza o pedido (sem calcular bônus)
+        service.finalizarPedido(pedido, vendedor);
+
+        // Salva o pedido no repositório
         repository.salvar(pedido);
-        return new ResultadoPedido(pedido.calcularTotal() * 0.05); // exemplo de bônus
+
+        // Calcula bônus correto (5%)
+        double bonus = pedido.calcularTotal() * 0.005;
+
+        // Adiciona no vendedor
+        vendedor.adicionarBonus(bonus);
+
+        return new ResultadoPedido(bonus);
     }
 
     public List<Pedido> listarPedidosFinalizados() {
         return repository.listar().stream()
-                .filter(p -> p.getStatusEntrega().equals("em_producao") || p.getStatusEntrega().equals("entregue"))
+                .filter(p -> p.getStatusEntrega().equals("em_producao")
+                          || p.getStatusEntrega().equals("entregue"))
                 .toList();
     }
 
