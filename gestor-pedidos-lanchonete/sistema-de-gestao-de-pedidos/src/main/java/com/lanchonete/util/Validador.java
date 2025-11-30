@@ -6,7 +6,6 @@ public class Validador {
             throw new IllegalArgumentException(mensagemErro);
         }   
     }
-
     
     public static void validarNumero(double valor, double minimo, String mensagemErro) {
         if (valor < minimo) {

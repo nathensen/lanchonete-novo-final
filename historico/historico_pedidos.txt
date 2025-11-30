@@ -1,0 +1,231 @@
+===== PEDIDO FINALIZADO =====
+Cliente: SADSAD
+Vendedor: NATANE_HENSEN
+Valor Total: R$ 16,00
+-----------------------------
+Itens:
+ - Carne no pão Duplo X-Burguer com molho Pão de forma | R$ 16,00
+-----------------------------
+
+===== PEDIDO FINALIZADO =====
+Cliente: PATRICK CAMPESTRINI
+Vendedor: NATANE_HENSEN
+Valor Total: R$ 69,00
+-----------------------------
+Itens:
+ - Frango e Bacon no pão X-Frango Bacon com molho Pão de forma | R$ 20,00
+ - Frango e Bacon no pão X-Frango Bacon com molho Pão de forma | R$ 20,00
+ - Frango e Bacon no pão X-Frango Bacon com molho Pão de forma | R$ 20,00
+ - Pastel Assado com recheio de Carne | R$ 5,00
+ - Pastel Frito com recheio de Frango | R$ 4,00
+-----------------------------
+
+===== PEDIDO FINALIZADO =====
+Cliente: asdasd
+Vendedor: NATANE_HENSEN
+Valor Total: R$ 18,00
+-----------------------------
+Itens:
+ - Carne no pão Triplo X-Burguer com molho Pão de forma | R$ 18,00
+-----------------------------
+
+===== PEDIDO FINALIZADO =====
+Cliente: PATRICK CAMPESTRINI
+Vendedor: NATANE_HENSEN
+Valor Total: R$ 69,00
+-----------------------------
+Itens:
+ - Frango e Bacon no pão X-Frango Bacon com molho Pão de forma | R$ 20,00
+ - Frango e Bacon no pão X-Frango Bacon com molho Pão de forma | R$ 20,00
+ - Frango e Bacon no pão X-Frango Bacon com molho Pão de forma | R$ 20,00
+ - Pastel Assado com recheio de Frango | R$ 5,00
+ - Pastel Frito com recheio de Carne | R$ 4,00
+-----------------------------
+
+===== PEDIDO FINALIZADO =====
+Cliente: JUVENAL SANTOS
+Vendedor: NATANE_HENSEN
+Valor Total: R$ 10,00
+-----------------------------
+Itens:
+ - Pastel Frito com recheio de Frango | R$ 4,00
+ - Empanado Frito com recheio de Frango | R$ 6,00
+-----------------------------
+
+===== PEDIDO FINALIZADO =====
+Cliente: CAROLINE DIAS
+Vendedor: NATANE_HENSEN
+Valor Total: R$ 102,00
+-----------------------------
+Itens:
+ - Carne no pão Duplo X-Burguer com molho Pão de forma | R$ 16,00
+ - Carne no pão Triplo X-Burguer com molho Pão de forma | R$ 18,00
+ - Carne no pão X-Egg com molho Pão de forma | R$ 13,00
+ - Frango e Bacon no pão X-Frango Bacon com molho Pão de forma | R$ 20,00
+ - Carne no pão X-Egg com molho Pão de forma | R$ 13,00
+ - Refrigerante Guaraná Garrafa (1L) | R$ 8,00
+ - Água Mineral Natural Garrafa (250ml) | R$ 2,00
+ - Refrigerante Coca-Cola Garrafa (2L) | R$ 12,00
+-----------------------------
+
+===== PEDIDO FINALIZADO =====
+Cliente: THIAGO ARAÚJO
+Vendedor: NATANE_HENSEN
+Valor Total: R$ 92,00
+-----------------------------
+Itens:
+ - Frango e Bacon no pão X-Frango Bacon com molho Pão de forma | R$ 20,00
+ - Carne no pão Triplo X-Burguer com molho Pão de forma | R$ 18,00
+ - Carne no pão Duplo X-Burguer com molho Pão de forma | R$ 16,00
+ - Carne no pão Cheeseburger com molho Pão de hambúrguer | R$ 12,00
+ - Carne no pão X-Bacon com molho Pão de forma | R$ 15,00
+ - Frango no pão X-Frango com molho Pão de forma | R$ 11,00
+-----------------------------
+
+===== PEDIDO FINALIZADO =====
+Cliente: MATHEUS RAMIRES
+Vendedor: NATANE_HENSEN
+Valor Total: R$ 18,00
+-----------------------------
+Itens:
+ - Carne no pão Triplo X-Burguer com molho Pão de forma | R$ 18,00
+-----------------------------
+
+===== PEDIDO FINALIZADO =====
+Cliente: VIVIANE FERREIRA
+Vendedor: NATANE_HENSEN
+Valor Total: R$ 6,00
+-----------------------------
+Itens:
+ - Empanado Frito com recheio de Frango | R$ 6,00
+-----------------------------
+
+===== PEDIDO FINALIZADO =====
+Cliente: BEATRIZ CIPRIANI
+Vendedor: NATANE_HENSEN
+Valor Total: R$ 12,00
+-----------------------------
+Itens:
+ - Refrigerante Guaraná Garrafa (2L) | R$ 12,00
+-----------------------------
+
+===== PEDIDO FINALIZADO =====
+Cliente: RUBENS SIQUEIRA
+Vendedor: NATANE_HENSEN
+Valor Total: R$ 18,00
+-----------------------------
+Itens:
+ - Carne no pão Triplo X-Burguer com molho Pão de forma | R$ 18,00
+-----------------------------
+
+===== PEDIDO FINALIZADO =====
+Cliente: LUANA TRAVALHA
+Vendedor: NATANE_HENSEN
+Valor Total: R$ 16,00
+-----------------------------
+Itens:
+ - Carne no pão Duplo X-Burguer com molho Pão de forma | R$ 16,00
+-----------------------------
+
+===== PEDIDO FINALIZADO =====
+Cliente: JONATHAN FERDINANDO
+Vendedor: NATANE_HENSEN
+Valor Total: R$ 14,00
+-----------------------------
+Itens:
+ - Carne no pão X-Tudo com molho Pão de forma | R$ 14,00
+-----------------------------
+
+===== PEDIDO FINALIZADO =====
+Cliente: PATRICK CAMPESTRINI
+Vendedor: NATANE_HENSEN
+Valor Total: R$ 20,00
+-----------------------------
+Itens:
+ - Frango e Bacon no pão X-Frango Bacon com molho Pão de forma | R$ 20,00
+-----------------------------
+
+===== PEDIDO FINALIZADO =====
+Cliente: luis
+Vendedor: NATANE_HENSEN
+Valor Total: R$ 20,00
+-----------------------------
+Itens:
+ - Frango e Bacon no pão X-Frango Bacon com molho Pão de forma | R$ 20,00
+-----------------------------
+
+===== PEDIDO FINALIZADO =====
+Cliente: PATRICK CAMPESTRINI
+Vendedor: NATANE_HENSEN
+Valor Total: R$ 69,00
+-----------------------------
+Itens:
+ - Frango e Bacon no pão X-Frango Bacon com molho Pão de forma | R$ 20,00
+ - Frango e Bacon no pão X-Frango Bacon com molho Pão de forma | R$ 20,00
+ - Frango e Bacon no pão X-Frango Bacon com molho Pão de forma | R$ 20,00
+ - Pastel Assado com recheio de Frango | R$ 5,00
+ - Pastel Frito com recheio de Frango | R$ 4,00
+-----------------------------
+
+===== PEDIDO FINALIZADO =====
+Cliente: NATANE
+Vendedor: NATANE_HENSEN
+Valor Total: R$ 69,00
+-----------------------------
+Itens:
+ - Frango e Bacon no pão X-Frango Bacon com molho Pão de forma | R$ 20,00
+ - Frango e Bacon no pão X-Frango Bacon com molho Pão de forma | R$ 20,00
+ - Frango e Bacon no pão X-Frango Bacon com molho Pão de forma | R$ 20,00
+ - Pastel Assado com recheio de Frango | R$ 5,00
+ - Pastel Frito com recheio de Frango | R$ 4,00
+-----------------------------
+
+===== PEDIDO FINALIZADO =====
+Cliente: JUVENAL
+Vendedor: NATANE_HENSEN
+Valor Total: R$ 21,00
+-----------------------------
+Itens:
+ - Calabresa no pão X-Calabresa com molho Pão de forma | R$ 17,00
+ - Pastel Frito com recheio de Frango | R$ 4,00
+-----------------------------
+
+===== PEDIDO FINALIZADO =====
+Cliente: MATHEUS
+Vendedor: NATANE_HENSEN
+Valor Total: R$ 69,00
+-----------------------------
+Itens:
+ - Frango e Bacon no pão X-Frango Bacon com molho Pão de forma | R$ 20,00
+ - Frango e Bacon no pão X-Frango Bacon com molho Pão de forma | R$ 20,00
+ - Frango e Bacon no pão X-Frango Bacon com molho Pão de forma | R$ 20,00
+ - Pastel Frito com recheio de Frango | R$ 4,00
+ - Pastel Assado com recheio de Carne | R$ 5,00
+-----------------------------
+
+===== PEDIDO FINALIZADO =====
+Cliente: MARCOS
+Vendedor: NATANE_HENSEN
+Valor Total: R$ 69,00
+-----------------------------
+Itens:
+ - Frango e Bacon no pão X-Frango Bacon com molho Pão de forma | R$ 20,00
+ - Frango e Bacon no pão X-Frango Bacon com molho Pão de forma | R$ 20,00
+ - Frango e Bacon no pão X-Frango Bacon com molho Pão de forma | R$ 20,00
+ - Pastel Assado com recheio de Frango | R$ 5,00
+ - Pastel Frito com recheio de Frango | R$ 4,00
+-----------------------------
+
+===== PEDIDO FINALIZADO =====
+Cliente: CARLOS
+Vendedor: NATANE_HENSEN
+Valor Total: R$ 69,00
+-----------------------------
+Itens:
+ - Frango e Bacon no pão X-Frango Bacon com molho Pão de forma | R$ 20,00
+ - Frango e Bacon no pão X-Frango Bacon com molho Pão de forma | R$ 20,00
+ - Frango e Bacon no pão X-Frango Bacon com molho Pão de forma | R$ 20,00
+ - Pastel Frito com recheio de Frango | R$ 4,00
+ - Pastel Assado com recheio de Carne | R$ 5,00
+-----------------------------
+

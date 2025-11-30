@@ -29,22 +29,27 @@ public class VendedorService {
         return repository.listarTodos();
     }
 
-    public double calcularTotalReceber(Vendedor vendedor) {
-        return vendedor.getBonus();
+    // ⬇⬇⬇ A PARTIR DAQUI ESTÁ DENTRO DA CLASSE (CORRIGIDO) ⬇⬇⬇
+
+    // Cálculo real do bônus
+    public double calcularBonusSobreTotal(double totalVendido) {
+        return totalVendido * 0.005;  // 0,5%
     }
 
-    public String gerarInformacoes(Vendedor vendedor) {
+    public String gerarInformacoes(Vendedor vendedor, double totalVendido) {
+        double bonusDoTurno = calcularBonusSobreTotal(totalVendido);
+
         return "=== Informações do Vendedor ===\n" +
                 "Nome: " + vendedor.getNome() + "\n" +
                 "Código: " + vendedor.getCodigo() + "\n" +
-                "Bônus acumulado: R$ " + String.format("%.2f", vendedor.getBonus()) + "\n" +
-                "Total a receber: R$ " + String.format("%.2f", calcularTotalReceber(vendedor)) + "\n";
+                "Total vendido no turno: R$ " + String.format("%.2f", totalVendido) + "\n" +
+                "Bônus do turno (0,5%): R$ " + String.format("%.2f", bonusDoTurno) + "\n" +
+                "Bônus acumulado: R$ " + String.format("%.2f", vendedor.getBonus()) + "\n";
     }
 
-    public String gerarResumoFinalTurno(Vendedor vendedor) {
+    public String gerarResumoFinalTurno(Vendedor vendedor, double totalVendido) {
         return "\n======== RESUMO FINAL DO TURNO ========\n" +
-                gerarInformacoes(vendedor) +
+                gerarInformacoes(vendedor, totalVendido) +
                 "=======================================\n";
     }
-    
 }

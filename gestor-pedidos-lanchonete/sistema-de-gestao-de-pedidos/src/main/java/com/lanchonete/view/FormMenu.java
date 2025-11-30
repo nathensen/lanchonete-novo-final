@@ -22,16 +22,16 @@ import javax.swing.SwingConstants;
 import com.lanchonete.controller.MenuController;
 import com.lanchonete.model.Pedido;
 
-    public class FormMenu extends BackgroundPanel {
+public class FormMenu extends BackgroundPanel {
 
-        private MainFrame mainFrame;
-        private MenuController controller;
+    private MainFrame mainFrame;
+    private MenuController controller;
 
-        private JButton btnNovoPedido, btnLanches, btnSalgadinhos, btnBebidas;
-        private JButton btnVerPedido, btnBonus, btnStatus, btnEncerrarTurno;
+    private JButton btnNovoPedido, btnLanches, btnSalgadinhos, btnBebidas;
+    private JButton btnVerPedido, btnBonus, btnStatus, btnEncerrarTurno;
 
-        public FormMenu(MainFrame mainFrame) {
-        
+    public FormMenu(MainFrame mainFrame) {
+
         Image img = null;
         try {
             img = ImageIO.read(BackgroundPanel.class.getResourceAsStream("/com/lanchonete/resources/fundoMenu.jpg"));
@@ -46,9 +46,10 @@ import com.lanchonete.model.Pedido;
 
         setLayout(new BorderLayout());
 
+        // ---------- TOPO ----------
         JPanel painelTopo = new JPanel(new FlowLayout(FlowLayout.CENTER));
         painelTopo.setOpaque(false);
-        painelTopo.setBorder(BorderFactory.createEmptyBorder(20, 0, 10, 0)); // perto da borda superior
+        painelTopo.setBorder(BorderFactory.createEmptyBorder(20, 0, 10, 0));
 
         JLabel lblTitulo = new JLabel("MENU PRINCIPAL", SwingConstants.CENTER);
         lblTitulo.setFont(new Font("Arial", Font.BOLD, 30));
@@ -57,6 +58,7 @@ import com.lanchonete.model.Pedido;
 
         add(painelTopo, BorderLayout.NORTH);
 
+        // ---------- CENTRO ----------
         JPanel painelCentro = new JPanel(new GridBagLayout());
         painelCentro.setOpaque(false);
         GridBagConstraints gbc = new GridBagConstraints();
@@ -95,15 +97,17 @@ import com.lanchonete.model.Pedido;
 
         btnStatus = criarBotao("Status do Pedido", fonte, cor);
         btnStatus.addActionListener(e -> {
-            mainFrame.getStatusPedidoPanel().atualizarLista(); // Atualiza pedidos pagos
-            mainFrame.showPanel("statusPedido"); // Mostra o painel StatusPedido
+            mainFrame.getStatusPedidoPanel().atualizarLista();
+            mainFrame.showPanel("statusPedido");
         });
         adicionar(painelCentro, gbc, btnStatus, 1, 2);
 
         add(painelCentro, BorderLayout.CENTER);
 
+        // ---------- RODAPÉ ----------
         JPanel painelRodape = new JPanel(new FlowLayout(FlowLayout.CENTER));
         painelRodape.setBorder(BorderFactory.createEmptyBorder(40, 0, 20, 0));
+        painelRodape.setOpaque(false);
 
         btnEncerrarTurno = new JButton("Encerrar Turno e Sair");
         btnEncerrarTurno.setFont(new Font("SansSerif", Font.BOLD, 20));
@@ -112,7 +116,7 @@ import com.lanchonete.model.Pedido;
         btnEncerrarTurno.setOpaque(true);
         btnEncerrarTurno.setBorderPainted(false);
         btnEncerrarTurno.setPreferredSize(new Dimension(250, 45));
-        btnEncerrarTurno.addActionListener(e -> controller.encerrarTurno(mainFrame.getVendedor()));
+        btnEncerrarTurno.addActionListener(e -> controller.encerrarTurno(mainFrame.getVendedor(), mainFrame)); // erro aqui
 
         btnEncerrarTurno.addMouseListener(new java.awt.event.MouseAdapter() {
             @Override
@@ -128,7 +132,6 @@ import com.lanchonete.model.Pedido;
 
         painelRodape.add(btnEncerrarTurno);
         add(painelRodape, BorderLayout.SOUTH);
-        painelRodape.setOpaque(false);
     }
 
     private JButton criarBotao(String texto, Font font, Color color) {
@@ -157,6 +160,7 @@ import com.lanchonete.model.Pedido;
         );
 
         if (pedido != null) {
+
             btnLanches.setVisible(true);
             btnSalgadinhos.setVisible(true);
             btnBebidas.setVisible(true);

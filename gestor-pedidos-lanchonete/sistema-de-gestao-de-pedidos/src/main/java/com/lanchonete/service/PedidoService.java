@@ -20,17 +20,24 @@ public class PedidoService {
 
     public void finalizarPedido(Pedido pedido, Vendedor vendedor) {
 
-        if (pedido == null) {
-            throw new IllegalArgumentException("Nenhum pedido ativo.");
-        }
+    if (pedido == null) {
+        throw new IllegalArgumentException("Nenhum pedido ativo.");
+    }
 
-        double total = pedido.calcularTotal();
+    double total = pedido.calcularTotal();
 
-        if (total <= 0) {
-            throw new IllegalArgumentException("O pedido está vazio.");
-        }
+    if (total <= 0) {
+        throw new IllegalArgumentException("O pedido está vazio.");
+    }
 
-        // Agora usa o método correto do seu Vendedor
-        vendedor.adicionarBonus(total);
+    // ➤ Soma no total vendido
+    vendedor.adicionarVenda(total);
+
+    // ➤ Calcula bônus (0,5%)
+    double bonus = total * 0.005;
+
+    // ➤ Acumula bônus no vendedor
+    vendedor.adicionarBonus(bonus);
+    
     }
 }

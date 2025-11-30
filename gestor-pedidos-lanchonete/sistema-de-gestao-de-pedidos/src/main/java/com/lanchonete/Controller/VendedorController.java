@@ -12,13 +12,18 @@ public class VendedorController {
     public VendedorController(VendedorService service) {
         this.service = service;
     }
-    
-    // Resumo final do turno
-    public void mostrarResumoFinalTurno(int codigo) {
-        Vendedor vendedor = service.buscarPorCodigo(codigo);
 
-        JOptionPane.showMessageDialog(null,
-                service.gerarResumoFinalTurno(vendedor),
-                "Resumo do Turno", JOptionPane.INFORMATION_MESSAGE);
-        }
- }
+    // Agora recebe diretamente o vendedor logado
+    public void mostrarResumoFinalTurno(Vendedor vendedorLogado, double totalVendido) {
+
+        String resumo = service.gerarResumoFinalTurno(vendedorLogado, totalVendido); // erro aqui
+
+        JOptionPane.showMessageDialog(
+                null,
+                resumo,
+                "Resumo do Turno",
+                JOptionPane.INFORMATION_MESSAGE
+        );
+    }
+}
+
