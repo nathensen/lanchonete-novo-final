@@ -24,6 +24,7 @@ import javax.swing.JTextField;
 import com.lanchonete.controller.LoginController;
 import com.lanchonete.repository.IVendedorRepository;
 import com.lanchonete.repository.VendedorRepository;
+import com.lanchonete.service.LoginService;
 import com.lanchonete.service.VendedorService;
 
 public class FormLogin extends BackgroundPanel {
@@ -50,12 +51,16 @@ public class FormLogin extends BackgroundPanel {
 
 
 
-        // Repository + service
+        // Repository + service (igual ao que você já tem)
         IVendedorRepository vendedorRepository = new VendedorRepository();
-        this.vendedorService = new VendedorService(vendedorRepository);
+        VendedorService vendedorService = new VendedorService(vendedorRepository);
 
-        // Controller recebendo service (CORRETO!)
-        this.loginController = new LoginController(vendedorService);
+        // novo: LoginService que usa VendedorService
+        LoginService loginService = new LoginService(vendedorService);
+
+        // Controller agora recebe LoginService
+        this.loginController = new LoginController(loginService);
+
 
         // Layout geral
         setLayout(new BorderLayout());

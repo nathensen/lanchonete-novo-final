@@ -3,74 +3,34 @@ package com.lanchonete.controller;
 import javax.swing.JOptionPane;
 
 import com.lanchonete.model.Vendedor;
-import com.lanchonete.service.VendedorService;
+import com.lanchonete.service.LoginService;
 import com.lanchonete.view.MainFrame;
 
-/**
- * LoginController
- * ----------------
- * Responsável por:
- *  - Validar dados do login
- *  - Criar o vendedor
- *  - Salvar no repository
- *  - Atualizar o MainFrame (setar vendedor e trocar tela)
- *
- * A VIEW (FormLogin) chama apenas o método login().
- */
 public class LoginController {
 
-    private static final String Usuario_permitido1 = "NATANE_HENSEN";
-    private static final String Usuario_permitido2 = "PATRICK_CAMPESTRINI";
-    private static final String Usuario_permitido3 = "THIAGO_BIAVATTI";
-    private static final String Senha_Fixa = "1234"; 
+    private final LoginService loginService;
 
-    private final VendedorService vendedorService;
-
-    public LoginController(VendedorService vendedorService) {
-        this.vendedorService = vendedorService;
+    public LoginController(LoginService loginService) {
+        this.loginService = loginService;
     }
 
     /**
-     * Método principal chamado pela View.
-     * Ele realiza o login COMPLETO:
-     *  1. Valida campos
-     *  2. Verifica senha
-     *  3. Cria vendedor
-     *  4. Salva no repository
-     *  5. Atualiza o MainFrame
+     * Chamado pela View. Coordena o fluxo de login.
      */
-    public void login(String nome, String senhaDigitada, MainFrame mainFrame) throws Exception {
+    public void login(String nome, String senhaDigitada, MainFrame mainFrame) {
 
-        autenticar(nome, senhaDigitada);
+        try {
+            Vendedor vendedor = loginService.autenticarELogar(nome, senhaDigitada);
 
-        // Cria e salva vendedor
-        Vendedor vendedor = vendedorService.criarVendedor(nome, 0);
-        vendedorService.salvarVendedor(vendedor);
+            // Atualiza o MainFrame (sessão)
+            mainFrame.setVendedor(vendedor);
+            mainFrame.showPanel("menu");
 
-        // Atualiza o MainFrame
-        mainFrame.setVendedor(vendedor);
-        mainFrame.showPanel("menu");
-
-        JOptionPane.showMessageDialog(null,
-                "Bem-vindo(a), " + nome + "!");
-    }
-
-    public void autenticar(String nome, String senhaDigitada) throws Exception {
-
-        if (nome == null || nome.isBlank()) {
-            throw new Exception("Digite o login.");
-        }
-
-        if (senhaDigitada == null || senhaDigitada.isBlank()) {
-            throw new Exception("Digite a senha.");
-        }
-
-        if (!nome.equals(Usuario_permitido1) && !nome.equals(Usuario_permitido2) && !nome.equals(Usuario_permitido3)) {
-            throw new Exception("Usuario nao cadastrado!");
-        }
-
-        if (!senhaDigitada.equals(Senha_Fixa)) {
-            throw new Exception("Senha incorreta!");
+            JOptionPane.showMessageDialog(null, "Bem-vindo(a), " + nome + "!");
+        } catch (Exception e) {
+            // repassa exceção para a view tratar (ou podemos mostrar aqui)
+            // manter comportamento atual: lançar para a view mostrar dialog
+            throw new RuntimeException(e.getMessage(), e);
         }
     }
 }

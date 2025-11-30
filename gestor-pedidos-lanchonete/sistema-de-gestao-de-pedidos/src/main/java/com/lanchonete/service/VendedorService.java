@@ -29,11 +29,12 @@ public class VendedorService {
         return repository.listarTodos();
     }
 
-    // ⬇⬇⬇ A PARTIR DAQUI ESTÁ DENTRO DA CLASSE (CORRIGIDO) ⬇⬇⬇
+    // =============================
+    // MÉTODOS DO TURNO (CORRETOS)
+    // =============================
 
-    // Cálculo real do bônus
     public double calcularBonusSobreTotal(double totalVendido) {
-        return totalVendido * 0.005;  // 0,5%
+        return totalVendido * 0.005; // 0,5%
     }
 
     public String gerarInformacoes(Vendedor vendedor, double totalVendido) {

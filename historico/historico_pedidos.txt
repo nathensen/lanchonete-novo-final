@@ -832,3 +832,14 @@ Itens:
  - Refrigerante Guaraná Garrafa (1L) | R$ 8,00
 -----------------------------
 
+===== PEDIDO FINALIZADO =====
+Cliente: SADSD
+Vendedor: NATANE_HENSEN
+Valor Total: R$ 26,00
+-----------------------------
+Itens:
+ - Calabresa no pão X-Calabresa com molho Pão de forma | R$ 17,00
+ - Pastel Assado com recheio de Carne | R$ 5,00
+ - Refrigerante Guaraná Lata (350ml) | R$ 4,00
+-----------------------------
+
