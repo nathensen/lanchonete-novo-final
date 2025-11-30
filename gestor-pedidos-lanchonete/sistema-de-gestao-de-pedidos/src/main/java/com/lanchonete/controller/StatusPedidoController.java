@@ -15,14 +15,25 @@ public class StatusPedidoController {
 
     public void adicionarPedido(Pedido pedido) {
         if (pedido != null && !pedidosEmProducao.contains(pedido)) {
-            pedido.setStatusEntrega("em_producao");
+            pedido.setStatusEntrega("EM PRODUÇÃO"); // removido colchetes para ficar mais limpo
             pedidosEmProducao.add(pedido);
+        }
+    }
+
+    public void marcarComoPronto(Pedido pedido) {
+        if (pedido != null && pedidosEmProducao.contains(pedido)) {
+            pedido.setStatusEntrega("PRONTO PARA ENTREGA");
         }
     }
 
     public void confirmarEntrega(Pedido pedido) {
         if (pedido != null && pedidosEmProducao.contains(pedido)) {
-            pedido.setStatusEntrega("entregue");
+            pedido.setStatusEntrega("RETIRADO PELO CLIENTE");
+        }
+    }
+
+    public void excluirPedido(Pedido pedido) {
+        if (pedido != null) {
             pedidosEmProducao.remove(pedido);
         }
     }

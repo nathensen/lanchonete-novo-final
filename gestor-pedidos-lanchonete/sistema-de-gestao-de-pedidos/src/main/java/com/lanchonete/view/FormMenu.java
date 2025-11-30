@@ -116,7 +116,7 @@ public class FormMenu extends BackgroundPanel {
         btnEncerrarTurno.setOpaque(true);
         btnEncerrarTurno.setBorderPainted(false);
         btnEncerrarTurno.setPreferredSize(new Dimension(250, 45));
-        btnEncerrarTurno.addActionListener(e -> controller.encerrarTurno(mainFrame.getVendedor(), mainFrame)); // erro aqui
+        btnEncerrarTurno.addActionListener(e -> controller.encerrarTurno(mainFrame.getVendedor(), mainFrame)); 
 
         btnEncerrarTurno.addMouseListener(new java.awt.event.MouseAdapter() {
             @Override

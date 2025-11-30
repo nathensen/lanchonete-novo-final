@@ -44,7 +44,7 @@ public class MenuController {
                 "=== ENCERRAMENTO DE TURNO ===\n\n" +
                 "Vendedor: " + vendedor.getNome() + "\n" +
                 "Total Vendido: R$ " + String.format("%.2f", vendedor.getTotalVendido()) + "\n" +
-                "Bônus (0,5%): R$ " + String.format("%.2f", vendedor.getBonus()) + "\n";
+                "Bônus (5%): R$ " + String.format("%.2f", vendedor.getBonus()) + "\n";
 
         JOptionPane.showMessageDialog(null, resumo,
                 "Resumo Final", JOptionPane.INFORMATION_MESSAGE);

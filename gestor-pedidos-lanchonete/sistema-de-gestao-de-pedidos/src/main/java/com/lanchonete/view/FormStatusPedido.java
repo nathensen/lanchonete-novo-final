@@ -23,7 +23,7 @@ public class FormStatusPedido extends JPanel {
     private StatusPedidoController controller;
     private DefaultListModel<Pedido> listModel;
     private JList<Pedido> listaPedidos;
-    private JButton btnMenu, btnConfirmarEntrega;
+    private JButton btnMenu, btnMarcarPronto, btnConfirmarRetirada, btnExcluirPedido;
 
     public FormStatusPedido(MainFrame mainFrame, StatusPedidoController controller) {
         this.mainFrame = mainFrame;
@@ -40,25 +40,51 @@ public class FormStatusPedido extends JPanel {
         JScrollPane scroll = new JScrollPane(listaPedidos);
         scroll.setPreferredSize(new Dimension(600, 400));
 
+        // Botões
         btnMenu = new JButton("Menu Principal");
-        btnConfirmarEntrega = new JButton("Confirmar Entrega ao Cliente");
+        btnMarcarPronto = new JButton("Marcar Pedido Pronto");
+        btnConfirmarRetirada = new JButton("Confirmar Retirada");
+        btnExcluirPedido = new JButton("Excluir Pedido");
 
         JPanel painelBotoes = new JPanel();
-        painelBotoes.add(btnConfirmarEntrega);
+        painelBotoes.add(btnMarcarPronto);
+        painelBotoes.add(btnConfirmarRetirada);
+        painelBotoes.add(btnExcluirPedido);
         painelBotoes.add(btnMenu);
 
         add(scroll, BorderLayout.CENTER);
         add(painelBotoes, BorderLayout.SOUTH);
 
+        // Ações dos botões
         btnMenu.addActionListener(e -> mainFrame.showPanel("menu"));
 
-        btnConfirmarEntrega.addActionListener(e -> {
+        btnMarcarPronto.addActionListener(e -> {
+            Pedido selecionado = listaPedidos.getSelectedValue();
+            if (selecionado != null) {
+                controller.marcarComoPronto(selecionado);
+                atualizarLista();
+            } else {
+                JOptionPane.showMessageDialog(this, "Selecione um pedido para marcar como pronto.");
+            }
+        });
+
+        btnConfirmarRetirada.addActionListener(e -> {
             Pedido selecionado = listaPedidos.getSelectedValue();
             if (selecionado != null) {
                 controller.confirmarEntrega(selecionado);
                 atualizarLista();
             } else {
-                JOptionPane.showMessageDialog(this, "Selecione um pedido para confirmar entrega.");
+                JOptionPane.showMessageDialog(this, "Selecione um pedido para confirmar retirada.");
+            }
+        });
+
+        btnExcluirPedido.addActionListener(e -> {
+            Pedido selecionado = listaPedidos.getSelectedValue();
+            if (selecionado != null) {
+                controller.excluirPedido(selecionado);
+                atualizarLista();
+            } else {
+                JOptionPane.showMessageDialog(this, "Selecione um pedido para excluir.");
             }
         });
     }
@@ -75,30 +101,37 @@ public class FormStatusPedido extends JPanel {
         }
     }
 
+    // Renderização com cores por status usando HTML
     private static class PedidoCellRenderer extends JLabel implements ListCellRenderer<Pedido> {
-    @Override
-    public Component getListCellRendererComponent(JList<? extends Pedido> list, Pedido value, int index,
-                                                  boolean isSelected, boolean cellHasFocus) {
+        @Override
+        public Component getListCellRendererComponent(JList<? extends Pedido> list,
+                                                    Pedido value,
+                                                    int index,
+                                                    boolean isSelected,
+                                                    boolean cellHasFocus) {
 
-        String status = value.getStatusEntrega();
+            // Define cor de acordo com o status usando contains()
+            String status = value.getStatusEntrega().toUpperCase();
+            String cor;
+            if (status.contains("EM PRODUÇÃO")) cor = "red";
+            else if (status.contains("PRONTO PARA ENTREGA")) cor = "blue";
+            else if (status.contains("RETIRADO PELO CLIENTE")) cor = "green";
+            else cor = "black";
 
-        // HTML para pintar apenas o status em verde
-        String texto = "<html>"
-                + value.getNomeCliente()
-                + " - Status: <span style='color:green;'><b>" + status + "</b></span>"
-                + " | Total: R$ " + String.format("%.2f", value.calcularTotal())
-                + "</html>";
+            // Texto em HTML com cor
+            String texto = "<html>"
+                    + "<b>Cliente:</b> " + value.getNomeCliente()
+                    + " | <b>Status:</b> <span style='color:" + cor + "'>" + value.getStatusEntrega() + "</span>"
+                    + " | <b>Total:</b> R$ " + String.format("%.2f", value.calcularTotal())
+                    + "</html>";
 
-        setText(texto);
+            setText(texto);
+            setFont(new Font("Arial", Font.BOLD, 22));
+            setOpaque(true);
+            setBackground(isSelected ? list.getSelectionBackground() : list.getBackground());
 
-        setFont(new Font("Arial", Font.BOLD, 25));
-
-        setOpaque(true);
-        setBackground(isSelected ? list.getSelectionBackground() : list.getBackground());
-        setForeground(isSelected ? list.getSelectionForeground() : java.awt.Color.BLACK);
-
-        return this;
+            return this;
+        }
     }
-}
 
 }
