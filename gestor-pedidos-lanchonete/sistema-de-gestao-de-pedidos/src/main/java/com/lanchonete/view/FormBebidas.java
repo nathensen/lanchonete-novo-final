@@ -23,9 +23,9 @@ public class FormBebidas extends JPanel {
     private DefaultListModel<String> listModel;
     private BebidasController controller;
 
-    public FormBebidas(MainFrame mainFrame) {
+    public FormBebidas(MainFrame mainFrame, BebidasController controller) {
         this.mainFrame = mainFrame;
-        this.controller = new BebidasController(mainFrame);
+        this.controller = controller;
 
         setLayout(new BorderLayout());
 
@@ -38,6 +38,7 @@ public class FormBebidas extends JPanel {
         // Lista de bebidas
         List<Bebidas> bebidas = controller.getBebidas();
         listModel = new DefaultListModel<>();
+
         for (Bebidas bebida : bebidas) {
             listModel.addElement(bebida.descricao() + " - R$ " + String.format("%.2f", bebida.getPrecoVenda()));
         }
@@ -45,6 +46,7 @@ public class FormBebidas extends JPanel {
         listBebidas = new JList<>(listModel);
         listBebidas.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         listBebidas.setFont(new Font("Arial", Font.BOLD, 27));
+
         JScrollPane scrollPane = new JScrollPane(listBebidas);
 
         // Botões
@@ -59,11 +61,13 @@ public class FormBebidas extends JPanel {
         add(scrollPane, BorderLayout.CENTER);
         add(buttonPanel, BorderLayout.SOUTH);
 
-        // Ações dos botões
+        // Ações
         btnVoltar.addActionListener(e -> mainFrame.showPanel("menu"));
+
         btnAdicionar.addActionListener(e -> {
             int index = listBebidas.getSelectedIndex();
             controller.adicionarBebida(index);
         });
     }
 }
+

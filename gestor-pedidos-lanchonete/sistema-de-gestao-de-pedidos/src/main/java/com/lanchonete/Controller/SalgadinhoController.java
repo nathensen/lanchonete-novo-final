@@ -4,31 +4,25 @@ import java.util.List;
 
 import com.lanchonete.model.Pedido;
 import com.lanchonete.model.Salgadinho;
-import com.lanchonete.repository.SalgadinhoRepository;
+import com.lanchonete.service.SalgadinhoService;
 import com.lanchonete.view.MainFrame;
 
 public class SalgadinhoController {
+
     private MainFrame mainFrame;
-    private SalgadinhoRepository repository;
+    private SalgadinhoService service;
 
     public SalgadinhoController(MainFrame mainFrame) {
         this.mainFrame = mainFrame;
-        this.repository = new SalgadinhoRepository();
+        this.service = new SalgadinhoService();
     }
 
     public List<Salgadinho> listarSalgadinhos() {
-        return repository.listarTodos();
+        return service.listarSalgadinhos();
     }
 
     public boolean adicionarSalgadinhoAoPedido(int index) {
         Pedido pedido = mainFrame.getPedidoAtual();
-        if (pedido == null) return false; // Nenhum pedido iniciado
-
-        Salgadinho salgadinho = repository.buscarPorIndice(index);
-        if (salgadinho != null) {
-            pedido.adicionarItem(salgadinho);
-            return true;
-        }
-        return false;
+        return service.adicionarSalgadinhoAoPedido(pedido, index);
     }
 }

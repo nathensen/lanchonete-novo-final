@@ -4,6 +4,7 @@ import java.awt.CardLayout;
 
 import javax.swing.JPanel;
 
+import com.lanchonete.controller.BebidasController;
 import com.lanchonete.controller.StatusPedidoController;
 import com.lanchonete.model.Pedido;
 import com.lanchonete.model.Vendedor;
@@ -23,7 +24,8 @@ public class MainFrame extends javax.swing.JFrame {
     private FormPagamento pagamentoPanel;
     private FormStatusPedido statusPedidoPanel;
 
-    // Controller
+    // Controllers
+    private BebidasController bebidasController;
     private StatusPedidoController statusPedidoController;
 
     // Dados
@@ -39,7 +41,8 @@ public class MainFrame extends javax.swing.JFrame {
         cardLayout = new CardLayout();
         cardPanel = new JPanel(cardLayout);
 
-        // Controller de status
+        // Controllers
+        bebidasController = new BebidasController(this);
         statusPedidoController = new StatusPedidoController();
 
         // Inicialização dos painéis
@@ -47,10 +50,11 @@ public class MainFrame extends javax.swing.JFrame {
         menuPanel = new FormMenu(this);
         lanchePanel = new FormLanche(this);
         salgadinhoPanel = new FormSalgadinho(this);
-        bebidasPanel = new FormBebidas(this);
-        pedidoPanel = new FormPedido(this);
 
-        // Status
+        // Ajustado: agora recebe controller por injeção
+        bebidasPanel = new FormBebidas(this, bebidasController);
+
+        pedidoPanel = new FormPedido(this);
         statusPedidoPanel = new FormStatusPedido(this, statusPedidoController);
 
         // Registro dos painéis

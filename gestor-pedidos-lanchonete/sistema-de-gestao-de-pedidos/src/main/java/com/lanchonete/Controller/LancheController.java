@@ -6,43 +6,61 @@ import javax.swing.JOptionPane;
 
 import com.lanchonete.model.Lanche;
 import com.lanchonete.model.Pedido;
-import com.lanchonete.repository.LancheRepository;
+import com.lanchonete.service.LancheService;
 import com.lanchonete.view.MainFrame;
 
 public class LancheController {
 
     private MainFrame mainFrame;
-    private LancheRepository repository;
+    private LancheService service;
 
     public LancheController(MainFrame mainFrame) {
         this.mainFrame = mainFrame;
-        this.repository = new LancheRepository();
+        this.service = new LancheService();
     }
 
     public List<Lanche> getLanches() {
-        return repository.listarLanches();
+        return service.listarTodos();
     }
 
     public void adicionarLanche(int index) {
-        Lanche lancheSelecionado = repository.getLanche(index);
+
+        Lanche lancheSelecionado = service.buscarPorIndex(index);
+
         if (lancheSelecionado == null) {
-            JOptionPane.showMessageDialog(null, "Selecione um lanche primeiro.", "Nenhuma Seleção", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(null,
+                "Selecione um lanche primeiro.",
+                "Nenhuma Seleção",
+                JOptionPane.WARNING_MESSAGE);
             return;
         }
 
         Pedido pedido = mainFrame.getPedidoAtual();
+
         if (pedido == null) {
-            JOptionPane.showMessageDialog(null, "Você deve iniciar um novo pedido primeiro.", "Pedido não iniciado", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(null,
+                "Você deve iniciar um novo pedido primeiro.",
+                "Pedido não iniciado",
+                JOptionPane.WARNING_MESSAGE);
             mainFrame.showPanel("menu");
             return;
         }
 
         if (pedido.getNomeCliente() == null || pedido.getNomeCliente().trim().isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Informe o nome do cliente antes de adicionar produtos.", "Cliente não informado", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(null,
+                "Informe o nome do cliente antes de adicionar produtos.",
+                "Cliente não informado",
+                JOptionPane.WARNING_MESSAGE);
             return;
         }
 
-        pedido.adicionarItem(lancheSelecionado);
-        JOptionPane.showMessageDialog(null, lancheSelecionado.descricao() + " adicionado ao pedido com sucesso!", "Item Adicionado", JOptionPane.INFORMATION_MESSAGE);
+        boolean sucesso = service.adicionarLancheAoPedido(pedido, lancheSelecionado);
+
+        if (sucesso) {
+            JOptionPane.showMessageDialog(null,
+                lancheSelecionado.descricao() + " adicionado ao pedido com sucesso!",
+                "Item Adicionado",
+                JOptionPane.INFORMATION_MESSAGE);
+        }
     }
 }
