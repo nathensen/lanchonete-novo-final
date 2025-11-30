@@ -677,3 +677,66 @@ Itens:
  - Refrigerante Guaraná Garrafa (2L) | R$ 12,00
 -----------------------------
 
+===== PEDIDO FINALIZADO =====
+Cliente: JUVENAL PADILHA
+Vendedor: NATANE_HENSEN
+Valor Total: R$ 20,00
+-----------------------------
+Itens:
+ - Frango e Bacon no pão X-Frango Bacon com molho Pão de forma | R$ 20,00
+-----------------------------
+
+===== PEDIDO FINALIZADO =====
+Cliente: ISDISA
+Vendedor: NATANE_HENSEN
+Valor Total: R$ 17,00
+-----------------------------
+Itens:
+ - Calabresa no pão X-Calabresa com molho Pão de forma | R$ 17,00
+-----------------------------
+
+===== PEDIDO FINALIZADO =====
+Cliente: SADSAD
+Vendedor: NATANE_HENSEN
+Valor Total: R$ 20,00
+-----------------------------
+Itens:
+ - Frango e Bacon no pão X-Frango Bacon com molho Pão de forma | R$ 20,00
+-----------------------------
+
+===== PEDIDO FINALIZADO =====
+Cliente: SDSD
+Vendedor: NATANE_HENSEN
+Valor Total: R$ 19,00
+-----------------------------
+Itens:
+ - Atum no pão X-Atum com molho Pão de forma | R$ 19,00
+-----------------------------
+
+===== PEDIDO FINALIZADO =====
+Cliente: ADAS
+Vendedor: NATANE_HENSEN
+Valor Total: R$ 19,00
+-----------------------------
+Itens:
+ - Atum no pão X-Atum com molho Pão de forma | R$ 19,00
+-----------------------------
+
+===== PEDIDO FINALIZADO =====
+Cliente: SDS
+Vendedor: NATANE_HENSEN
+Valor Total: R$ 20,00
+-----------------------------
+Itens:
+ - Frango e Bacon no pão X-Frango Bacon com molho Pão de forma | R$ 20,00
+-----------------------------
+
+===== PEDIDO FINALIZADO =====
+Cliente: ASDASD
+Vendedor: NATANE_HENSEN
+Valor Total: R$ 19,00
+-----------------------------
+Itens:
+ - Atum no pão X-Atum com molho Pão de forma | R$ 19,00
+-----------------------------
+

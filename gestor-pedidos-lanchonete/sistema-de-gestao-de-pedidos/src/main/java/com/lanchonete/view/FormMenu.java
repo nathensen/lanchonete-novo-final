@@ -97,7 +97,7 @@ public class FormMenu extends BackgroundPanel {
 
         btnStatus = criarBotao("Status do Pedido", fonte, cor);
         btnStatus.addActionListener(e -> {
-            mainFrame.getStatusPedidoPanel().atualizarLista();
+            mainFrame.getStatusPedidoPanel().atualizarTabela();
             mainFrame.showPanel("statusPedido");
         });
         adicionar(painelCentro, gbc, btnStatus, 1, 2);

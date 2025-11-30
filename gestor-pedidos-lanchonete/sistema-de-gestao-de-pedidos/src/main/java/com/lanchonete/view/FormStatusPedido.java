@@ -1,18 +1,17 @@
 package com.lanchonete.view;
 
 import java.awt.BorderLayout;
-import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
 
-import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JLabel;
-import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.ListCellRenderer;
+import javax.swing.JTable;
+import javax.swing.table.AbstractTableModel;
+import javax.swing.table.DefaultTableCellRenderer;
 
 import com.lanchonete.controller.StatusPedidoController;
 import com.lanchonete.model.Pedido;
@@ -21,8 +20,10 @@ public class FormStatusPedido extends JPanel {
 
     private MainFrame mainFrame;
     private StatusPedidoController controller;
-    private DefaultListModel<Pedido> listModel;
-    private JList<Pedido> listaPedidos;
+
+    private JTable tabela;
+    private PedidoTableModel tableModel;
+
     private JButton btnMenu, btnMarcarPronto, btnConfirmarRetirada, btnExcluirPedido;
 
     public FormStatusPedido(MainFrame mainFrame, StatusPedidoController controller) {
@@ -33,12 +34,51 @@ public class FormStatusPedido extends JPanel {
     }
 
     private void initComponents() {
-        listModel = new DefaultListModel<>();
-        listaPedidos = new JList<>(listModel);
-        listaPedidos.setCellRenderer(new PedidoCellRenderer());
+        // Cria TableModel
+        tableModel = new PedidoTableModel(controller.listarPedidos());
+        tabela = new JTable(tableModel);
 
-        JScrollPane scroll = new JScrollPane(listaPedidos);
-        scroll.setPreferredSize(new Dimension(600, 400));
+        // Altura das linhas
+        tabela.setRowHeight(30);
+
+        // Fonte das células
+        tabela.setFont(new Font("Arial", Font.BOLD, 25));
+
+        // Fonte do cabeçalho
+        tabela.getTableHeader().setFont(new Font("Arial", Font.BOLD, 20));
+
+        // Centraliza títulos
+        ((DefaultTableCellRenderer) tabela.getTableHeader().getDefaultRenderer())
+                .setHorizontalAlignment(JLabel.CENTER);
+
+        // Centraliza todas as células
+        DefaultTableCellRenderer cellRenderer = new DefaultTableCellRenderer();
+        cellRenderer.setHorizontalAlignment(JLabel.CENTER);
+        tabela.setDefaultRenderer(Object.class, cellRenderer);
+
+        // Renderer específico para a coluna "Status" com cores
+        tabela.getColumnModel().getColumn(1).setCellRenderer(new DefaultTableCellRenderer() {
+            @Override
+            public java.awt.Component getTableCellRendererComponent(JTable table, Object value,
+                    boolean isSelected, boolean hasFocus, int row, int column) {
+                
+                JLabel label = (JLabel) super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+                String status = value.toString().toUpperCase();
+
+                switch(status) {
+                    case "EM PRODUÇÃO": label.setForeground(java.awt.Color.RED); break;
+                    case "PRONTO PARA ENTREGA": label.setForeground(java.awt.Color.BLUE); break;
+                    case "RETIRADO PELO CLIENTE": label.setForeground(java.awt.Color.GREEN); break;
+                    default: label.setForeground(java.awt.Color.BLACK);
+                }
+
+                label.setHorizontalAlignment(JLabel.CENTER);
+                return label;
+            }
+        });
+
+        JScrollPane scrollPane = new JScrollPane(tabela);
+        scrollPane.setPreferredSize(new Dimension(600, 400));
 
         // Botões
         btnMenu = new JButton("Menu Principal");
@@ -52,37 +92,40 @@ public class FormStatusPedido extends JPanel {
         painelBotoes.add(btnExcluirPedido);
         painelBotoes.add(btnMenu);
 
-        add(scroll, BorderLayout.CENTER);
+        add(scrollPane, BorderLayout.CENTER);
         add(painelBotoes, BorderLayout.SOUTH);
 
         // Ações dos botões
         btnMenu.addActionListener(e -> mainFrame.showPanel("menu"));
 
         btnMarcarPronto.addActionListener(e -> {
-            Pedido selecionado = listaPedidos.getSelectedValue();
-            if (selecionado != null) {
+            int linha = tabela.getSelectedRow();
+            if (linha != -1) {
+                Pedido selecionado = tableModel.getPedidoAt(linha);
                 controller.marcarComoPronto(selecionado);
-                atualizarLista();
+                atualizarTabela();
             } else {
                 JOptionPane.showMessageDialog(this, "Selecione um pedido para marcar como pronto.");
             }
         });
 
         btnConfirmarRetirada.addActionListener(e -> {
-            Pedido selecionado = listaPedidos.getSelectedValue();
-            if (selecionado != null) {
+            int linha = tabela.getSelectedRow();
+            if (linha != -1) {
+                Pedido selecionado = tableModel.getPedidoAt(linha);
                 controller.confirmarEntrega(selecionado);
-                atualizarLista();
+                atualizarTabela();
             } else {
                 JOptionPane.showMessageDialog(this, "Selecione um pedido para confirmar retirada.");
             }
         });
 
         btnExcluirPedido.addActionListener(e -> {
-            Pedido selecionado = listaPedidos.getSelectedValue();
-            if (selecionado != null) {
+            int linha = tabela.getSelectedRow();
+            if (linha != -1) {
+                Pedido selecionado = tableModel.getPedidoAt(linha);
                 controller.excluirPedido(selecionado);
-                atualizarLista();
+                atualizarTabela();
             } else {
                 JOptionPane.showMessageDialog(this, "Selecione um pedido para excluir.");
             }
@@ -91,47 +134,49 @@ public class FormStatusPedido extends JPanel {
 
     public void adicionarPedido(Pedido pedido) {
         controller.adicionarPedido(pedido);
-        atualizarLista();
+        atualizarTabela();
     }
 
-    public void atualizarLista() {
-        listModel.clear();
-        for (Pedido p : controller.listarPedidos()) {
-            listModel.addElement(p);
+    public void atualizarTabela() {
+        tableModel.atualizar(controller.listarPedidos());
+    }
+
+    // TableModel interno
+    private static class PedidoTableModel extends AbstractTableModel {
+        private java.util.List<Pedido> pedidos;
+        private final String[] colunas = {"Cliente", "Status", "Total"};
+
+        public PedidoTableModel(java.util.List<Pedido> pedidos) {
+            this.pedidos = pedidos;
         }
-    }
 
-    // Renderização com cores por status usando HTML
-    private static class PedidoCellRenderer extends JLabel implements ListCellRenderer<Pedido> {
+        public void atualizar(java.util.List<Pedido> pedidos) {
+            this.pedidos = pedidos;
+            fireTableDataChanged();
+        }
+
+        public Pedido getPedidoAt(int rowIndex) {
+            return pedidos.get(rowIndex);
+        }
+
         @Override
-        public Component getListCellRendererComponent(JList<? extends Pedido> list,
-                                                    Pedido value,
-                                                    int index,
-                                                    boolean isSelected,
-                                                    boolean cellHasFocus) {
+        public int getRowCount() { return pedidos.size(); }
 
-            // Define cor de acordo com o status usando contains()
-            String status = value.getStatusEntrega().toUpperCase();
-            String cor;
-            if (status.contains("EM PRODUÇÃO")) cor = "red";
-            else if (status.contains("PRONTO PARA ENTREGA")) cor = "blue";
-            else if (status.contains("RETIRADO PELO CLIENTE")) cor = "green";
-            else cor = "black";
+        @Override
+        public int getColumnCount() { return colunas.length; }
 
-            // Texto em HTML com cor
-            String texto = "<html>"
-                    + "<b>Cliente:</b> " + value.getNomeCliente()
-                    + " | <b>Status:</b> <span style='color:" + cor + "'>" + value.getStatusEntrega() + "</span>"
-                    + " | <b>Total:</b> R$ " + String.format("%.2f", value.calcularTotal())
-                    + "</html>";
+        @Override
+        public String getColumnName(int column) { return colunas[column]; }
 
-            setText(texto);
-            setFont(new Font("Arial", Font.BOLD, 22));
-            setOpaque(true);
-            setBackground(isSelected ? list.getSelectionBackground() : list.getBackground());
-
-            return this;
+        @Override
+        public Object getValueAt(int rowIndex, int columnIndex) {
+            Pedido p = pedidos.get(rowIndex);
+            switch(columnIndex) {
+                case 0: return p.getNomeCliente();
+                case 1: return p.getStatusEntrega();
+                case 2: return "R$ " + String.format("%.2f", p.calcularTotal());
+            }
+            return null;
         }
     }
-
 }
