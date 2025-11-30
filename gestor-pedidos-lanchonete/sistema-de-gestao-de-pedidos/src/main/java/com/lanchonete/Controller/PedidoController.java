@@ -26,16 +26,15 @@ public class PedidoController {
     }
 
     public ResultadoPedido finalizarPedido() {
+
         Pedido pedido = mainFrame.getPedidoAtual();
         if (pedido == null) return new ResultadoPedido(0);
 
-        // Calcula bônus (0,5%) apenas dentro do service
-        service.finalizarPedido(pedido, mainFrame.getVendedor());
+        // >>> AGORA O SERVICE DEVOLVE O BONUS REAL
+        double bonusAplicado = service.finalizarPedido(pedido, mainFrame.getVendedor());
 
+        // salva no histórico
         repository.salvar(pedido);
-
-        // Retorna o bônus real adicionado ao vendedor
-        double bonusAplicado = pedido.calcularTotal() * 0.05;
 
         return new ResultadoPedido(bonusAplicado);
     }
@@ -58,7 +57,11 @@ public class PedidoController {
 
     public static class ResultadoPedido {
         private double bonusPedido;
-        public ResultadoPedido(double bonusPedido) { this.bonusPedido = bonusPedido; }
-        public double getBonusPedido() { return bonusPedido; }
+        public ResultadoPedido(double bonusPedido) {
+            this.bonusPedido = bonusPedido;
+        }
+        public double getBonusPedido() {
+            return bonusPedido;
+        }
     }
 }

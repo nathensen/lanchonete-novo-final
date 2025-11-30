@@ -1,48 +1,39 @@
 package com.lanchonete.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import com.lanchonete.model.Pedido;
+import com.lanchonete.service.StatusPedidoService;
 
 public class StatusPedidoController {
 
-    private List<Pedido> pedidosEmProducao;
+    private StatusPedidoService service;
 
     public StatusPedidoController() {
-        pedidosEmProducao = new ArrayList<>();
+        service = new StatusPedidoService();
     }
 
     public void adicionarPedido(Pedido pedido) {
-        if (pedido != null && !pedidosEmProducao.contains(pedido)) {
-            pedido.setStatusEntrega("EM PRODUÇÃO"); // removido colchetes para ficar mais limpo
-            pedidosEmProducao.add(pedido);
-        }
+        service.adicionarPedido(pedido);
     }
 
     public void marcarComoPronto(Pedido pedido) {
-        if (pedido != null && pedidosEmProducao.contains(pedido)) {
-            pedido.setStatusEntrega("PRONTO PARA ENTREGA");
-        }
+        service.marcarComoPronto(pedido);
     }
 
     public void confirmarEntrega(Pedido pedido) {
-        if (pedido != null && pedidosEmProducao.contains(pedido)) {
-            pedido.setStatusEntrega("RETIRADO PELO CLIENTE");
-        }
+        service.confirmarEntrega(pedido);
     }
 
     public void excluirPedido(Pedido pedido) {
-        if (pedido != null) {
-            pedidosEmProducao.remove(pedido);
-        }
+        service.excluirPedido(pedido);
     }
 
     public List<Pedido> listarPedidos() {
-        return new ArrayList<>(pedidosEmProducao);
+        return service.listarPedidos();
     }
 
     public boolean isEmpty() {
-        return pedidosEmProducao.isEmpty();
+        return service.isEmpty();
     }
 }

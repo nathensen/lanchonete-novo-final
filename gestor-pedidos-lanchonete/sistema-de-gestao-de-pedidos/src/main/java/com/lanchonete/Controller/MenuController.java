@@ -38,6 +38,7 @@ public class MenuController {
     }
 
     // Encerrar turno + sair
+    // Encerrar turno + sair
     public void encerrarTurno(Vendedor vendedor, JFrame frame) {
 
         String resumo =
@@ -46,12 +47,20 @@ public class MenuController {
                 "Total Vendido: R$ " + String.format("%.2f", vendedor.getTotalVendido()) + "\n" +
                 "Bônus (5%): R$ " + String.format("%.2f", vendedor.getBonus()) + "\n";
 
-        JOptionPane.showMessageDialog(null, resumo,
-                "Resumo Final", JOptionPane.INFORMATION_MESSAGE);
+        JOptionPane.showMessageDialog(
+                null,
+                resumo,
+                "Resumo Final",
+                JOptionPane.INFORMATION_MESSAGE
+        );
 
-        vendedor.resetarTurno(); // zera pro próximo dia
+        // Zera dados do vendedor após mostrar o popup
+        vendedor.resetarTurno();
 
+        // Fecha a aplicação
         frame.dispose();
+        System.exit(0);
     }
+
 
 }

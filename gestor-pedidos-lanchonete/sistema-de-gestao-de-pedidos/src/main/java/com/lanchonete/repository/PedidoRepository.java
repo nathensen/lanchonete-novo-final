@@ -13,9 +13,15 @@ public class PedidoRepository {
         if (pedido != null) pedidos.add(pedido);
     }
 
-    public void remover(Pedido pedido) { pedidos.remove(pedido); }
+    public void remover(Pedido pedido) {
+        pedidos.remove(pedido);
+    }
 
-    public List<Pedido> listar() { return new ArrayList<>(pedidos); }
+    public List<Pedido> listar() {
+        return new ArrayList<>(pedidos);
+    }
 
-    public void limpar() { pedidos.clear(); }
+    public void limpar() {
+        pedidos.clear();
+    }
 }

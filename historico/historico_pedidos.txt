@@ -843,3 +843,80 @@ Itens:
  - Refrigerante Guaraná Lata (350ml) | R$ 4,00
 -----------------------------
 
+===== PEDIDO FINALIZADO =====
+Cliente: JUNIOR
+Vendedor: NATANE_HENSEN
+Valor Total: R$ 31,00
+-----------------------------
+Itens:
+ - Calabresa no pão X-Calabresa com molho Pão de forma | R$ 17,00
+ - Empanado Frito com recheio de Frango | R$ 6,00
+ - Refrigerante Guaraná Garrafa (1L) | R$ 8,00
+-----------------------------
+
+===== PEDIDO FINALIZADO =====
+Cliente: ASDAS
+Vendedor: NATANE_HENSEN
+Valor Total: R$ 17,00
+-----------------------------
+Itens:
+ - Calabresa no pão X-Calabresa com molho Pão de forma | R$ 17,00
+-----------------------------
+
+===== PEDIDO FINALIZADO =====
+Cliente: ASDASDASD
+Vendedor: NATANE_HENSEN
+Valor Total: R$ 17,00
+-----------------------------
+Itens:
+ - Calabresa no pão X-Calabresa com molho Pão de forma | R$ 17,00
+-----------------------------
+
+===== PEDIDO FINALIZADO =====
+Cliente: SADASD
+Vendedor: NATANE_HENSEN
+Valor Total: R$ 18,00
+-----------------------------
+Itens:
+ - Carne no pão Triplo X-Burguer com molho Pão de forma | R$ 18,00
+-----------------------------
+
+===== PEDIDO FINALIZADO =====
+Cliente: SADASD
+Vendedor: NATANE_HENSEN
+Valor Total: R$ 31,00
+-----------------------------
+Itens:
+ - Calabresa no pão X-Calabresa com molho Pão de forma | R$ 17,00
+ - Empanado Frito com recheio de Frango | R$ 6,00
+ - Refrigerante Guaraná Garrafa (1L) | R$ 8,00
+-----------------------------
+
+===== PEDIDO FINALIZADO =====
+Cliente: ASDAS
+Vendedor: NATANE_HENSEN
+Valor Total: R$ 5,00
+-----------------------------
+Itens:
+ - Pastel Assado com recheio de Frango | R$ 5,00
+-----------------------------
+
+===== PEDIDO FINALIZADO =====
+Cliente: SDAS
+Vendedor: NATANE_HENSEN
+Valor Total: R$ 23,00
+-----------------------------
+Itens:
+ - Carne no pão Triplo X-Burguer com molho Pão de forma | R$ 18,00
+ - Pastel Assado com recheio de Frango | R$ 5,00
+-----------------------------
+
+===== PEDIDO FINALIZADO =====
+Cliente: ASDAS
+Vendedor: NATANE_HENSEN
+Valor Total: R$ 19,00
+-----------------------------
+Itens:
+ - Atum no pão X-Atum com molho Pão de forma | R$ 19,00
+-----------------------------
+

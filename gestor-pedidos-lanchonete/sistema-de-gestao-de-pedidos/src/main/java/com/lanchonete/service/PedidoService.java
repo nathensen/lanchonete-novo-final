@@ -18,23 +18,24 @@ public class PedidoService {
         return pedido.getItensConsumidos().isEmpty();
     }
 
-    public void finalizarPedido(Pedido pedido, Vendedor vendedor) {
+    // >>> AGORA RETORNA O BÔNUS CALCULADO
+    public double finalizarPedido(Pedido pedido, Vendedor vendedor) {
 
-    if (pedido == null) {
-        throw new IllegalArgumentException("Nenhum pedido ativo.");
-    }
+        if (pedido == null) {
+            throw new IllegalArgumentException("Nenhum pedido ativo.");
+        }
 
-    double total = pedido.calcularTotal();
+        double total = pedido.calcularTotal();
 
-    if (total <= 0) {
-        throw new IllegalArgumentException("O pedido está vazio.");
-    }
+        if (total <= 0) {
+            throw new IllegalArgumentException("O pedido está vazio.");
+        }
 
-    vendedor.adicionarVenda(total);
+        vendedor.adicionarVenda(total);
 
-    double bonus = total * 0.05;
+        double bonus = total * 0.05; // 5%
+        vendedor.adicionarBonus(bonus);
 
-    vendedor.adicionarBonus(bonus);
-    
+        return bonus;  // devolve para o controller
     }
 }

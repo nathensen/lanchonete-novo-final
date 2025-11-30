@@ -50,10 +50,7 @@ public class MainFrame extends javax.swing.JFrame {
         menuPanel = new FormMenu(this);
         lanchePanel = new FormLanche(this);
         salgadinhoPanel = new FormSalgadinho(this);
-
-        // Ajustado: agora recebe controller por injeção
         bebidasPanel = new FormBebidas(this, bebidasController);
-
         pedidoPanel = new FormPedido(this);
         statusPedidoPanel = new FormStatusPedido(this, statusPedidoController);
 
@@ -78,8 +75,14 @@ public class MainFrame extends javax.swing.JFrame {
     public void showPanel(String panelName) {
         cardLayout.show(cardPanel, panelName);
 
+        // Atualiza pedido atual quando entra no painel de pedido
         if (panelName.equals("pedido") && pedidoPanel != null && pedidoAtual != null) {
             pedidoPanel.atualizarPedido(pedidoAtual);
+        }
+
+        // Atualiza tabela de pedidos quando entra no painel de status
+        if (panelName.equals("statusPedido") && statusPedidoPanel != null) {
+            statusPedidoPanel.atualizarTabela();
         }
     }
 
@@ -96,3 +99,4 @@ public class MainFrame extends javax.swing.JFrame {
     public FormPedido getFormPedido() { return pedidoPanel; }
     public FormStatusPedido getStatusPedidoPanel() { return statusPedidoPanel; }
 }
+

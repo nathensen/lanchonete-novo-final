@@ -11,7 +11,7 @@ public class Pedido {
     private String nomeCliente;
     private Vendedor vendedor; 
     private List<ItemPedido> itensConsumidos;
-    private String statusEntrega = "em_producao"; // "em_producao" ou "entregue"
+    private String statusEntrega = "em_producao";
 
     public Pedido(String nomeCliente, Vendedor vendedor) {
         Validador.validarString(nomeCliente, "Nome do cliente não pode ser vazio");
@@ -22,7 +22,7 @@ public class Pedido {
     }
 
     public String getStatusEntrega() { 
-    return statusEntrega; 
+        return statusEntrega; 
     }
 
     public void adicionarItem(ItemPedido item) {
@@ -43,18 +43,6 @@ public class Pedido {
         return valorPago - calcularTotal();
     }
 
-    public void mostrarFatura() {
-        System.out.println("------- ProgLanches -------");
-        System.out.println("Cliente: " + nomeCliente);
-        System.out.println("Vendedor: " + vendedor.getNome());
-        System.out.println("Itens consumidos:");
-        for (ItemPedido item : itensConsumidos) {
-            System.out.println("- " + item.descricao() + " (" + FormatadorMoeda.formatar(item.getPrecoVenda()) + ")");
-        }
-        System.out.println("Total: " + FormatadorMoeda.formatar(calcularTotal()));
-        System.out.println("Status: " + statusEntrega);
-    }
-
     public String gerarResumoHistorico() {
         StringBuilder sb = new StringBuilder();
         sb.append("Pedido | Cliente: ").append(nomeCliente)
@@ -65,7 +53,6 @@ public class Pedido {
         sb.append(" | Total: ").append(FormatadorMoeda.formatar(calcularTotal()))
           .append(" | Status: ").append(statusEntrega);
         return sb.toString();
-        
     }
 
     public String getNomeCliente() { return nomeCliente; }
