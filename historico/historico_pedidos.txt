@@ -920,3 +920,41 @@ Itens:
  - Atum no pão X-Atum com molho Pão de forma | R$ 19,00
 -----------------------------
 
+===== PEDIDO FINALIZADO =====
+Cliente: RAFAEL
+Vendedor: NATANE_HENSEN
+Valor Total: R$ 33,00
+-----------------------------
+Itens:
+ - Carne no pão Duplo X-Burguer com molho Pão de forma | R$ 16,00
+ - Pastel Assado com recheio de Carne | R$ 5,00
+ - Refrigerante Coca-Cola Garrafa (2L) | R$ 12,00
+-----------------------------
+
+===== PEDIDO FINALIZADO =====
+Cliente: ASDASD
+Vendedor: NATANE_HENSEN
+Valor Total: R$ 16,00
+-----------------------------
+Itens:
+ - Carne no pão Duplo X-Burguer com molho Pão de forma | R$ 16,00
+-----------------------------
+
+===== PEDIDO FINALIZADO =====
+Cliente: julia ribeiro
+Vendedor: NATANE_HENSEN
+Valor Total: R$ 94,00
+-----------------------------
+Itens:
+ - Carne no pão X-Egg com molho Pão de forma | R$ 13,00
+ - Empanado Frito com recheio de Frango | R$ 6,00
+ - Suco de Maracujá 300ml | R$ 4,00
+ - Carne no pão X-Tudo com molho Pão de forma | R$ 14,00
+ - Carne no pão Triplo X-Burguer com molho Pão de forma | R$ 18,00
+ - Carne no pão X-Egg com molho Pão de forma | R$ 13,00
+ - Pastel Assado com recheio de Frango | R$ 5,00
+ - Pastel Frito com recheio de Frango | R$ 4,00
+ - Pastel Assado com recheio de Frango | R$ 5,00
+ - Refrigerante Coca-Cola Garrafa (2L) | R$ 12,00
+-----------------------------
+
