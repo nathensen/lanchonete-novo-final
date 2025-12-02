@@ -1,0 +1,5 @@
+# Created at 2025-12-02T20:18:38.404
+Boot Manifest-JAR contains absolute paths in classpath 'E:\Senai\Java\RepositoryGit\solid-pagamento-swing\lanchonete-novo-final\gestor-pedidos-lanchonete\sistema-de-gestao-de-pedidos\target\test-classes'
+Hint: <argLine>-Djdk.net.URLClassPath.disableClassPathURLCheck=true</argLine>
+'other' has different root
+
