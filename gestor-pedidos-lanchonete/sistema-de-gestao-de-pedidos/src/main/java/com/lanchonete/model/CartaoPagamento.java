@@ -2,8 +2,8 @@ package com.lanchonete.model;
 
 public class CartaoPagamento implements Pagamento {
 
-    private String tipo;     // "Débito" ou "Crédito"
-    private int parcelas;    // somente para crédito
+    private String tipo;     
+    private int parcelas;    
 
     public void setTipo(String tipo) {
         this.tipo = tipo;

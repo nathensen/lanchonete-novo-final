@@ -30,10 +30,8 @@ public class PedidoController {
         Pedido pedido = mainFrame.getPedidoAtual();
         if (pedido == null) return new ResultadoPedido(0);
 
-        // >>> AGORA O SERVICE DEVOLVE O BONUS REAL
         double bonusAplicado = service.finalizarPedido(pedido, mainFrame.getVendedor());
 
-        // salva no histórico
         repository.salvar(pedido);
 
         return new ResultadoPedido(bonusAplicado);

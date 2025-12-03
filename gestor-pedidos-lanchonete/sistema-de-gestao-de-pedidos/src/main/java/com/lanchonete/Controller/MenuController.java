@@ -13,7 +13,6 @@ public class MenuController {
 
     public MenuController() {}
 
-    // Criar novo pedido
     public Pedido novoPedido(String nomeCliente, Pedido atual, Vendedor vendedor) {
         if (atual != null && !atual.getItensConsumidos().isEmpty()) {
             JOptionPane.showMessageDialog(null,
@@ -24,7 +23,6 @@ public class MenuController {
         return pedidoService.criarPedido(nomeCliente, vendedor);
     }
 
-    // Mostrar bônus acumulado
     public void mostrarBonus(Vendedor vendedor) {
         if (vendedor == null) {
             JOptionPane.showMessageDialog(null,
@@ -37,8 +35,6 @@ public class MenuController {
         JOptionPane.showMessageDialog(null, msg, "Bônus", JOptionPane.INFORMATION_MESSAGE);
     }
 
-    // Encerrar turno + sair
-    // Encerrar turno + sair
     public void encerrarTurno(Vendedor vendedor, JFrame frame) {
 
         String resumo =
@@ -54,10 +50,8 @@ public class MenuController {
                 JOptionPane.INFORMATION_MESSAGE
         );
 
-        // Zera dados do vendedor após mostrar o popup
         vendedor.resetarTurno();
 
-        // Fecha a aplicação
         frame.dispose();
         System.exit(0);
     }

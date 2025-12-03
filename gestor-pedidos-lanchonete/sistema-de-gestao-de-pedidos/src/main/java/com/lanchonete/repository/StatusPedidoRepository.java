@@ -14,7 +14,7 @@ public class StatusPedidoRepository {
     }
 
     public void atualizar(Pedido pedido) {
-        // Como é a mesma instância, nada precisa ser feito aqui
+
     }
 
     public void remover(Pedido pedido) {

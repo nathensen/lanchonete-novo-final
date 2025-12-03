@@ -14,9 +14,6 @@ public class LoginController {
         this.loginService = loginService;
     }
 
-    /**
-     * Chamado pela View. Coordena o fluxo de login.
-     */
     public void login(String nome, String senhaDigitada, MainFrame mainFrame) {
 
         try {
@@ -28,8 +25,7 @@ public class LoginController {
 
             JOptionPane.showMessageDialog(null, "Bem-vindo(a), " + nome + "!");
         } catch (Exception e) {
-            // repassa exceção para a view tratar (ou podemos mostrar aqui)
-            // manter comportamento atual: lançar para a view mostrar dialog
+
             throw new RuntimeException(e.getMessage(), e);
         }
     }
