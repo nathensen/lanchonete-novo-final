@@ -19,7 +19,6 @@ public class Bebidas extends Prato {
         this.tamanho = tamanho;
     }
 
-    // Getters
     public String getTipo() {
         return tipo;
     }
@@ -32,7 +31,6 @@ public class Bebidas extends Prato {
         return tamanho;
     }
 
-    // Setters
     public void setTipo(String tipo) {
         Validador.validarString(tipo, "Tipo não pode ser vazio");
         this.tipo = tipo;

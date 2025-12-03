@@ -15,7 +15,7 @@ public class LancheRepository {
     }
 
     private void inicializarLanches() {
-        // Lista completa de lanches
+
         lanches.add(new Lanche(10.0, "X-Burguer", "Carne", "Pão de forma"));
         lanches.add(new Lanche(12.0, "X-Salada", "Carne", "Pão de forma"));
         lanches.add(new Lanche(11.0, "X-Frango", "Frango", "Pão de forma"));

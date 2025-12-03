@@ -13,10 +13,9 @@ public class VendedorController {
         this.service = service;
     }
 
-    // Agora recebe diretamente o vendedor logado
     public void mostrarResumoFinalTurno(Vendedor vendedorLogado, double totalVendido) {
 
-        String resumo = service.gerarResumoFinalTurno(vendedorLogado, totalVendido); // erro aqui
+        String resumo = service.gerarResumoFinalTurno(vendedorLogado, totalVendido); 
 
         JOptionPane.showMessageDialog(
                 null,

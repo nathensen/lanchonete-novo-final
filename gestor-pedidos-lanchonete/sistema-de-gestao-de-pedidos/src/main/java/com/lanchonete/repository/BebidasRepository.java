@@ -15,14 +15,13 @@ public class BebidasRepository {
     }
 
     private void inicializarBebidas() {
-        // Sucos
+
         String[] saboresSuco = {"Goiaba", "Acerola", "Maracujá", "Abacaxi"};
         for (int i = 0; i < saboresSuco.length; i++) {
             double preco = (i == 1) ? 5.0 : 4.0;
             bebidas.add(new Bebidas(preco, "Suco", "de " + saboresSuco[i], "300ml"));
         }
 
-        // Refrigerantes
         String[] refrigerantes = {"Coca-Cola", "Guaraná"};
         String[] tamanhosRefri = {"Lata (350ml)", "Garrafa (1L)", "Garrafa (2L)"};
         for (String refri : refrigerantes) {
@@ -37,7 +36,6 @@ public class BebidasRepository {
             }
         }
 
-        // Água mineral
         String[] tamanhosAgua = {"Garrafa (250ml)", "Garrafa (500ml)", "Garrafa (2L)"};
         for (int i = 0; i < tamanhosAgua.length; i++) {
             double preco = switch (i) {
