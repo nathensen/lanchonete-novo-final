@@ -28,13 +28,11 @@ public class FormLanche extends JPanel {
 
         setLayout(new BorderLayout());
 
-        // Título
         JPanel titlePanel = new JPanel();
         JLabel lblTitle = new JLabel("Escolha um Lanche");
         lblTitle.setFont(new Font("Arial", Font.BOLD, 20));
         titlePanel.add(lblTitle);
 
-        // Lista de lanches
         List<Lanche> lanches = controller.getLanches();
         listModel = new DefaultListModel<>();
         for (Lanche lanche : lanches) {
@@ -53,12 +51,10 @@ public class FormLanche extends JPanel {
         buttonPanel.add(btnAdicionar);
         buttonPanel.add(btnVoltar);
 
-        // Layout
         add(titlePanel, BorderLayout.NORTH);
         add(scrollPane, BorderLayout.CENTER);
         add(buttonPanel, BorderLayout.SOUTH);
 
-        // Ações dos botões
         btnVoltar.addActionListener(e -> mainFrame.showPanel("menu"));
         btnAdicionar.addActionListener(e -> {
             int selectedIndex = listLanches.getSelectedIndex();

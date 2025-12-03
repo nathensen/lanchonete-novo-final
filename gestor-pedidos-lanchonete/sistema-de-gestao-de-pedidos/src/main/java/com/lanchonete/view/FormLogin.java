@@ -49,20 +49,13 @@ public class FormLogin extends BackgroundPanel {
         this.mainFrame = mainFrame;
         mainFrame.setExtendedState(JFrame.MAXIMIZED_BOTH);
 
-
-
-        // Repository + service (igual ao que você já tem)
         IVendedorRepository vendedorRepository = new VendedorRepository();
         VendedorService vendedorService = new VendedorService(vendedorRepository);
 
-        // novo: LoginService que usa VendedorService
         LoginService loginService = new LoginService(vendedorService);
 
-        // Controller agora recebe LoginService
         this.loginController = new LoginController(loginService);
 
-
-        // Layout geral
         setLayout(new BorderLayout());
         setBackground(null);
 
@@ -120,7 +113,6 @@ public class FormLogin extends BackgroundPanel {
         add(formPanel, BorderLayout.CENTER);
     }
 
-    // ---- Botão estilizado ----
     private JButton criarBotao(String texto, java.awt.event.ActionListener listener) {
 
         JButton btn = new JButton(texto) {
@@ -170,7 +162,6 @@ public class FormLogin extends BackgroundPanel {
         return btn;
     }
 
-    // ---- CHAMA O CONTROLLER ----
     private void executarLogin() {
         String nome = txtNome.getText().trim();
         String codigo = String.valueOf(txtCodigo.getPassword()).trim();

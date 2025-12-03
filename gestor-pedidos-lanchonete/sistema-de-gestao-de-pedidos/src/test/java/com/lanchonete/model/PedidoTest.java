@@ -1,12 +1,10 @@
 package com.lanchonete.model;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-
 import org.junit.jupiter.api.Test;
 
 public class PedidoTest {
 
-    // Classe simples para simular um ItemPedido
     static class ItemFake implements ItemPedido {
         private final double preco;
 
@@ -36,7 +34,6 @@ public class PedidoTest {
 
         double total = pedido.calcularTotal();
 
-        // delta pequeno para evitar problemas de precisão com doubles
         assertEquals(30.0, total, 0.0001);
     }
 }

@@ -8,7 +8,7 @@ import javax.swing.JPanel;
 
 public class BackgroundPanel extends JPanel {
 
-    private Image img; // ← FALTAVA ISTO
+    private Image img;
 
     private static Image carregarImagem() {
         try {

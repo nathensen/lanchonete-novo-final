@@ -15,14 +15,12 @@
 
     <dependencies>
 
-        <!-- Seu MySQL Driver -->
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
             <version>8.0.33</version>
         </dependency>
 
-        <!-- ===== JUNIT 5 - TESTES ===== -->
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter</artifactId>
@@ -34,14 +32,20 @@
 
     <build>
         <plugins>
-            <!-- Garante que o Maven execute os testes JUnit 5 -->
             <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-surefire-plugin</artifactId>
-                <version>3.1.2</version>
-                <configuration>
-                    <useModulePath>false</useModulePath>
-                </configuration>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>3.1.0</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>java</goal>
+                        </goals>
+                        <configuration>
+                            <mainClass>com.lanchonete.DatabaseTest</mainClass> 
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>

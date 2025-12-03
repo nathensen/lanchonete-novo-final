@@ -61,7 +61,6 @@ public class FormBebidas extends JPanel {
         add(scrollPane, BorderLayout.CENTER);
         add(buttonPanel, BorderLayout.SOUTH);
 
-        // Ações
         btnVoltar.addActionListener(e -> mainFrame.showPanel("menu"));
 
         btnAdicionar.addActionListener(e -> {

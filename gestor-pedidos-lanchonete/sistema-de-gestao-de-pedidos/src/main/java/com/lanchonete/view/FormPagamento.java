@@ -102,7 +102,6 @@ public class FormPagamento extends JPanel {
         JScrollPane scroll = new JScrollPane(txtResultado);
         scroll.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        // ---------- ADICIONA NO CONTENT ----------
         content.add(Box.createVerticalStrut(10));
         content.add(lblTotal);
         content.add(Box.createVerticalStrut(20));
@@ -123,13 +122,11 @@ public class FormPagamento extends JPanel {
         content.add(Box.createVerticalStrut(20));
         content.add(scroll);
 
-        // ---------- CENTRALIZA NO PAINEL ----------
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.gridx = 0;
         gbc.gridy = 0;
         add(content, gbc);
 
-        // ---------- EVENTOS ----------
         cmbMetodo.addActionListener(e -> atualizarCampos());
         cmbTipoCartao.addActionListener(e -> atualizarParcelas());
 
@@ -163,14 +160,11 @@ public class FormPagamento extends JPanel {
         String resultado = pagamentoController.realizarPagamento(forma, total);
         txtResultado.append(resultado + "\n\n");
 
-        // Finaliza o pedido
         PedidoController.ResultadoPedido res = pedidoController.finalizarPedido();
 
         if (res != null) {
-            // SALVAR NO HISTÓRICO
             HistoricoTXT.salvar(pedido, mainFrame.getVendedor());
 
-            // 🔹 Enviar para StatusPedido sem alterar layout
             if (mainFrame.getStatusPedidoPanel() != null) {
                 mainFrame.getStatusPedidoPanel().adicionarPedido(pedido);
             }
@@ -190,7 +184,6 @@ public class FormPagamento extends JPanel {
             "Bônus gerado: R$ " + String.format("%.2f", res.getBonusPedido())
         );
 
-        // Limpa pedido atual e retorna ao menu
         mainFrame.setPedidoAtual(null);
         mainFrame.showPanel("menu");
     }

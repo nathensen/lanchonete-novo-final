@@ -46,7 +46,6 @@ public class FormMenu extends BackgroundPanel {
 
         setLayout(new BorderLayout());
 
-        // ---------- TOPO ----------
         JPanel painelTopo = new JPanel(new FlowLayout(FlowLayout.CENTER));
         painelTopo.setOpaque(false);
         painelTopo.setBorder(BorderFactory.createEmptyBorder(20, 0, 10, 0));
@@ -58,7 +57,6 @@ public class FormMenu extends BackgroundPanel {
 
         add(painelTopo, BorderLayout.NORTH);
 
-        // ---------- CENTRO ----------
         JPanel painelCentro = new JPanel(new GridBagLayout());
         painelCentro.setOpaque(false);
         GridBagConstraints gbc = new GridBagConstraints();
@@ -104,7 +102,6 @@ public class FormMenu extends BackgroundPanel {
 
         add(painelCentro, BorderLayout.CENTER);
 
-        // ---------- RODAPÉ ----------
         JPanel painelRodape = new JPanel(new FlowLayout(FlowLayout.CENTER));
         painelRodape.setBorder(BorderFactory.createEmptyBorder(40, 0, 20, 0));
         painelRodape.setOpaque(false);
