@@ -41,7 +41,6 @@ public class MainFrame extends javax.swing.JFrame {
         cardLayout = new CardLayout();
         cardPanel = new JPanel(cardLayout);
 
-        // Controllers
         bebidasController = new BebidasController(this);
         statusPedidoController = new StatusPedidoController();
 
@@ -75,18 +74,15 @@ public class MainFrame extends javax.swing.JFrame {
     public void showPanel(String panelName) {
         cardLayout.show(cardPanel, panelName);
 
-        // Atualiza pedido atual quando entra no painel de pedido
         if (panelName.equals("pedido") && pedidoPanel != null && pedidoAtual != null) {
             pedidoPanel.atualizarPedido(pedidoAtual);
         }
 
-        // Atualiza tabela de pedidos quando entra no painel de status
         if (panelName.equals("statusPedido") && statusPedidoPanel != null) {
             statusPedidoPanel.atualizarTabela();
         }
     }
 
-    // Getters e Setters
     public Vendedor getVendedor() { return vendedor; }
     public void setVendedor(Vendedor vendedor) { this.vendedor = vendedor; }
 

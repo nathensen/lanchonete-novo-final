@@ -34,14 +34,11 @@ public class FormStatusPedido extends JPanel {
     }
 
     private void initComponents() {
-        // Cria TableModel
         tableModel = new PedidoTableModel(controller.listarPedidos());
         tabela = new JTable(tableModel);
 
-        // Altura das linhas
         tabela.setRowHeight(30);
 
-        // Fonte das células
         tabela.setFont(new Font("Arial", Font.BOLD, 25));
 
         // Fonte do cabeçalho
@@ -56,7 +53,6 @@ public class FormStatusPedido extends JPanel {
         cellRenderer.setHorizontalAlignment(JLabel.CENTER);
         tabela.setDefaultRenderer(Object.class, cellRenderer);
 
-        // Renderer específico para a coluna "Status" com cores
         tabela.getColumnModel().getColumn(1).setCellRenderer(new DefaultTableCellRenderer() {
             @Override
             public java.awt.Component getTableCellRendererComponent(JTable table, Object value,
@@ -95,7 +91,6 @@ public class FormStatusPedido extends JPanel {
         add(scrollPane, BorderLayout.CENTER);
         add(painelBotoes, BorderLayout.SOUTH);
 
-        // Ações dos botões
         btnMenu.addActionListener(e -> mainFrame.showPanel("menu"));
 
         btnMarcarPronto.addActionListener(e -> {
@@ -141,7 +136,6 @@ public class FormStatusPedido extends JPanel {
         tableModel.atualizar(controller.listarPedidos());
     }
 
-    // TableModel interno
     private static class PedidoTableModel extends AbstractTableModel {
         private java.util.List<Pedido> pedidos;
         private final String[] colunas = {"Cliente", "Status", "Total"};

@@ -32,7 +32,7 @@ public class FormSalgadinho extends JPanel {
         lblTitle.setFont(new Font("Arial", Font.BOLD, 20));
         titlePanel.add(lblTitle);
 
-        // Lista de salgadinhos
+        // Lista de salgados
         List<Salgadinho> salgadinhos = controller.listarSalgadinhos();
         String[] opcoes = new String[salgadinhos.size()];
         for (int i = 0; i < salgadinhos.size(); i++) {
@@ -57,7 +57,6 @@ public class FormSalgadinho extends JPanel {
         add(scrollPane, BorderLayout.CENTER);
         add(buttonPanel, BorderLayout.SOUTH);
 
-        // Ações
         btnVoltar.addActionListener(e -> mainFrame.showPanel("menu"));
 
         btnAdicionar.addActionListener(e -> {

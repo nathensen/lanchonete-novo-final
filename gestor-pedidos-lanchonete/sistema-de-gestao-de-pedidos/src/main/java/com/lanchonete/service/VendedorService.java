@@ -29,10 +29,6 @@ public class VendedorService {
         return repository.listarTodos();
     }
 
-    // =============================
-    // MÉTODOS DO TURNO (CORRETOS)
-    // =============================
-
     public double calcularBonusSobreTotal(double totalVendido) {
         return totalVendido * 0.005; // 0,5%
     }

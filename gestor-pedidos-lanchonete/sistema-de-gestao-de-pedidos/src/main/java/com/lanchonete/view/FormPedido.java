@@ -63,14 +63,12 @@ public class FormPedido extends JPanel {
         scrollPane.setPreferredSize(new Dimension(500, 250));
         add(scrollPane, BorderLayout.CENTER);
 
-        // Painel inferior com total
         JPanel totalPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         lblTotal = new JLabel("Total: R$ 0,00");
         lblTotal.setFont(new Font("Arial", Font.BOLD, 25));
         totalPanel.add(lblTotal);
         add(totalPanel, BorderLayout.SOUTH);
 
-        // Painel com os 2 botões na vertical
         JPanel painelVertical = new JPanel(new GridLayout(2, 1, 5, 5));
 
         JButton btnPagamento = new JButton("Forma de Pagamento");
@@ -97,7 +95,6 @@ public class FormPedido extends JPanel {
         add(painelDireita, BorderLayout.EAST);
     }
 
-    // Atualizar cliente + tabela + total
     public void atualizarPedido(Pedido pedido) {
         if (pedido != null) lblCliente.setText("Cliente: " + pedido.getNomeCliente());
         else lblCliente.setText("Cliente: [Nenhum pedido iniciado]");

@@ -20,10 +20,6 @@ public class LoginService {
         this.vendedorService = vendedorService;
     }
 
-    /**
-     * Valida credenciais e retorna o Vendedor autenticado.
-     * Lança Exception com mensagem amigável em caso de falha.
-     */
     public Vendedor autenticarELogar(String nome, String senhaDigitada) throws Exception {
 
         if (nome == null || nome.isBlank()) {

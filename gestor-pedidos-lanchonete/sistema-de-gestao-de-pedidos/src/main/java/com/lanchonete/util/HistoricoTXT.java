@@ -15,13 +15,11 @@ public class HistoricoTXT {
 
     public static void salvar(Pedido pedido, Vendedor vendedor) {
 
-        // Criar pasta se não existir
         File pasta = new File("historico");
         if (!pasta.exists()) {
             pasta.mkdirs();
         }
 
-        // Abrir arquivo no MODO APPEND (ACRESCENTAR)
         try (FileWriter writer = new FileWriter(CAMINHO, true)) {
 
             writer.write("===== PEDIDO FINALIZADO =====\n");

@@ -18,7 +18,7 @@ public class PedidoService {
         return pedido.getItensConsumidos().isEmpty();
     }
 
-    // >>> AGORA RETORNA O BÔNUS CALCULADO
+    // RETORNA O BÔNUS CALCULADO
     public double finalizarPedido(Pedido pedido, Vendedor vendedor) {
 
         if (pedido == null) {
@@ -33,9 +33,9 @@ public class PedidoService {
 
         vendedor.adicionarVenda(total);
 
-        double bonus = total * 0.05; // 5%
+        double bonus = total * 0.05;    // 5%
         vendedor.adicionarBonus(bonus);
 
-        return bonus;  // devolve para o controller
+        return bonus;
     }
 }
