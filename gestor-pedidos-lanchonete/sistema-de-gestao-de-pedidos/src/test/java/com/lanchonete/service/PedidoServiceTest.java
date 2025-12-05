@@ -31,7 +31,7 @@ class PedidoServiceTest {
     void deveAdicionarBonusDeCincoPorCentoDoTotal() {
 
         PedidoService service = new PedidoService();
-        Vendedor vendedor = new Vendedor("João", 123);
+        Vendedor vendedor = new Vendedor(123, "João");
         Pedido pedido = new Pedido("Cliente Teste", vendedor);
 
         pedido.adicionarItem(new ItemFake(50.0)); // total = 50

@@ -3,6 +3,7 @@ package com.lanchonete.model;
 import com.lanchonete.util.Validador;
 
 public class Lanche extends Prato {
+    private int id;
     private String pao;
     private String recheio;
     private String molho;
@@ -20,6 +21,14 @@ public class Lanche extends Prato {
     public String getPao() { return pao; }
     public String getRecheio() { return recheio; }
     public String getMolho() { return molho; }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public int getId() {
+        return id;
+    }
 
     public void setPao(String pao) {
         Validador.validarString(pao, "Tipo de pão não pode ser vazio");

@@ -968,3 +968,24 @@ Itens:
  - Refrigerante Guaraná Garrafa (1L) | R$ 8,00
 -----------------------------
 
+===== PEDIDO FINALIZADO =====
+Cliente: cleber
+Vendedor: PATRICK_CAMPESTRINI
+Valor Total: R$ 32,00
+-----------------------------
+Itens:
+ - Pastel Assado com recheio de Frango | R$ 5,00
+ - Atum no pão X-Atum com molho Pão de forma | R$ 19,00
+ - Refrigerante Guaraná Garrafa (1L) | R$ 8,00
+-----------------------------
+
+===== PEDIDO FINALIZADO =====
+Cliente: lkjlkjlkjlkj
+Vendedor: PATRICK_CAMPESTRINI
+Valor Total: R$ 23,00
+-----------------------------
+Itens:
+ - Calabresa no pão X-Calabresa com molho Pão de forma | R$ 17,00
+ - Empanado Frito com recheio de Frango | R$ 6,00
+-----------------------------
+

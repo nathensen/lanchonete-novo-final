@@ -14,7 +14,7 @@ public class VendedorService {
     }
 
     public Vendedor criarVendedor(String nome, int codigo) {
-        return new Vendedor(nome, codigo);
+        return new Vendedor(codigo, nome);
     }
 
     public void salvarVendedor(Vendedor vendedor) {

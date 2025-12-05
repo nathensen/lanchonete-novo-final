@@ -1,18 +1,18 @@
 package com.lanchonete.model;
 
 public class Vendedor {
-
-    private String nome;
+    
     private int codigo;
+    private String nome;
 
     private double bonus;
     private double totalVendido;
 
-    public Vendedor(String nome, int codigo) {
-        this.nome = nome;
-        this.codigo = codigo;
-        this.bonus = 0;
-        this.totalVendido = 0;
+    public Vendedor(int codigo, String nome) {
+    this.codigo = codigo;
+    this.nome = nome;
+    this.bonus = 0;
+    this.totalVendido = 0;
     }
 
     public String getNome() { return nome; }

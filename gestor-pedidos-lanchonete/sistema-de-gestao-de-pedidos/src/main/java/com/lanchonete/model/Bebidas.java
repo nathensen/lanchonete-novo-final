@@ -6,6 +6,7 @@ public class Bebidas extends Prato {
     private String tipo;
     private String sabor;
     private String tamanho;
+    private int id;
 
     public Bebidas(double precoVenda, String tipo, String sabor, String tamanho) {
         super(precoVenda);
@@ -17,6 +18,14 @@ public class Bebidas extends Prato {
         this.tipo = tipo;
         this.sabor = sabor;
         this.tamanho = tamanho;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public int getId() {
+        return id;
     }
 
     public String getTipo() {

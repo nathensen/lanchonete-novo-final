@@ -25,7 +25,7 @@ public class PedidoTest {
 
     @Test
     void deveCalcularTotalCorretamente() {
-        Vendedor vendedor = new Vendedor("Vendedor Teste", 1);
+        Vendedor vendedor = new Vendedor(1, "Vendedor Teste");
         Pedido pedido = new Pedido("Cliente Teste", vendedor);
 
         pedido.adicionarItem(new ItemFake(10.0));

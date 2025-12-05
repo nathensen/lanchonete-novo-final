@@ -1,39 +1,54 @@
-CREATE DATABASE lanchonete_db;
-USE lanchonete_db;
+DROP DATABASE IF EXISTS db_sa_6;
+CREATE DATABASE db_sa_6;
+USE db_sa_6;
 
--- Tabela de Clientes
-CREATE TABLE cliente (
-    id_cliente INT AUTO_INCREMENT PRIMARY KEY,
+CREATE TABLE vendedor (
+    id INT AUTO_INCREMENT PRIMARY KEY,
     nome VARCHAR(100) NOT NULL,
-    telefone VARCHAR(20),
-    email VARCHAR(100)
+    total_vendido DOUBLE DEFAULT 0,
+    bonus DOUBLE DEFAULT 0
 );
 
--- Tabela de Produtos
-CREATE TABLE produto (
-    id_produto INT AUTO_INCREMENT PRIMARY KEY,
-    nome VARCHAR(100) NOT NULL,
-    descricao VARCHAR(255),
-    preco DECIMAL(10,2) NOT NULL,
-    categoria VARCHAR(50)
+CREATE TABLE lanche (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    tipo VARCHAR(100),
+    recheio VARCHAR(100),
+    pao VARCHAR(100),
+    molho VARCHAR(100),
+    preco DOUBLE NOT NULL
 );
 
--- Tabela de Pedidos
+CREATE TABLE salgadinho (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    tipo VARCHAR(100),
+    massa VARCHAR(100),
+    recheio VARCHAR(100),
+    preco DOUBLE NOT NULL
+);
+
+CREATE TABLE bebidas (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    tipo VARCHAR(100),
+    sabor VARCHAR(100),
+    tamanho VARCHAR(50),
+    preco DOUBLE NOT NULL
+);
+
 CREATE TABLE pedido (
-    id_pedido INT AUTO_INCREMENT PRIMARY KEY,
-    id_cliente INT NOT NULL,
-    data_pedido DATETIME DEFAULT CURRENT_TIMESTAMP,
-    status VARCHAR(50) DEFAULT 'Em produção',
-    FOREIGN KEY (id_cliente) REFERENCES cliente(id_cliente)
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nome_cliente VARCHAR(100) NOT NULL,
+    vendedor_id INT NOT NULL,
+    status_entrega VARCHAR(30) DEFAULT 'em_producao',
+    total DOUBLE DEFAULT 0,
+    FOREIGN KEY (vendedor_id) REFERENCES vendedor(id)
 );
 
--- Tabela de Itens do Pedido
-CREATE TABLE item_pedido (
-    id_item INT AUTO_INCREMENT PRIMARY KEY,
-    id_pedido INT NOT NULL,
-    id_produto INT NOT NULL,
-    quantidade INT NOT NULL,
-    preco_unitario DECIMAL(10,2) NOT NULL,
-    FOREIGN KEY (id_pedido) REFERENCES pedido(id_pedido),
-    FOREIGN KEY (id_produto) REFERENCES produto(id_produto)
+CREATE TABLE pedido_itens (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    pedido_id INT NOT NULL,
+    item_tipo ENUM('lanche', 'salgadinho', 'bebidas') NOT NULL,
+    item_id INT NOT NULL,
+    quantidade INT DEFAULT 1,
+
+    FOREIGN KEY (pedido_id) REFERENCES pedido(id)
 );

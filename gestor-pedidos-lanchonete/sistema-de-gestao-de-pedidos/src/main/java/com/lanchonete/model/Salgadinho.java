@@ -6,6 +6,7 @@ public class Salgadinho extends Prato {
     private String tipo;
     private String massa;
     private String recheio;
+    private int id;
 
     public Salgadinho(double precoVenda, String tipo, String massa, String recheio) {
         super(precoVenda);
@@ -17,6 +18,14 @@ public class Salgadinho extends Prato {
         this.tipo = tipo;
         this.massa = massa;
         this.recheio = recheio;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public int getId() {
+        return id;
     }
 
     public String getTipo() {

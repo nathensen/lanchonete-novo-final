@@ -1,7 +1,7 @@
 package com.lanchonete.model;
 
-import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import org.junit.jupiter.api.Test;
 
 public class PagamentoDinheiroTest {
 
@@ -25,7 +25,7 @@ public class PagamentoDinheiroTest {
 
     @Test
     void deveCalcularTrocoCorretamente() {
-        Vendedor vendedor = new Vendedor("Vendedor Teste", 1);
+        Vendedor vendedor = new Vendedor(1, "Vendedor Teste");
         Pedido pedido = new Pedido("Cliente Teste", vendedor);
 
         pedido.adicionarItem(new ItemFake(20.0));
